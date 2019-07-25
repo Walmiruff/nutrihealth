@@ -4,6 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { ToasterModule } from 'angular2-toaster/angular2-toaster';
+import { ErrorMsgComponent } from './error-msg/error-msg.component';
 
 import { AccordionModule } from 'ngx-bootstrap/accordion';
 import { AlertModule } from 'ngx-bootstrap/alert';
@@ -15,7 +16,7 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { ProgressbarModule } from 'ngx-bootstrap/progressbar';
 import { RatingModule } from 'ngx-bootstrap/rating';
-import { TabsModule } from 'ngx-bootstrap/tabs';
+ import { TabsModule } from 'ngx-bootstrap/tabs';
 import { TimepickerModule } from 'ngx-bootstrap/timepicker';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { PopoverModule } from 'ngx-bootstrap/popover';
@@ -52,7 +53,7 @@ import { JqcloudDirective } from './directives/jqcloud/jqcloud.directive';
         PaginationModule.forRoot(),
         ProgressbarModule.forRoot(),
         RatingModule.forRoot(),
-        TabsModule.forRoot(),
+         TabsModule.forRoot(),
         TimepickerModule.forRoot(),
         TooltipModule.forRoot(),
         PopoverModule.forRoot(),
@@ -60,7 +61,7 @@ import { JqcloudDirective } from './directives/jqcloud/jqcloud.directive';
         ToasterModule
     ],
     providers: [
-        ColorsService
+       ColorsService
     ],
     declarations: [
         FlotDirective,
@@ -70,7 +71,8 @@ import { JqcloudDirective } from './directives/jqcloud/jqcloud.directive';
         VectormapDirective,
         NowDirective,
         ScrollableDirective,
-        JqcloudDirective
+        JqcloudDirective,
+        ErrorMsgComponent
     ],
     exports: [
         CommonModule,
@@ -90,12 +92,13 @@ import { JqcloudDirective } from './directives/jqcloud/jqcloud.directive';
         PaginationModule,
         ProgressbarModule,
         RatingModule,
-        TabsModule,
+         TabsModule,
         TimepickerModule,
         TooltipModule,
         PopoverModule,
         TypeaheadModule,
         ToasterModule,
+        ErrorMsgComponent,
         FlotDirective,
         SparklineDirective,
         EasypiechartDirective,

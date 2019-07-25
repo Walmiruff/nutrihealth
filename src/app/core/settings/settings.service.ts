@@ -20,8 +20,8 @@ export class SettingsService {
         // App Settings
         // -----------------------------------
         this.app = {
-            name: 'Angle',
-            description: 'Angular Bootstrap Admin Template',
+            name: 'NutriHealth',
+            description: 'Software de Nutrição',
             year: ((new Date()).getFullYear())
         };
 

@@ -1,7 +1,7 @@
 {
     "header": {
         "search": {
-            "PLACEHOLDER": "Type and hit enter.."
+            "PLACEHOLDER": "Buscar Pacientes..."
         }
     },
     "offsidebar": {
@@ -10,7 +10,7 @@
         }
     },
     "sidebar": {
-        "WELCOME": "Welcome",
+        "WELCOME": "Bem Vindo",
         "heading": {
             "HEADER": "Menu Heading"
         },

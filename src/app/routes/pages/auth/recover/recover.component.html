@@ -3,8 +3,8 @@
     <!-- START card-->
     <div class="card card-flat">
       <div class="card-header text-center bg-dark">
-        <a href="#">
-          <img class="block-center rounded" src="assets/img/logo.png" alt="Image" />
+        <a>
+          <img class="block-center rounded" src="assets/img/logo.png" style="width: 120px" alt="Image" />
         </a>
       </div>
       <div class="card-body">
@@ -45,3 +45,6 @@
       <br />
       <span>{{ settings.getAppSetting('description') }}</span>
     </div>
+
+
+    <toaster-container [toasterconfig]="toasterconfig"></toaster-container>

@@ -1,6 +1,6 @@
 /*!
  *
- * Angle - Bootstrap Admin Template
+ * NutriHealth - Bootstrap Admin Template
  *
  * Version: 4.3
  * Author: @themicon_co
@@ -63,3 +63,15 @@
 // @import "app/calendar";
 // @import "app/mailbox";
 // @import "app/plans";
+
+#wrapper{
+  display: flex
+}
+
+#align-right-top{
+margin: 0 0 auto auto
+}
+
+#align-right{
+  margin: 0 0 0 auto
+  }

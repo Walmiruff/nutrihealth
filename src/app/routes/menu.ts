@@ -1,12 +1,12 @@
 
 const Home = {
     text: 'Home',
-    link: '/home',
+    link: '/app',
     icon: 'icon-home'
 };
 
 const headingMain = {
-    text: 'Main Navigation',
+    text: 'Menu Principal',
     heading: true
 };
 

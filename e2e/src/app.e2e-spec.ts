@@ -7,8 +7,8 @@ describe('ng2angle App', function() {
     page = new Ng2anglePage();
   });
 
-  it('should display Angle in h1 tag', () => {
+  it('should display NutriHealth in h1 tag', () => {
     page.navigateTo();
-    expect(page.getParagraphText()).toEqual('Angle');
+    expect(page.getParagraphText()).toEqual('NutriHealth');
   });
 });

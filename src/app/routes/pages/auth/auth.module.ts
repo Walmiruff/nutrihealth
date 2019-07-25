@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Routes, RouterModule } from '@angular/router';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { ToasterService } from 'angular2-toaster/angular2-toaster';
+import { ToasterModule } from 'angular2-toaster/angular2-toaster';
 
 import { LoginComponent } from './login/login.component';
 import { RecoverComponent } from './recover/recover.component';
@@ -20,13 +22,17 @@ const routes: Routes = [
         RouterModule.forChild(routes),
         CommonModule,
         ReactiveFormsModule,
-        FormsModule
+        FormsModule,
+        ToasterModule
     ],
     declarations: [
       LoginComponent,
       RecoverComponent,
       RegisterComponent,
       AuthComponent
+    ],
+    providers: [
+        ToasterService
     ],
     exports: [
         RouterModule

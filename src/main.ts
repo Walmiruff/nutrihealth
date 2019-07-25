@@ -1,6 +1,6 @@
 /*!
  *
- * Angle - Bootstrap Admin Template
+ * NutriHealth - Bootstrap Admin Template
  *
  * Version: 4.3
  * Author: @themicon_co
