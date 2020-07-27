@@ -26,6 +26,8 @@ export class AppComponent implements OnInit {
         document.addEventListener('click', e => {
             const target = e.target as HTMLElement;
             if (target.tagName === 'A') e.preventDefault();
-        })
+        });
+
+        localStorage.setItem('uid', 'xXRTmDbPbcMnmUcPCZJBYz861k12');
     }
 }

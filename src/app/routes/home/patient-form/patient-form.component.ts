@@ -1,13 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { take } from 'rxjs/operators';
+import { take, tap, map, switchMap } from 'rxjs/operators';
 
 import { ActivatedRoute, Router } from '@angular/router';
 
+import { ToasterService, ToasterConfig } from 'angular2-toaster/angular2-toaster';
 
 import { DropdownService } from './service/dropdown.service';
 import { PatientService } from '../../../shared/services/patient.service';
 import { IFormCanDeactivate } from './guards/iform-candesactivate';
+import { ModalService } from '../../../shared/services/modal.service';
+
 
 @Component({
   selector: 'app-patient-form',
@@ -21,28 +24,63 @@ export class PatientFormComponent implements OnInit, IFormCanDeactivate {
   formulario: FormGroup;
   txt_Sexo: any[];
   pacienteSemEmail: any[];
-
+  // param para o card que estao fora do form
+  pacienteNome: string;
+  pacienteFoto: string;
+  pacienteId: string;
+  pacienteCelular: string;
+  pacienteEmail: string;
+  // interpolação para data
+  dateFormat: any;
+  // config toast
+  toasterConfig: any;
+  toasterconfig: ToasterConfig = new ToasterConfig({
+    positionClass: 'toast-bottom-right',
+    showCloseButton: true
+  });
+  // Datepicker
+  bsValue = new Date();
+  bsRangeValue: Date[];
+  maxDate = new Date();
+  bsConfig = {
+    containerClass: 'theme-blue',
+    dateInputFormat: 'DD/MM/YYYY'
+  };
   constructor(
     private formBuilder: FormBuilder,
     private dropdownService: DropdownService,
     private pacienteService: PatientService,
     private route: ActivatedRoute,
-    private router: Router
-  ) { }
+    private router: Router,
+    public toasterService: ToasterService,
+    private modalService: ModalService
+  ) {
+    // Datepicker
+    this.maxDate.setDate(this.maxDate.getDate() + 7);
+    this.bsRangeValue = [this.bsValue, this.maxDate];
+  }
 
   ngOnInit() {
     this.txt_Sexo = this.dropdownService.getSexo();
 
-    const codigoPaciente = this.route.snapshot.params['id'];
-
     this.configurarFormulario();
 
+    this.route.params
+      .pipe(
+        map((params: any) => params['id']),
+        switchMap(id => this.pacienteService.getPatientId(id))
+      )
+      .subscribe(paciente => {
+        this.formulario.patchValue(paciente);
+        this.dateFormat = (this.formulario.get('txt_DN').value).toDate(); // mostra a data formatada no form
+        this.pacienteNome = this.formulario.get('txt_Nome').value; // mostra info no card
+        this.pacienteFoto = this.formulario.get('txt_Foto').value;
+        this.pacienteCelular = 'tel:' + this.formulario.get('txt_Cel').value;
+        this.pacienteEmail = 'mailto:' + this.formulario.get('txt_email').value;
+      });
 
-
-    if (codigoPaciente) {
-      this.carregarPaciente(codigoPaciente);
-    }
   }
+
 
   configurarFormulario() {
     this.formulario = this.formBuilder.group({
@@ -52,70 +90,63 @@ export class PatientFormComponent implements OnInit, IFormCanDeactivate {
       txt_Sexo: ['m'],
       txt_DN: [null, [Validators.required]],
 
-      txt_pais: [null, [Validators.required, Validators.maxLength(50)]],
+      txt_pais: [null, [Validators.maxLength(50)]],
       txt_End: [null, Validators.maxLength(200)],
       txt_CEP: [null, Validators.maxLength(20)],
       txt_Cidade: [null, Validators.maxLength(40)],
-      txt_UF: [null, Validators.maxLength(4)],
+      txt_UF: [null, Validators.maxLength(40)],
 
       txt_Cel: [null, [Validators.maxLength(25)]],
       txt_Tel: [null, Validators.maxLength(25)],
-      txt_email: [null, [Validators.email, Validators.maxLength(80)]],
+      txt_email: [null, [Validators.email, Validators.maxLength(80), Validators.required]],
       enviarEmailPaciente: ['s'],
       pacienteSemEmail: ['false'],
       txt_Plano: [null, [Validators.maxLength(60)]],
+      txt_Foto: ['assets/img/usr.jpg']
     });
   }
 
 
 
-  carregarPaciente(codigo: number) {
-    // this.pacienteService.buscarPorCodigo(codigo)
-    //  .then(paciente => {
-    //   this.formulario.patchValue(paciente)
-    //   });
-  }
 
 
   onSubmit() {
 
+    if (this.formulario.valid && this.formulario.get('id').value == null) {
+      // insert
 
-    // if (this.formulario.valid && this.formulario.get('id').value == null) {
-    //   // insert
-    //   this.pacienteService.postPaciente(this.formulario)
-    //     .pipe(take(1))
-    //     .subscribe(dados => {
-    //       // console.log(dados);
-    //       // reseta o form
-    //       this.resetar();
-    //       this.pacienteService.getListaPacientes();
-    //       // aqui coloca um alert que foi gravado com sucesso
-    //       this.formMudou = false;
-    //       this.router.navigate(['/pages/software-nutrition'])
-
-    //     },
-    //       (error: any) => alert('Erro ao gravar!'));
-    // }
+      this.pacienteService.addPatient(this.formulario.value)
+        .then(() => {
+          this.toasterService.pop('success', 'Cadastro', 'Paciente cadastrado com sucesso!');
+          this.resetar();
+          this.formMudou = false;
+          this.router.navigate(['/app']);
+        })
+        .catch((error: any) => {
+          this.toasterService.pop('error', 'Error', 'Error ao Cadastrar o Paciente.');
+        });
+    }
 
 
-    // if (this.formulario.valid && this.formulario.get('id').value != null) {
-    //   // update
-    //   this.pacienteService.putPaciente(this.formulario, parseInt(this.formulario.get('id').value))
-    //     .pipe(take(1))
-    //     .subscribe(dados => {
-    //       // console.log(dados);
-    //       // reseta o form
-    //       this.resetar();
-    //       this.pacienteService.getListaPacientes();
-    //       //aqui coloca um alert que foi alterado com sucesso
-    //       this.formMudou = false;
-    //       this.router.navigate(['/pages/software-nutrition'])
-    //     },
-    //       (error: any) => alert('Erro ao editar!'));
+    if (this.formulario.valid && this.formulario.get('id').value != null) {
+      // update
 
-    // } else {
-    //   this.verificaValidacoesForm(this.formulario);
-    // }
+      this.pacienteService.updatePatient(this.formulario.value, this.formulario.get('id').value)
+        .then(() => {
+          this.toasterService.pop('success', 'Cadastro', 'Paciente atualizado com sucesso!');
+          this.resetar();
+          this.formMudou = false;
+          this.router.navigate(['/app']);
+        })
+        .catch((error: any) => {
+          this.toasterService.pop('error', 'Error', 'Error ao Atualizar o Paciente.');
+        });
+
+    }
+
+    if (!this.formulario.valid) {
+      this.verificaValidacoesForm(this.formulario);
+    }
 
 
   }
@@ -126,7 +157,7 @@ export class PatientFormComponent implements OnInit, IFormCanDeactivate {
       // console.log(campo);
       const controle = formGroup.get(campo);
       controle.markAsDirty();
-      controle.markAsUntouched();
+      controle.markAsTouched();
 
       if (controle instanceof FormGroup) {
         this.verificaValidacoesForm(controle);
@@ -140,10 +171,8 @@ export class PatientFormComponent implements OnInit, IFormCanDeactivate {
   }
 
 
-
-
   onClickChecked() {
-  this.disableInput = !this.disableInput;
+    this.disableInput = !this.disableInput;
   }
 
 
@@ -152,23 +181,27 @@ export class PatientFormComponent implements OnInit, IFormCanDeactivate {
     // console.log('mudou');
   }
 
-  podeMudarRota() {
-    if (this.formMudou === true) {
-      if (confirm('Você deseja sair da página?') === true) {
-        return true;
-      }
-    }
-
-    if (this.formMudou === false) {
-      return true;
-    }
-  }
-
-
   podeDesativar() {
     return this.podeMudarRota();
   }
 
+
+  podeMudarRota() {
+    if (this.formMudou) {
+      const title = 'Cadastro';
+      const msg = 'Deseja sair da página?';
+      const result$ = this.modalService.showModalConfirm(title, msg, 'Sim', 'Não');
+     return result$.asObservable()
+        .pipe( take(1), tap(result => !!result));
+     } else {
+      return true; // return para canDesactived permite que a rota mude se o form nao mudou
+    }
+  }
+
+
+  goToApp() {
+    this.router.navigate(['/app']);
+  }
 
 
 

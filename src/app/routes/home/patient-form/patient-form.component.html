@@ -7,13 +7,61 @@
 
 <div class="row justify-content-sm-center">
 
+  <div class="col-lg-3">
+    <div class="card card-default">
+
+
+
+
+      <div class="card-body text-center" style="padding: 0 0 15px 0">
+
+        <div class="d-flex justify-content-end mt-1 mr-1">
+          <div class="btn-group" dropdown>
+            <button class="btn btn-link" dropdownToggle>
+              <em class="fa fa-ellipsis-v fa-lg text-muted"></em>
+            </button>
+            <ul *dropdownMenu class="dropdown-menu dropdown-menu-right-forced animated fadeInLeft" role="menu"
+              style="cursor: pointer">
+              <a class="dropdown-item" [href]="pacienteCelular ? pacienteCelular : 'tel:+552400000000'">
+                <span class="text-warning"><em class="fa mr-2 icon-phone"></em>Ligar</span>
+              </a>
+              <a class="dropdown-item" [href]="pacienteEmail? pacienteEmail : 'mailto:@gmail.com'">
+                <span><em class="fa mr-2 icon-envelope-open"></em>Enviar Email</span>
+              </a>
+              <!--a class="dropdown-item">
+                        <span><em class="fa mr-2 icon-share"></em>Compartilhar Contato</span>
+                    </a-->
+            </ul>
+          </div>
+        </div>
+
+        <div class="py-1">
+          <img class="img-fluid rounded-circle img-thumbnail thumb96" style="border: 0"
+            [src]="pacienteFoto ? pacienteFoto : 'assets/img/usr.jpg'" alt="Contact" />
+        </div>
+        <h3 class="m-0 text-bold">{{ pacienteNome ? pacienteNome : 'Nome do Paciente' }}</h3>
+        <div class="my-3">
+          <p class="mx-2">A foto do paciente ajudará você a indetificá-lo no NutriHealth!</p>
+        </div>
+        <div class="text-center">
+          <a class="btn btn-primary" href="#">Alterar Foto</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
   <div class="col-lg-9">
     <div class="card card-default mb-5">
 
-      <div class="card-header">
-        <h3>Dados Paciente</h3>
-      </div>
+      <div class="card-header d-flex align-items-center">
+        <div class="d-flex justify-content-center col">
+          <div class="h4 m-0 text-center">Dados do Paciente</div>
+        </div>
 
+      </div>
 
 
 
@@ -21,14 +69,14 @@
         <div class="card-body">
 
 
-          <input type="hidden" class="form-control" formControlName="id" id="id" (input)="onInput()">
+
 
 
           <div class="row">
 
             <div class="col-sm-12  mb-3">
-              <input type="text" class="form-control" placeholder="Nome*" formControlName="txt_Nome" id="txt_Nome"
-                (input)="onInput()">
+              <input type="text" class="form-control border-right-0" placeholder="Nome*" formControlName="txt_Nome"
+                id="txt_Nome" (input)="onInput()">
               <app-error-msg [control]="formulario.get('txt_Nome')" label="Nome"></app-error-msg>
             </div>
           </div>
@@ -39,6 +87,7 @@
             <div class="col-sm-12  mb-3">
               <input type="text" class="form-control" formControlName="txt_NomeResp" placeholder="Nome do Responsável"
                 id="txt_NomeResp" (input)="onInput()">
+              <app-error-msg [control]="formulario.get('txt_NomeResp')" label="Nome do Responsável"></app-error-msg>
             </div>
           </div>
 
@@ -48,13 +97,13 @@
             <div class="col-12  mb-3">
               <label for="txt_Sexo" class="control-label">Sexo*</label>
 
-              <div id="txt_Sexo" class="row">
+              <div id="txt_Sexo" class="row" style="margin-left: 15px">
 
-                <div  class="form-check-inline" *ngFor="let item of txt_Sexo">
+                <div class="form-check-inline" *ngFor="let item of txt_Sexo">
                   <label class="form-check-label">
                     <input type="radio" class="form-check-input" formControlName="txt_Sexo" [value]="item.valor"
                       (input)="onInput()">
-                     <span class="custom-control-description">{{item.desc }}</span>
+                    <span class="custom-control-description">{{item.desc }}</span>
                   </label>
                 </div>
 
@@ -64,32 +113,17 @@
           </div>
 
 
-          <!--DataPicker-->
-          <!--div class="row">
-            <div class="col-sm-12  mb-3">
-              <div class="input-group">
-                <input type="text" class="form-control" placeholder="Date of Birth" formControlName="txt_DN" id="txt_DN"
-                  bsDatepicker (input)="onInput()">
-                <span class="input-group-append">
-                  <span class="btn btn-primary btn-icon input-group-text" style="background-color: #5cb85c">
-                    <i class="fa fa-calendar-alt"></i>
-                  </span>
-                </span>
-              </div>
-              <app-error-msg [control]="formulario.get('txt_DN')" label="Date of Birth"></app-error-msg>
-            </div>
-          </div-->
+
 
 
           <div class="row">
             <div class="col-sm-12  mb-3">
               <input type="text" class="form-control" placeholder="Data de Nascimento*" formControlName="txt_DN"
-                id="txt_DN" (input)="onInput()">
+                #dp="bsDatepicker" bsDatepicker [bsValue]="bsValue" [bsConfig]="bsConfig"
+                [value]=" dateFormat | date: 'dd/MM/yyyy'">
               <app-error-msg [control]="formulario.get('txt_DN')" label="Data de Nascimento"></app-error-msg>
             </div>
           </div>
-
-
 
 
 
@@ -97,6 +131,7 @@
             <div class="col-sm-12  mb-3">
               <input type="text" class="form-control" placeholder="País" formControlName="txt_pais" id="txt_pais"
                 (input)="onInput()">
+              <app-error-msg [control]="formulario.get('txt_pais')" label="País"></app-error-msg>
             </div>
           </div>
 
@@ -105,6 +140,7 @@
             <div class="col-sm-12  mb-3">
               <input type="text" class="form-control" placeholder="Estado" formControlName="txt_UF" id="txt_UF"
                 (input)="onInput()">
+              <app-error-msg [control]="formulario.get('txt_UF')" label="Estado"></app-error-msg>
             </div>
           </div>
 
@@ -113,7 +149,7 @@
             <div class="col-sm-12  mb-3">
               <input type="text" class="form-control" placeholder="Cidade" formControlName="txt_Cidade" id="txt_Cidade"
                 (input)="onInput()">
-
+              <app-error-msg [control]="formulario.get('txt_Cidade')" label="Cidade"></app-error-msg>
             </div>
           </div>
 
@@ -123,11 +159,13 @@
             <div class="col-sm-6 input-group mb-3">
               <input type="text" placeholder="Endereço" class="form-control" formControlName="txt_End" id="txt_End"
                 (input)="onInput()">
+              <app-error-msg [control]="formulario.get('txt_End')" label="Endereço"></app-error-msg>
             </div>
 
             <div class="col-sm-6 input-group mb-3">
               <input type="text" class="form-control" placeholder="CEP" formControlName="txt_CEP" id="txt_CEP"
                 (input)="onInput()">
+              <app-error-msg [control]="formulario.get('txt_CEP')" label="CEP"></app-error-msg>
             </div>
 
           </div>
@@ -142,11 +180,13 @@
             <div class="col-sm-6 input-group mb-3">
               <input type="text" placeholder="Celular" class="form-control" formControlName="txt_Cel" id="txt_Cel"
                 (input)="onInput()">
+              <app-error-msg [control]="formulario.get('txt_Cel')" label="Celular"></app-error-msg>
             </div>
 
             <div class="col-sm-6 input-group mb-3">
               <input type="text" class="form-control" placeholder="Telefone" formControlName="txt_Tel" id="txt_Tel"
                 (input)="onInput()">
+              <app-error-msg [control]="formulario.get('txt_Tel')" label="Telefone"></app-error-msg>
             </div>
 
           </div>
@@ -182,8 +222,7 @@
 
           <div class="row">
             <div class="col-sm-12 input-group mb-3">
-                 <input class="custom-control-input" id="enviarEmailPaciente"
-                  formControlName="enviarEmailPaciente">
+              <input class="custom-control-input" id="enviarEmailPaciente" formControlName="enviarEmailPaciente">
               <p>Um e-mail será enviado para que seu paciente instale o aplicativo</p>
             </div>
           </div>
@@ -193,15 +232,16 @@
             <div class="col-sm-12  mb-3">
               <input type="text" class="form-control" placeholder="Plano de Saúde" formControlName="txt_Plano"
                 id="txt_Plano" (input)="onInput()">
+              <app-error-msg [control]="formulario.get('txt_Plano')" label="Plano de Saúde"></app-error-msg>
             </div>
           </div>
-       </div>
+        </div>
 
 
         <div id="wrapper" class="card-footer">
           <div id="align-right">
             <button type="submit" class="btn btn-primary mr-2">Salvar</button>
-            <button class="btn btn-outline-danger" (click)="podeDesativar()">Cancelar</button>
+            <button class="btn btn-outline-danger" (click)="goToApp()">Cancelar</button>
           </div>
         </div>
 
@@ -213,23 +253,7 @@
 
 
 
-  <div class="col-lg-3">
-    <div class="card card-default">
-      <div class="card-header">
-        <h3>Foto</h3>
-      </div>
-      <div class="card-body">
-        <img src="assets/img/usr.jpg">
-        <div class="card-text">A foto só pode ser alterada após o registro do paciente.</div>
-      </div>
-      <div id="wrapper" class="card-footer">
-        <div id="align-right">
-          <button class="btn btn-primary">Alterar Foto</button>
-        </div>
-      </div>
-    </div>
-
-
-  </div>
 
 </div>
+
+<toaster-container [toasterconfig]="toasterconfig"></toaster-container>

@@ -1,5 +1,6 @@
 import { LayoutComponent } from '../layout/layout.component';
 import { Error404Component } from './pages/error404/error404.component';
+import { AuthGuard } from '../shared/guards/auth.guard';
 
 
 
@@ -13,7 +14,7 @@ export const routes = [
         component: LayoutComponent,
         children: [
             { path: '', redirectTo: 'home', pathMatch: 'full' },
-            { path: 'home', loadChildren: './home/home.module#HomeModule' }
+            { path: 'home', loadChildren: './home/home.module#HomeModule'}// , canActivate: [AuthGuard] remover appComp Localstorage.set
         ]
     },
 

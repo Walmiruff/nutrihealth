@@ -40,7 +40,7 @@
 @import "app/utils";
 @import "app/print";
 // Elements
-// @import "app/spinner";
+@import "app/spinner";
 // Charts
 // @import "app/radial-bar";
 // @import "app/chart-flot";
@@ -74,4 +74,13 @@ margin: 0 0 auto auto
 
 #align-right{
   margin: 0 0 0 auto
+  }
+
+  #align-right-top{
+    margin: 0 0 auto auto
+  }
+
+
+  #align-center{
+    margin: auto auto auto auto
   }

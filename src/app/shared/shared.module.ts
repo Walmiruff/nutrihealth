@@ -4,7 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { ToasterModule } from 'angular2-toaster/angular2-toaster';
-import { ErrorMsgComponent } from './error-msg/error-msg.component';
+
 
 import { AccordionModule } from 'ngx-bootstrap/accordion';
 import { AlertModule } from 'ngx-bootstrap/alert';
@@ -16,7 +16,7 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { ProgressbarModule } from 'ngx-bootstrap/progressbar';
 import { RatingModule } from 'ngx-bootstrap/rating';
- import { TabsModule } from 'ngx-bootstrap/tabs';
+import { TabsModule } from 'ngx-bootstrap/tabs';
 import { TimepickerModule } from 'ngx-bootstrap/timepicker';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { PopoverModule } from 'ngx-bootstrap/popover';
@@ -33,6 +33,9 @@ import { VectormapDirective } from './directives/vectormap/vectormap.directive';
 import { NowDirective } from './directives/now/now.directive';
 import { ScrollableDirective } from './directives/scrollable/scrollable.directive';
 import { JqcloudDirective } from './directives/jqcloud/jqcloud.directive';
+
+import { ErrorMsgComponent } from './error-msg/error-msg.component';
+import { ModalConfirmComponent } from './components/modal-confirm/modal-confirm.component';
 
 // https://angular.io/styleguide#!#04-10
 @NgModule({
@@ -72,7 +75,8 @@ import { JqcloudDirective } from './directives/jqcloud/jqcloud.directive';
         NowDirective,
         ScrollableDirective,
         JqcloudDirective,
-        ErrorMsgComponent
+        ErrorMsgComponent,
+        ModalConfirmComponent
     ],
     exports: [
         CommonModule,
@@ -107,7 +111,8 @@ import { JqcloudDirective } from './directives/jqcloud/jqcloud.directive';
         NowDirective,
         ScrollableDirective,
         JqcloudDirective
-    ]
+    ],
+    entryComponents: [ModalConfirmComponent]
 })
 
 // https://github.com/ocombe/ng2-translate/issues/209

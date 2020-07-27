@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-
+  hmr: false,
   firebaseConfig : {
     apiKey: 'AIzaSyD7oBqBgi5YV2mSXADTEs9HxBdoFnGQqHo',
     authDomain: 'nutrihealth-1620.firebaseapp.com',
