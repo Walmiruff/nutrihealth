@@ -28,6 +28,6 @@ export class AppComponent implements OnInit {
             if (target.tagName === 'A') e.preventDefault();
         });
 
-        localStorage.setItem('uid', 'xXRTmDbPbcMnmUcPCZJBYz861k12');
+        localStorage.setItem('uid', 'UWcxIiq0bodpQjGQJPMF850lSGu2');
     }
 }

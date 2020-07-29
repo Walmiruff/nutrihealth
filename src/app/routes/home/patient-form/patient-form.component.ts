@@ -52,8 +52,8 @@ export class PatientFormComponent implements OnInit, IFormCanDeactivate {
     private pacienteService: PatientService,
     private route: ActivatedRoute,
     private router: Router,
-    public toasterService: ToasterService,
-    private modalService: ModalService
+    private modalService: ModalService,
+    public toasterService: ToasterService
   ) {
     // Datepicker
     this.maxDate.setDate(this.maxDate.getDate() + 7);
@@ -98,7 +98,7 @@ export class PatientFormComponent implements OnInit, IFormCanDeactivate {
 
       txt_Cel: [null, [Validators.maxLength(25)]],
       txt_Tel: [null, Validators.maxLength(25)],
-      txt_email: [null, [Validators.email, Validators.maxLength(80), Validators.required]],
+      txt_email: [null, [Validators.email, Validators.maxLength(80)]],
       enviarEmailPaciente: ['s'],
       pacienteSemEmail: ['false'],
       txt_Plano: [null, [Validators.maxLength(60)]],

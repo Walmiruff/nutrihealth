@@ -10,11 +10,7 @@ import { AngularFireAuth } from '@angular/fire/auth';
 export class AuthGuard implements CanActivate {
   codigoUsuario: string;
 
-  constructor(private router: Router, private afAuth: AngularFireAuth) {
-    this.afAuth.authState.subscribe(user => {
-      this.codigoUsuario = user.uid;
-    });
-  }
+  constructor(private router: Router, private afAuth: AngularFireAuth) { }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
     return this.verificarAcesso();
@@ -25,6 +21,11 @@ export class AuthGuard implements CanActivate {
   }
 
   verificarAcesso() {
+    this.afAuth.authState.subscribe(user => {
+      console.log('user', user);
+      this.codigoUsuario = user.uid;
+    });
+    
     if (this.codigoUsuario) {
       localStorage.setItem('uid', this.codigoUsuario);
       return true;

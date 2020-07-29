@@ -14,7 +14,7 @@ export const routes = [
         component: LayoutComponent,
         children: [
             { path: '', redirectTo: 'home', pathMatch: 'full' },
-            { path: 'home', loadChildren: './home/home.module#HomeModule'}// , canActivate: [AuthGuard] remover appComp Localstorage.set
+            { path: 'home', loadChildren: './home/home.module#HomeModule' }// , canActivate: [AuthGuard] remover appComp Localstorage.set
         ]
     },
 

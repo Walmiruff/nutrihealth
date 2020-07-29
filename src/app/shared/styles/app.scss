@@ -64,23 +64,28 @@
 // @import "app/mailbox";
 // @import "app/plans";
 
-#wrapper{
-  display: flex
+$black: #000000;
+
+#wrapper {
+  display: flex;
 }
 
-#align-right-top{
-margin: 0 0 auto auto
+#align-right-top {
+  margin: 0 0 auto auto;
 }
 
-#align-right{
-  margin: 0 0 0 auto
-  }
+#align-right {
+  margin: 0 0 0 auto;
+}
 
-  #align-right-top{
-    margin: 0 0 auto auto
-  }
+#align-right-top {
+  margin: 0 0 auto auto;
+}
 
+#align-center {
+  margin: auto auto auto auto;
+}
 
-  #align-center{
-    margin: auto auto auto auto
-  }
+.margin-0 {
+  margin: 0px;
+}
