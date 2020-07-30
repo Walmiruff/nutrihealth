@@ -7,6 +7,7 @@ import { ToasterService, ToasterConfig } from 'angular2-toaster/angular2-toaster
 import { IPatientmin } from '../../../shared/models/patientmin.model';
 import { PatientService } from '../../../shared/services/patient.service';
 import { ModalService } from '../../../shared/services/modal.service';
+import { PatientStore } from '../../../shared/store/patiente-store';
 
 
 @Component({
@@ -26,8 +27,9 @@ export class PatientListComponent implements OnInit {
 
   constructor(
     private pacienteService: PatientService,
-    public toasterService: ToasterService,
-    private modalService: ModalService
+    private modalService: ModalService,
+    private patienteStore: PatientStore,
+    public toasterService: ToasterService
   ) { }
 
   ngOnInit() {
@@ -49,6 +51,10 @@ export class PatientListComponent implements OnInit {
       }, error => {
         this.toasterService.pop('error', 'Error', 'Error ao deletar o Paciente.');
       });
+  }
+
+  setPatientStore(patientSelected: IPatientmin) {
+    this.patienteStore.set(patientSelected);
   }
 
 }

@@ -25,7 +25,12 @@ export class PatientService {
       txt_email: dataPatient.txt_email,
       txt_Tel: dataPatient.txt_Tel,
       txt_Cel: dataPatient.txt_Cel,
-      txt_Foto: 'assets/img/usr.jpg'
+      txt_Foto: 'assets/img/usr.jpg',
+      informationAdd: {
+        weight: '00',
+        height: '0,00',
+        objective: 'Perda de Peso'
+      }
     });
     authRef.collection('patient').doc(docRef.id).update({id: docRef.id});
    });
@@ -54,14 +59,14 @@ export class PatientService {
        txt_Tel: dataPatient.txt_Tel,
        txt_Cel: dataPatient.txt_Cel,
        txt_Foto: dataPatient.txt_Foto,
-     });
+       });
     });
    }
 
    deletePatient(id: string) {
     const authRef = this.firestore.collection('users_patient').doc(localStorage.getItem('uid'));
     return  authRef.collection('patient').doc(id).delete()
-    .then( () => authRef.collection('patientmin').doc(id).delete() );
+    .then( () => authRef.collection('patientmin').doc(id).delete());
    }
 
 }

@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-patient-menu',
@@ -9,15 +7,8 @@ import { map } from 'rxjs/operators';
 })
 export class PatientMenuComponent implements OnInit {
 
-  private idPatient: string;
-    
-  constructor(private route: ActivatedRoute) { }
+  constructor() { }
 
-  ngOnInit() {
-    this.route.params
-    .pipe(
-      map((params: any) => this.idPatient = params['id']),
-    ).subscribe();
-  }
+  ngOnInit() { }
 
 }

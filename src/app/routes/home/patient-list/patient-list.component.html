@@ -71,8 +71,8 @@
 
           <div id="wrapper-card-footer" class="card-footer">
             <div id="align-right">
-              <button class="btn btn-xs btn-secondary mr-3">Acompanhamento</button>
-              <button class="btn btn-xs btn-primary" [routerLink]="['/app/home/menu',patient.id]">Iniciar</button>
+              <button class="btn btn-xs btn-secondary mr-3"  [routerLink]="['/app/home/dashboard',patient.id]">Acompanhamento</button>
+              <button class="btn btn-xs btn-primary" [routerLink]="['/app/home/menu',patient.id]" (click)="setPatientStore(patient)">Iniciar</button>
             </div>
           </div>
 

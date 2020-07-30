@@ -5,7 +5,6 @@ import { ToasterService } from 'angular2-toaster';
 import { PatientListComponent } from './patient-list/patient-list.component';
 import { PatientFormComponent } from './patient-form/patient-form.component';
 import { PatientDashboardComponent } from './patient-dashboard/patient-dashboard.component';
-import { PatientMenuComponent } from './patient-menu/patient-menu.component';
 import { SharedModule } from '../../shared/shared.module';
 import { SharedPipesModule } from '../../shared/pipes/shared-pipes.module';
 import { EditpatientDeactivateGuard } from './patient-form/guards/editpatient-desactivate.guards';
@@ -13,9 +12,9 @@ import { EditpatientDeactivateGuard } from './patient-form/guards/editpatient-de
 const routes: Routes = [
     { path: '', component: PatientListComponent },
     { path: 'form', component: PatientFormComponent , canDeactivate: [EditpatientDeactivateGuard]},
-    { path: 'form/:id', component: PatientFormComponent, canDeactivate: [EditpatientDeactivateGuard] }, // form edit
-    { path: 'dashboard/:id', component: PatientFormComponent }, // dash
-    { path: 'menu/:id', component: PatientMenuComponent }, // lazyloading
+    { path: 'form/:id', component: PatientFormComponent, canDeactivate: [EditpatientDeactivateGuard] },
+    { path: 'dashboard/:id', component: PatientDashboardComponent },
+    { path: 'menu/:id', loadChildren: './patient-menu/patient-menu.module#PatientMenuModule' },
 ];
 
 @NgModule({
@@ -28,7 +27,6 @@ const routes: Routes = [
       PatientFormComponent,
       PatientDashboardComponent,
       PatientListComponent,
-      PatientMenuComponent
     ],
       providers: [
           ToasterService

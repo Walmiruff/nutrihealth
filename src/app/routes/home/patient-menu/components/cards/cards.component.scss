@@ -1,0 +1,62 @@
+@import "../../../../../shared/styles/app.scss";
+
+#cards{
+    h4{
+        color: white;
+        text-align: center;
+    }
+
+    a {
+        border: none;
+    }
+
+    .color8 {
+        background-color: #FFC857;
+    }
+    
+    .color7 {
+        background-color: #E9724C;
+    }
+    
+    .color6 {
+        background-color: #C5283D;
+    }
+    
+    .color5 {
+        background-color: #363537;
+    }
+    
+    .color4 {
+        background-color: #255F85;
+    }
+
+    .color3 {
+        background-color: #758BFD;
+    }
+    
+    .color2 {
+        background-color: #3B429F;
+    }
+
+    .color1 {
+        background-color: #AA7DCE;
+    }
+
+    .card {
+        max-width: 247px;
+        .card-top {
+            width: 247px;
+            height: 100px;
+            border-top-left-radius: calc(0.25rem - 1px);
+            border-top-right-radius: calc(0.25rem - 1px);
+        }
+        .card-body {
+            min-height: 300px;
+            a {
+                position: absolute;
+                right: 10px;
+                bottom: 10px;
+            }
+        }
+    }
+}
