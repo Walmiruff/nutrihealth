@@ -1,29 +1,21 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { CommonModule } from '@angular/common';
 
+import { PatientMenuRoutingModule } from './patient-menu-routing.module';
 import { PatientMenuComponent } from './patient-menu.component';
+import { HeaderComponent } from './components/header/header.component';
+
 import { SharedModule } from '../../../shared/shared.module';
 import { SharedPipesModule } from '../../../shared/pipes/shared-pipes.module';
-import { HeaderComponent } from './components/header/header.component';
-import { CardsComponent } from './components/cards/cards.component';
 
-const routes: Routes = [
-    { path: '', component: PatientMenuComponent }
-]
 
 @NgModule({
     imports: [
-        RouterModule.forChild(routes),
+        CommonModule,
+        PatientMenuRoutingModule,
+        SharedPipesModule,
         SharedModule,
-        SharedPipesModule
     ],
-    declarations: [
-        PatientMenuComponent,
-        HeaderComponent,
-        CardsComponent
-    ],
-    exports: [
-        RouterModule
-    ]
+    declarations: [PatientMenuComponent, HeaderComponent]
 })
-export class PatientMenuModule { }
+export class PatientMenuModule {}
