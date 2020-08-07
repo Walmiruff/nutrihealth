@@ -1,0 +1,43 @@
+    export interface IAlim {
+        $id: string;
+        PK: number;
+        ID: number;
+        Nome: string;
+        Carboidrato: number;
+        Açúcar: number;
+        Proteína: number;
+        Lipídeos: number;
+        Colesterol: number;
+        FibraAlimentar: number;
+        Cálcio: number;
+        Magnésio: number;
+        Manganês: number;
+        Fósforo: number;
+        Ferro: number;
+        Sódio: number;
+        Potássio: number;
+        Cobre: number;
+        Zinco: number;
+        Tiamina: number;
+        Riboflavina: number;
+        Piridoxina: number;
+        Niacina: number;
+        VitaminaC: number;
+        Saturados: number;
+        Monoinsaturados: number;
+        Poliinsaturados: number;
+        GorduraTrans: any;
+        Selênio: any;
+        VitaminaA: any;
+        VitaminaD: any;
+        VitaminaE: any;
+        ÁcidoPantotênico: any;
+        VitaminaB6: number;
+        Biotina: any;
+        VitaminaB12: any;
+        ÁcidoFólico: any;
+        NumeroAlimento?: number;
+        CaloriasAlim: number;
+        TabelasAlimentos?: number;
+    }
+

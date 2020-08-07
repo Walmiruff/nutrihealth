@@ -10,6 +10,8 @@ const routes: Routes = [
         children: [
             { path: 'cards', loadChildren: './components/cards/cards.module#CardsModule' },
             { path: 'gastos-energeticos', loadChildren: './gastos-energeticos/gastos-energeticos.module#GastosEnergeticosModule' },
+            { path: 'planos-alimentares', loadChildren: './planos-alimentares/planos-alimentares.module#PlanosAlimentaresModule' },
+            { path: 'aval-laboratoriais', loadChildren:'./aval-laboratoriais/aval-laboratoriais.module#AvalLaboratoriaisModule' },
             { path: '', redirectTo: 'cards', pathMatch: 'prefix' },
         ]
 
