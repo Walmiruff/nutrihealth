@@ -2,28 +2,7 @@
 @import "~ngx-bootstrap/datepicker/bs-datepicker.css";
 
 #patient-form {
-    /*Date Picker*/
-    .bs-datepicker-head > bs-datepicker-navigation-view {
-        display: flex;
-        justify-content: space-around;
-    }
-
-    .theme-blue {
-        .bs-datepicker-head {
-            background-color: $info;
-        }
-        .bs-datepicker-body table td {
-            span.selected,
-            &.selected span,
-            span[class*="select-"]:after,
-            &[class*="select-"] span:after {
-                background-color: $info;
-            }
-            &.week span {
-                color: $info;
-            }
-        }
-    }
+    
 
     ul {
         cursor: pointer;

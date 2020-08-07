@@ -6,7 +6,60 @@
       </div>
       <div class=""></div>
       <div class="card-body">
+        <div class="container">
+          <div class="row">
 
+            <div class="col-md-4">
+              <form class="form-horizontal" [formGroup]="formularioPrincipal">
+                <div class="row">
+                  <div class="col-sm-12 mb-3">
+                    <label for="desc">Descrição*</label>
+                    <textarea class="form-control" formControlName="desc" id="desc" cols="30" rows="10"
+                      maxlength="200"></textarea>
+                    <small>
+                      Caracteres restantes
+                      <span>{{ this.formularioPrincipal.get('desc').value === null ? 200 : 200 - this.formularioPrincipal.get('desc').value.length }}</span>
+                    </small>
+                  </div>
+                </div>
+
+                <div class="row">
+
+                  <div class="col-sm-12 mb-3">
+                    <label for="dataAtend">Data*</label>
+                    <input type="text" class="form-control" placeholder="Data de Nascimento*"
+                      formControlName="dataAtend" id="dataAtend" #dp="bsDatepicker" bsDatepicker [bsValue]="bsValue"
+                      [bsConfig]="bsConfig" [value]=" dateFormat | date: 'dd/MM/yyyy'">
+                  </div>
+                </div>
+
+                <div class="row mb-3">
+                  <div class="col-sm-6">
+                    <label for="altura">Altura*</label>
+                    <input type="text" class="form-control" formControlName="altura" id="altura" placeholder="metros">
+                  </div>
+                  <div class="col-sm-6">
+                    <label for="peso">Peso*</label>
+                    <input type="text" class="form-control" formControlName="peso" id="peso" placeholder="quilos">
+                  </div>
+                </div>
+                
+                <div class="row">
+                  <div class="col-sm-6 mb-3">
+                    <label for="altura">Idade*</label>
+                    <input type="text" class="form-control" formControlName="idade" id="idade" placeholder="anos">
+                  </div>
+                </div>
+
+              </form>
+            </div>
+
+            <div class="col-md-8">
+
+            </div>
+
+          </div>
+        </div>
       </div>
       <div class="card-footer flex flex-end">
         <button type="submit" class="btn btn-primary mr-2">Salvar</button>

@@ -10,7 +10,7 @@ export class PlanosAlimentaresComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
- 
+   
   }
 
 }
