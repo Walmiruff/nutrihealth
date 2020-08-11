@@ -8,5 +8,6 @@ export interface IPatientmin {
   txt_Foto?: string;
   txt_Cel?: string;
   txt_Tel?: string;
+  txt_Sexo?: string;
   informationAdd?: IPatientminMesures;
 }

@@ -26,6 +26,7 @@ export class PatientService {
       txt_Tel: dataPatient.txt_Tel,
       txt_Cel: dataPatient.txt_Cel,
       txt_Foto: 'assets/img/usr.jpg',
+      txt_Sexo: dataPatient.txt_Sexo,
       informationAdd: {
         weight: '00',
         height: '0,00',
