@@ -28,8 +28,8 @@ export class PatientService {
       txt_Foto: 'assets/img/usr.jpg',
       txt_Sexo: dataPatient.txt_Sexo,
       informationAdd: {
-        weight: '00',
-        height: '0,00',
+        weight: null,
+        height: null,
         objective: 'Perda de Peso'
       }
     });

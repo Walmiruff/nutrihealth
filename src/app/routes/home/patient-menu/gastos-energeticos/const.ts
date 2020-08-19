@@ -12,21 +12,16 @@ export const protocolos = [
     },
     {
         value: 2,
-        label: 'FAO/OMS (1985)',
-        title: 'FAO/OMS (1985)',
-    },
-    {
-        value: 3,
         label: 'DRI/IOM (2001)',
         title: 'DRI/IOM (2001)',
     },
     {
-        value: 4,
+        value: 3,
         label: 'Cunningham (1991)',
         title: 'Cunningham (1991) - Utilizado para atletas, através do percentual de gordura e valor de massa magra'
     },
     {
-        value: 5,
+        value: 4,
         label: 'Regra de Bolso',
         title: 'Fórmula simplificada muito utilizada que sugere o consumo diário de 20-25 kcal/kg para perder peso, 25 a 35 para manutenção de peso e 30-35 kcal/kg para ganhar peso. Esta regra não considera nível de atividade e nenhum protocolo de TMB e GET'
     }
@@ -36,6 +31,10 @@ export const protocolos = [
 
 export const nivelAtivArray = [
     [
+        {
+            value: -1,
+            label: '',
+        },
         {
             value: 0,
             label: 'Sedentário',
@@ -62,6 +61,10 @@ export const nivelAtivArray = [
 
     [
         {
+            value: -1,
+            label: '',
+        },
+        {
             value: 0,
             label: 'Leve',
         },
@@ -74,23 +77,11 @@ export const nivelAtivArray = [
             label: 'Pesada'
         },
     ],
-
     [
         {
-            value: 0,
-            label: 'Leve',
+            value: -1,
+            label: '',
         },
-        {
-            value: 1,
-            label: 'Moderada',
-        },
-        {
-            value: 2,
-            label: 'Pesada'
-        },
-    ],
-
-    [
         {
             value: 0,
             label: 'Sedentário',
@@ -111,6 +102,10 @@ export const nivelAtivArray = [
 
     [
         {
+            value: -1,
+            label: '',
+        },
+        {
             value: 0,
             label: 'Atleta'
         }
@@ -118,6 +113,10 @@ export const nivelAtivArray = [
     [
     ],
     [
+        {
+            value: -1,
+            label: '',
+        },
         {
             value: 0,
             label: 'Leve'

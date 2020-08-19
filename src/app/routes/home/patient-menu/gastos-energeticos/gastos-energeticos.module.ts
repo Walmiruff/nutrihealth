@@ -5,12 +5,14 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { GastosEnergeticosComponent } from './gastos-energeticos.component';
 import { GastosEnergeticosRoutingModule } from './gastos-energeticos-routing.module';
 import { SharedModule } from '../../../../shared/shared.module';
+import { SharedPipesModule } from '../../../../shared/pipes/shared-pipes.module';
+
 
 @NgModule({
   imports: [
     CommonModule,
-    ReactiveFormsModule,
     SharedModule,
+    SharedPipesModule,
     GastosEnergeticosRoutingModule
   ],
   declarations: [GastosEnergeticosComponent]

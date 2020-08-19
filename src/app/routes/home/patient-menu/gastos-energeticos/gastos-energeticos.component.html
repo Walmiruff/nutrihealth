@@ -14,7 +14,7 @@
                 <div class="row">
                   <div class="col-sm-12 mb-3">
                     <label for="desc">Descrição*</label>
-                    <textarea class="form-control" formControlName="desc" id="desc" cols="30" rows="10"
+                    <textarea class="form-control note-editor note-editor-margin" formControlName="desc" id="desc" cols="30" rows="10"
                       maxlength="200"></textarea>
                     <small>
                       Caracteres restantes
@@ -27,26 +27,28 @@
                   <div class="col-sm-12 mb-3">
                     <label for="dataAtend">Data*</label>
                     <input type="text" class="form-control" placeholder="Data de Nascimento*"
-                      formControlName="dataAtend" id="dataAtend" #dp="bsDatepicker" bsDatepicker [bsValue]="bsValue"
-                      [bsConfig]="bsConfig" [value]=" dateFormat | date: 'dd/MM/yyyy'">
+                      formControlName="dataAtend" id="dataAtend" #dp="bsDatepicker" bsDatepicker [value]=" dateFormat | date: 'dd/MM/yyyy'">
                   </div>
                 </div>
 
                 <div class="row mb-3">
                   <div class="col-sm-6">
                     <label for="altura">Altura*</label>
-                    <input type="text" class="form-control" formControlName="altura" id="altura" placeholder="metros">
+                    <input type="text" class="form-control" formControlName="altura" id="altura" placeholder="metros"
+                      [textMask]="{mask: mask, placeholderChar:' '}">
                   </div>
                   <div class="col-sm-6">
                     <label for="peso">Peso*</label>
-                    <input type="text" class="form-control" formControlName="peso" id="peso" placeholder="quilos">
+                    <input type="text" class="form-control" formControlName="peso" id="peso" placeholder="quilos"
+                      [textMask]="{mask: maskNumber, placeholderChar:' '}">
                   </div>
                 </div>
 
                 <div class="row">
                   <div class="col-sm-6 mb-3">
                     <label for="idade">Idade*</label>
-                    <input type="text" class="form-control" formControlName="idade" id="idade" placeholder="anos">
+                    <input type="text" class="form-control" formControlName="idade" id="idade" placeholder="anos"
+                      [textMask]="{mask: maskNumber2, placeholderChar:' '}">
                   </div>
                 </div>
 
@@ -75,7 +77,7 @@
                 </div>
 
 
-                <div class="row mb-3" *ngIf="this.formularioPrincipal.controls.protocolo.value === '3'">
+                <div class="row mb-3" *ngIf="this.formularioPrincipal.controls.protocolo.value === '2'">
                   <div class="col-sm-12">
                     <label for="classificacao">Classificação*</label>
                     <select class="form-control" id="classificacao" formControlName="classificacao">
@@ -85,7 +87,7 @@
                   </div>
                 </div>
 
-                <div class="row mb-3" *ngIf="this.formularioPrincipal.controls.protocolo.value === '4'">
+                <div class="row mb-3" *ngIf="this.formularioPrincipal.controls.protocolo.value === '3'">
                   <div class="col-sm-4">
                     <label for="massaMagra">Massa Magra*</label>
                     <input type="text" class="form-control" formControlName="massaMagra" id="massaMagra"
@@ -96,12 +98,22 @@
                 <div class="row my-4" *ngIf="nivelAtivArray.length > 0">
                   <div class="col-sm-6">
                     <label class="mr-3">TMB</label>
-                    <label>-</label>
+                    <ng-container *ngIf="TMB === 0 || TMB === NaN; else elseTemplateTMB">
+                      <label>-</label>
+                    </ng-container>
+                    <ng-template #elseTemplateTMB>
+                      <label>{{ TMB | round }} Kcal</label>
+                    </ng-template>
                   </div>
 
                   <div class="col-sm-6">
                     <label class="mr-3">GET</label>
-                    <label>-</label>
+                    <ng-container *ngIf="GET === 0 || GET === NaN; else elseTemplateGET">
+                      <label>-</label>
+                    </ng-container>
+                    <ng-template #elseTemplateGET>
+                      <label>{{ GET | round }} Kcal</label>
+                    </ng-template>
                   </div>
 
                 </div>
@@ -113,7 +125,7 @@
                   <div class="col-sm-8">
                     <label>-</label>
                   </div>
-              
+
                   <div class="col-sm-4">
                     <label class="mr-3">Manutenção de Peso:</label>
                   </div>

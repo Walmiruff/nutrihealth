@@ -9,8 +9,8 @@ export class DropdownService {
 
   getSexo () {
     return [
-      { valor: 'm', desc: 'Masculino' },
-      { valor: 'f', desc: 'Feminino' }
+      { valor: 'M', desc: 'Masculino' },
+      { valor: 'F', desc: 'Feminino' }
      ];
   }
 

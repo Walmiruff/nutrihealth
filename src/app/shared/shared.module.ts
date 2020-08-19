@@ -4,7 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { ToasterModule } from 'angular2-toaster/angular2-toaster';
-
+import { TextMaskModule } from 'angular2-text-mask';
 
 import { AccordionModule } from 'ngx-bootstrap/accordion';
 import { AlertModule } from 'ngx-bootstrap/alert';
@@ -56,15 +56,16 @@ import { ModalConfirmComponent } from './components/modal-confirm/modal-confirm.
         PaginationModule.forRoot(),
         ProgressbarModule.forRoot(),
         RatingModule.forRoot(),
-         TabsModule.forRoot(),
+        TabsModule.forRoot(),
         TimepickerModule.forRoot(),
         TooltipModule.forRoot(),
         PopoverModule.forRoot(),
         TypeaheadModule.forRoot(),
-        ToasterModule
+        ToasterModule,
+        TextMaskModule,
     ],
     providers: [
-       ColorsService
+        ColorsService
     ],
     declarations: [
         FlotDirective,
@@ -96,7 +97,7 @@ import { ModalConfirmComponent } from './components/modal-confirm/modal-confirm.
         PaginationModule,
         ProgressbarModule,
         RatingModule,
-         TabsModule,
+        TabsModule,
         TimepickerModule,
         TooltipModule,
         PopoverModule,
@@ -110,7 +111,8 @@ import { ModalConfirmComponent } from './components/modal-confirm/modal-confirm.
         VectormapDirective,
         NowDirective,
         ScrollableDirective,
-        JqcloudDirective
+        JqcloudDirective,
+        TextMaskModule,
     ],
     entryComponents: [ModalConfirmComponent]
 })
