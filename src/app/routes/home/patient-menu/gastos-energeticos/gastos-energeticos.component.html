@@ -14,12 +14,13 @@
                 <div class="row">
                   <div class="col-sm-12 mb-3">
                     <label for="desc">Descrição*</label>
-                    <textarea class="form-control note-editor note-editor-margin" formControlName="desc" id="desc" cols="30" rows="10"
-                      maxlength="200"></textarea>
+                    <textarea class="form-control note-editor note-editor-margin" formControlName="desc" id="desc"
+                      cols="30" rows="10" maxlength="200"></textarea>
                     <small>
                       Caracteres restantes
                       <span>{{ this.formularioPrincipal.get('desc').value === null ? 200 : 200 - this.formularioPrincipal.get('desc').value.length }}</span>
                     </small>
+                    <!-- <app-error-msg [control]="formulario.get('desc')" label="Descrição"></app-error-msg> -->
                   </div>
                 </div>
 
@@ -27,7 +28,8 @@
                   <div class="col-sm-12 mb-3">
                     <label for="dataAtend">Data*</label>
                     <input type="text" class="form-control" placeholder="Data de Nascimento*"
-                      formControlName="dataAtend" id="dataAtend" #dp="bsDatepicker" bsDatepicker [value]=" dateFormat | date: 'dd/MM/yyyy'">
+                      formControlName="dataAtend" id="dataAtend" #dp="bsDatepicker" bsDatepicker
+                      [value]=" dateFormat | date: 'dd/MM/yyyy'">
                   </div>
                 </div>
 
@@ -91,14 +93,14 @@
                   <div class="col-sm-4">
                     <label for="massaMagra">Massa Magra*</label>
                     <input type="text" class="form-control" formControlName="massaMagra" id="massaMagra"
-                      placeholder="quilos">
+                      placeholder="quilos" [textMask]="{mask: maskNumber, placeholderChar:' '}">
                   </div>
                 </div>
 
                 <div class="row my-4" *ngIf="nivelAtivArray.length > 0">
                   <div class="col-sm-6">
                     <label class="mr-3">TMB</label>
-                    <ng-container *ngIf="TMB === 0 || TMB === NaN; else elseTemplateTMB">
+                    <ng-container *ngIf="TMB === 0 || TMB === NaN || TMB < 0; else elseTemplateTMB">
                       <label>-</label>
                     </ng-container>
                     <ng-template #elseTemplateTMB>
@@ -108,7 +110,7 @@
 
                   <div class="col-sm-6">
                     <label class="mr-3">GET</label>
-                    <ng-container *ngIf="GET === 0 || GET === NaN; else elseTemplateGET">
+                    <ng-container *ngIf="GET === 0 || GET === NaN || GET < 0; else elseTemplateGET">
                       <label>-</label>
                     </ng-container>
                     <ng-template #elseTemplateGET>
@@ -123,21 +125,21 @@
                     <label>Perda de Peso:</label>
                   </div>
                   <div class="col-sm-8">
-                    <label>-</label>
+                    <label>{{ regraBolsoObj.perdaPeso }}</label>
                   </div>
 
                   <div class="col-sm-4">
                     <label class="mr-3">Manutenção de Peso:</label>
                   </div>
                   <div class="col-sm-8">
-                    <label>-</label>
+                    <label>{{ regraBolsoObj.manutPeso }}</label>
                   </div>
 
                   <div class="col-sm-4">
                     <label class="mr-3">Ganho de Peso:</label>
                   </div>
                   <div class="col-sm-8">
-                    <label>-</label>
+                    <label>{{ regraBolsoObj.ganhoPeso }}</label>
                   </div>
                 </div>
 
@@ -155,7 +157,7 @@
                   <div class="col-sm-4">
                     <label for="gastoEnergFinal">Gasto Energético Final*</label>
                     <input type="text" class="form-control" formControlName="gastoEnergFinal" id="gastoEnergFinal"
-                      placeholder="Kcal">
+                      placeholder="Kcal" [textMask]="{mask: maskNumber3, placeholderChar:' '}">
                   </div>
                 </div>
 
@@ -165,9 +167,10 @@
         </div>
       </div>
       <div class="card-footer flex flex-end">
-        <button type="submit" class="btn btn-primary mr-2">Salvar</button>
+        <button (click)="onSubmit()" class="btn btn-primary mr-2">Salvar</button>
         <button class="btn btn-outline-danger">Cancelar</button>
       </div>
     </div>
   </div>
+  <toaster-container [toasterconfig]="toasterconfig"></toaster-container>
 </div>

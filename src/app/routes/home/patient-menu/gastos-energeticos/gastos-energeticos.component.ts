@@ -1,11 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { ToasterService, ToasterConfig } from 'angular2-toaster/angular2-toaster';
 
 import { IPatientmin } from '../../../../shared/models/patientmin.model';
 import { PatientStore } from '../../../../shared/store/patiente-store';
+import { GastosEnergeticosService } from '../../../../shared/services/gastos-energeticos.service';
 import { ConvertTimestampDatePipe } from '../../../../shared/pipes/convert-timestamp-date.pipe';
 import { nivelAtivArray } from './const';
 import { protocolos } from './const';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-gastos-energeticos',
@@ -23,18 +26,33 @@ export class GastosEnergeticosComponent implements OnInit {
   public mask: Array<string | RegExp>;
   public maskNumber: Array<string | RegExp>;
   public maskNumber2: Array<string | RegExp>;
+  public maskNumber3: Array<string | RegExp>;
   public GET: number = 0;
   public TMB: number = 0;
   public nivelAtivDRI: string = '0';
   public classificacaoDRI: string = null;
+  public regraBolsoObj = {
+    perdaPeso: '-',
+    manutPeso: '-',
+    ganhoPeso: '-',
+  }
+  public toasterconfig: ToasterConfig = new ToasterConfig({
+    positionClass: 'toast-bottom-right',
+    showCloseButton: true
+  });
 
   constructor(
     private formBuilder: FormBuilder,
     private patienteStore: PatientStore,
+    private gastosEnergeticosService: GastosEnergeticosService,
+    private router: Router,
+    public toasterService: ToasterService
   ) {
     this.mask = [/\d+/, ',', /\d+/, /\d+/];
     this.maskNumber = [/\d+/, /\d+/, /\d+/];
     this.maskNumber2 = [/\d+/, /\d+/];
+    this.maskNumber3 = [/\d+/, /\d+/, /\d+/, /\d+/, /\d+/];
+
   }
 
   ngOnInit() {
@@ -53,10 +71,10 @@ export class GastosEnergeticosComponent implements OnInit {
       altura: [null, Validators.required],
       peso: [null, Validators.required],
       protocolo: ['0'],
-      nivelAtiv: ['-1', Validators.required],
-      gastoEnergFinal: [null, Validators.required],
-      classificacao: [null, Validators.required],
-      massaMagra: [null, Validators.required],
+      nivelAtiv: ['-1'],
+      gastoEnergFinal: [null],
+      classificacao: [null],
+      massaMagra: [null],
     })
   }
 
@@ -65,8 +83,8 @@ export class GastosEnergeticosComponent implements OnInit {
       this.formularioPrincipal.patchValue({
         idade: this.convertTimestampDatePipe.transform((new Date(resp.txt_DN['seconds'] * 1000)), true),
         sexo: resp.txt_Sexo,
-        altura: resp.informationAdd.height,
-        peso: resp.informationAdd.weight,
+        altura: resp.height,
+        peso: resp.weight,
         dataAtend: this.dateFormat,
       })
     });
@@ -101,6 +119,8 @@ export class GastosEnergeticosComponent implements OnInit {
       this.calcProtocolos();
     });
 
+    this.formularioPrincipal.get(['massaMagra']).valueChanges.subscribe(() => this.validarControles());
+
   }
 
   public validarControles(): void {
@@ -111,14 +131,16 @@ export class GastosEnergeticosComponent implements OnInit {
 
     this.title = this.protocolosArray[value].title;
 
-    value === '4' ? this.formularioPrincipal.get('nivelAtiv').clearValidators :
-      this.formularioPrincipal.get('nivelAtiv').setValidators(Validators.required);
+    value === '4' ? this.formularioPrincipal.controls['nivelAtiv'].clearValidators :
+      this.formularioPrincipal.controls['nivelAtiv'].setValidators([Validators.required]);
 
-    value === '3' ? this.formularioPrincipal.get('massaMagra').setValidators(Validators.required) :
-      this.formularioPrincipal.get('massaMagra').clearValidators;
+    value === '3' ? this.formularioPrincipal.controls['massaMagra'].setValidators([Validators.required]) :
+      this.formularioPrincipal.controls['massaMagra'].clearValidators;
 
-    value === '2' ? this.formularioPrincipal.get('classificacao').setValidators(Validators.required) :
-      this.formularioPrincipal.get('classificacao').clearValidators;
+    value === '2' ? this.formularioPrincipal.controls['classificacao'].setValidators([Validators.required]) :
+      this.formularioPrincipal.controls['classificacao'].clearValidators;
+
+    this.formularioPrincipal.updateValueAndValidity();
 
     this.calcProtocolos();
   }
@@ -373,12 +395,24 @@ export class GastosEnergeticosComponent implements OnInit {
       }
     }
 
+    // Cunningham
+    if (this.formularioPrincipal.get('protocolo').value === '3') {
+      // Atleta
+      if (this.formularioPrincipal.get('nivelAtiv').value === '0') {
+        this.Cunningham();
+      }
+    }
+
+    // Regra de Bolso
+    if (this.formularioPrincipal.get('protocolo').value === '4') {
+      this.regraBolso();
+    }
+
     // Limpa TMB GET nivel ativ null
     if (this.formularioPrincipal.get('nivelAtiv').value === '-1') {
       this.TMB = 0;
       this.GET = 0;
     }
-
   }
 
   public TMB_HBfem(): number {
@@ -503,5 +537,88 @@ export class GastosEnergeticosComponent implements OnInit {
         break;
     }
   }
+
+  public Cunningham(): void {
+    const massaMagra = this.formularioPrincipal.get('massaMagra').value;
+    this.GET = 370 + 21.6 * massaMagra;
+    this.TMB = 0;
+  }
+
+  public regraBolso(): void {
+    const peso = this.formularioPrincipal.get('peso').value;
+    if (peso !== null && peso !== '0') {
+      this.regraBolsoObj.perdaPeso = `${peso * 20} Kcal - ${peso * 25} Kcal`;
+      this.regraBolsoObj.manutPeso = `${peso * 25} Kcal - ${peso * 30} Kcal`;
+      this.regraBolsoObj.ganhoPeso = `${peso * 30} Kcal - ${peso * 35} Kcal`;
+    }
+  }
+
+  public onSubmit(): void {
+
+    if (this.formularioPrincipal.valid && this.formularioPrincipal.get('id').value == null) {
+      // insert
+      this.gastosEnergeticosService.add(this.formularioPrincipal.value)
+        .then(() => {
+          this.setPatientStore();
+          this.toasterService.pop('success', 'Cadastro', 'Gasto Energético cadastrado com sucesso!');
+          this.router.navigate([this.router.url.replace('/gastos-energeticos', '/cards')]);
+        })
+        .catch((error: any) => {
+          this.toasterService.pop('error', 'Error', 'Error ao salvar.');
+        });
+    }
+
+
+    if (this.formularioPrincipal.valid && this.formularioPrincipal.get('id').value != null) {
+      // update
+      this.gastosEnergeticosService.update(this.formularioPrincipal.value, this.formularioPrincipal.get('id').value)
+        .then(() => {
+          this.setPatientStore();
+          this.toasterService.pop('success', 'Cadastro', 'Gasto Energético com sucesso!');
+          this.router.navigate([this.router.url.replace('/gastos-energeticos', '/cards')]);
+        })
+        .catch((error: any) => {
+          this.toasterService.pop('error', 'Error', 'Error ao atualizar.');
+        });
+
+    }
+
+    if (!this.formularioPrincipal.valid) {
+      this.verificaValidacoesForm(this.formularioPrincipal);
+    }
+  }
+
+
+  public verificaValidacoesForm(formGroup: FormGroup): void {
+    Object.keys(formGroup.controls).forEach(campo => {
+
+      const controle = formGroup.get(campo);
+      controle.markAsDirty();
+      controle.markAsTouched();
+
+      if (controle instanceof FormGroup) {
+        this.verificaValidacoesForm(controle);
+      }
+    });
+  }
+
+  public setPatientStore(): void {
+    this.patienteStore.patiente$.subscribe((DTOpatient: IPatientmin) => {
+      this.patienteStore.set({
+        id: DTOpatient.id,
+        objective: DTOpatient.objective,
+        txt_Cel: DTOpatient.txt_Cel,
+        txt_DN: DTOpatient.txt_DN,
+        txt_Foto: DTOpatient.txt_Foto,
+        txt_Nome: DTOpatient.txt_Nome,
+        txt_Sexo: DTOpatient.txt_Sexo,
+        txt_Tel: DTOpatient.txt_Tel,
+        txt_email: DTOpatient.txt_email,
+        weight: this.formularioPrincipal.get('peso').value,
+        height: this.formularioPrincipal.get('altura').value,
+      });
+    })
+  }
+
 
 }

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ToasterService } from 'angular2-toaster';
 
 import { GastosEnergeticosComponent } from './gastos-energeticos.component';
 import { GastosEnergeticosRoutingModule } from './gastos-energeticos-routing.module';
@@ -15,6 +15,9 @@ import { SharedPipesModule } from '../../../../shared/pipes/shared-pipes.module'
     SharedPipesModule,
     GastosEnergeticosRoutingModule
   ],
+  providers: [
+    ToasterService,
+],
   declarations: [GastosEnergeticosComponent]
 })
 export class GastosEnergeticosModule { }
