@@ -1,15 +1,20 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { take, tap, map, switchMap } from 'rxjs/operators';
+import { take, tap, map, switchMap, filter } from 'rxjs/operators';
 
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { ToasterService, ToasterConfig } from 'angular2-toaster/angular2-toaster';
-
 import { DropdownService } from './service/dropdown.service';
 import { PatientService } from '../../../shared/services/patient.service';
-import { IFormCanDeactivate } from './guards/iform-candesactivate';
+import { IFormCanDeactivate } from '../../../shared/models/form-candesactivate.model';
 import { ModalService } from '../../../shared/services/modal.service';
+import { MessageStore } from '../../../shared/store/message.store';
+import { messages } from '../../../shared/const/messages';
+
+import { BsLocaleService } from 'ngx-bootstrap/datepicker';
+import { defineLocale } from 'ngx-bootstrap/chronos';
+import { ptBrLocale } from 'ngx-bootstrap/locale';
+defineLocale('pt-br', ptBrLocale);
 
 
 @Component({
@@ -32,12 +37,6 @@ export class PatientFormComponent implements OnInit, IFormCanDeactivate {
   pacienteEmail: string;
   // interpolação para data
   dateFormat: any;
-  // config toast
-  toasterConfig: any;
-  toasterconfig: ToasterConfig = new ToasterConfig({
-    positionClass: 'toast-bottom-right',
-    showCloseButton: true
-  });
   // Datepicker
   bsValue = new Date();
   bsRangeValue: Date[];
@@ -53,11 +52,13 @@ export class PatientFormComponent implements OnInit, IFormCanDeactivate {
     private route: ActivatedRoute,
     private router: Router,
     private modalService: ModalService,
-    public toasterService: ToasterService
+    private bsLocaleService: BsLocaleService,
+    private messageStore: MessageStore, 
   ) {
     // Datepicker
     this.maxDate.setDate(this.maxDate.getDate() + 7);
     this.bsRangeValue = [this.bsValue, this.maxDate];
+    this.bsLocaleService.use('pt-br');
   }
 
   ngOnInit() {
@@ -68,6 +69,7 @@ export class PatientFormComponent implements OnInit, IFormCanDeactivate {
     this.route.params
       .pipe(
         map((params: any) => params['id']),
+        filter(id => id !== undefined),
         switchMap(id => this.pacienteService.getPatientId(id))
       )
       .subscribe(paciente => {
@@ -117,13 +119,13 @@ export class PatientFormComponent implements OnInit, IFormCanDeactivate {
 
       this.pacienteService.addPatient(this.formulario.value)
         .then(() => {
-          this.toasterService.pop('success', 'Cadastro', 'Paciente cadastrado com sucesso!');
+          this.messageStore.set(messages[2]);
           this.resetar();
           this.formMudou = false;
           this.router.navigate(['/app']);
         })
         .catch((error: any) => {
-          this.toasterService.pop('error', 'Error', 'Error ao Cadastrar o Paciente.');
+          this.messageStore.set(messages[3]);
         });
     }
 
@@ -133,13 +135,13 @@ export class PatientFormComponent implements OnInit, IFormCanDeactivate {
 
       this.pacienteService.updatePatient(this.formulario.value, this.formulario.get('id').value)
         .then(() => {
-          this.toasterService.pop('success', 'Cadastro', 'Paciente atualizado com sucesso!');
+          this.messageStore.set(messages[4]);
           this.resetar();
           this.formMudou = false;
           this.router.navigate(['/app']);
         })
         .catch((error: any) => {
-          this.toasterService.pop('error', 'Error', 'Error ao Atualizar o Paciente.');
+          this.messageStore.set(messages[5]);
         });
 
     }

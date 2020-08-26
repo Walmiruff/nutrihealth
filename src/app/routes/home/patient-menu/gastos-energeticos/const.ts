@@ -32,7 +32,7 @@ export const protocolos = [
 export const nivelAtivArray = [
     [
         {
-            value: -1,
+            value: null,
             label: '',
         },
         {
@@ -61,7 +61,7 @@ export const nivelAtivArray = [
 
     [
         {
-            value: -1,
+            value: null,
             label: '',
         },
         {
@@ -79,7 +79,7 @@ export const nivelAtivArray = [
     ],
     [
         {
-            value: -1,
+            value: null,
             label: '',
         },
         {
@@ -102,7 +102,7 @@ export const nivelAtivArray = [
 
     [
         {
-            value: -1,
+            value: null,
             label: '',
         },
         {
@@ -114,7 +114,7 @@ export const nivelAtivArray = [
     ],
     [
         {
-            value: -1,
+            value: null,
             label: '',
         },
         {

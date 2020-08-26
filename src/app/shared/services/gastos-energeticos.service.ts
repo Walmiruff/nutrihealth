@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 
-import { IGastosEnerg } from '../models/gastos-energ.model';
 import { PatientStore } from '../store/patiente-store';
+import { IGastosEnerg } from '../models/gastos-energ.model';
+import { IGastosEnergMin } from '../models/gastos-energ-min.model';
 
 
 @Injectable({
@@ -31,9 +32,20 @@ export class GastosEnergeticosService {
         authRefUserPatient.collection('patientmin').doc(idPatiente).update({
           weight: data.peso,
           height: data.altura,
+          lastKcal: data.gastoEnergFinal,
         }
         );
       });
+  }
+
+  getMin() {
+    const authRef = this.firestore.collection('user_gastos_energeticos').doc(localStorage.getItem('uid'));
+    return authRef.collection<IGastosEnergMin>('gastos_energeticos_min').valueChanges();
+  }
+
+  getId(id: string) {
+    const authRef = this.firestore.collection('user_gastos_energeticos').doc(localStorage.getItem('uid'));
+    return authRef.collection<IGastosEnerg>('gastos_energeticos').doc(id).valueChanges();
   }
 
   update(data: IGastosEnerg, id: string) {
@@ -45,13 +57,8 @@ export class GastosEnergeticosService {
           desc: data.desc,
           dataAtend: data.dataAtend,
         });
-        authRef.collection('patientmin').doc(id).update({
-          informationAdd: {
-            weight: data.peso,
-            height: data.altura,
-          }
-        });
       })
-
   }
+
+  
 }

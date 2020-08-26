@@ -1,22 +1,40 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { ToasterService, ToasterConfig } from 'angular2-toaster/angular2-toaster';
+import { Router, ActivatedRoute } from '@angular/router';
+import { map, switchMap, tap, filter, take } from 'rxjs/operators';
 
+import { IFormCanDeactivate } from '../../../../shared/models/form-candesactivate.model';
 import { IPatientmin } from '../../../../shared/models/patientmin.model';
 import { PatientStore } from '../../../../shared/store/patiente-store';
+import { messages } from '../../../../shared/const/messages';
 import { GastosEnergeticosService } from '../../../../shared/services/gastos-energeticos.service';
 import { ConvertTimestampDatePipe } from '../../../../shared/pipes/convert-timestamp-date.pipe';
+import { MessageStore } from '../../../../shared/store/message.store';
+import { ModalService } from '../../../../shared/services/modal.service';
 import { nivelAtivArray } from './const';
 import { protocolos } from './const';
-import { Router } from '@angular/router';
+import * as moment_ from 'moment';
+
+import { BsLocaleService } from 'ngx-bootstrap/datepicker';
+import { defineLocale } from 'ngx-bootstrap/chronos';
+import { ptBrLocale } from 'ngx-bootstrap/locale';
+defineLocale('pt-br', ptBrLocale);
+
+const moment = moment_;
+moment.locale('pt-br');
+
+const formatDate = (dateInput: number) => {
+  return moment.unix(dateInput / 1000)['_d'];
+};
 
 @Component({
   selector: 'app-gastos-energeticos',
   templateUrl: './gastos-energeticos.component.html',
   styleUrls: ['./gastos-energeticos.component.scss']
 })
-export class GastosEnergeticosComponent implements OnInit {
+export class GastosEnergeticosComponent implements OnInit, IFormCanDeactivate {
 
+  private formMudou = false; // verifica se modificou o form
   private convertTimestampDatePipe: ConvertTimestampDatePipe = new ConvertTimestampDatePipe();
   public formularioPrincipal: FormGroup;
   public dateFormat = Date.now();
@@ -31,34 +49,45 @@ export class GastosEnergeticosComponent implements OnInit {
   public TMB: number = 0;
   public nivelAtivDRI: string = '0';
   public classificacaoDRI: string = null;
+  public id: string;
   public regraBolsoObj = {
     perdaPeso: '-',
     manutPeso: '-',
     ganhoPeso: '-',
-  }
-  public toasterconfig: ToasterConfig = new ToasterConfig({
-    positionClass: 'toast-bottom-right',
-    showCloseButton: true
-  });
+  };
 
   constructor(
     private formBuilder: FormBuilder,
     private patienteStore: PatientStore,
     private gastosEnergeticosService: GastosEnergeticosService,
+    private route: ActivatedRoute,
     private router: Router,
-    public toasterService: ToasterService
+    private bsLocaleService: BsLocaleService,
+    private modalService: ModalService,
+    private messageStore: MessageStore,
   ) {
     this.mask = [/\d+/, ',', /\d+/, /\d+/];
     this.maskNumber = [/\d+/, /\d+/, /\d+/];
     this.maskNumber2 = [/\d+/, /\d+/];
     this.maskNumber3 = [/\d+/, /\d+/, /\d+/, /\d+/, /\d+/];
-
+    this.bsLocaleService.use('pt-br');
+    this.buildForm();
   }
 
   ngOnInit() {
-    this.buildForm();
-    this.formularioPrincipal.get('id').value === null ? this.consultDataRegister() : this.loadForm();
-    this.triggersControls();
+    this.consultDataRegister();
+    this.route.params
+      .pipe(
+        map((params: any) => this.id = params['id']),
+        filter(id => id !== undefined),
+        switchMap(id => this.gastosEnergeticosService.getId(id)),
+        tap((resp) => this.formularioPrincipal.patchValue(resp)),
+      )
+      .subscribe(() => {
+        this.validarControles();
+        this.triggersControls();
+      });
+    this.id !== undefined ? null : this.triggersControls();
   }
 
   public buildForm(): void {
@@ -71,8 +100,8 @@ export class GastosEnergeticosComponent implements OnInit {
       altura: [null, Validators.required],
       peso: [null, Validators.required],
       protocolo: ['0'],
-      nivelAtiv: ['-1'],
-      gastoEnergFinal: [null],
+      nivelAtiv: [null],
+      gastoEnergFinal: [null, Validators.required],
       classificacao: [null],
       massaMagra: [null],
     })
@@ -80,18 +109,15 @@ export class GastosEnergeticosComponent implements OnInit {
 
   public consultDataRegister(): void {
     this.patienteStore.patiente$.subscribe((resp: IPatientmin) => {
+
       this.formularioPrincipal.patchValue({
         idade: this.convertTimestampDatePipe.transform((new Date(resp.txt_DN['seconds'] * 1000)), true),
         sexo: resp.txt_Sexo,
         altura: resp.height,
         peso: resp.weight,
-        dataAtend: this.dateFormat,
+        dataAtend: formatDate(this.dateFormat),
       })
     });
-  }
-
-  public loadForm(): void {
-
   }
 
   public triggersControls(): void {
@@ -127,10 +153,18 @@ export class GastosEnergeticosComponent implements OnInit {
 
     const value = this.formularioPrincipal.get('protocolo').value;
 
+    this.validarControlesAoEnviar(value);
+
     this.nivelAtivArray = nivelAtivArray[value];
 
     this.title = this.protocolosArray[value].title;
 
+    this.formularioPrincipal.updateValueAndValidity();
+
+    this.calcProtocolos();
+  }
+
+  public validarControlesAoEnviar(value) {
     value === '4' ? this.formularioPrincipal.controls['nivelAtiv'].clearValidators :
       this.formularioPrincipal.controls['nivelAtiv'].setValidators([Validators.required]);
 
@@ -140,10 +174,9 @@ export class GastosEnergeticosComponent implements OnInit {
     value === '2' ? this.formularioPrincipal.controls['classificacao'].setValidators([Validators.required]) :
       this.formularioPrincipal.controls['classificacao'].clearValidators;
 
-    this.formularioPrincipal.updateValueAndValidity();
-
-    this.calcProtocolos();
+    this.formularioPrincipal.updateValueAndValidity({ onlySelf: true });
   }
+
 
   public calcProtocolos(): void {
 
@@ -554,31 +587,33 @@ export class GastosEnergeticosComponent implements OnInit {
   }
 
   public onSubmit(): void {
-
-    if (this.formularioPrincipal.valid && this.formularioPrincipal.get('id').value == null) {
+    const value = this.formularioPrincipal.get('protocolo').value
+    this.validarControlesAoEnviar(value);
+    if (this.formularioPrincipal.valid && this.formularioPrincipal.get('id').value === null) {
       // insert
       this.gastosEnergeticosService.add(this.formularioPrincipal.value)
         .then(() => {
           this.setPatientStore();
-          this.toasterService.pop('success', 'Cadastro', 'Gasto Energético cadastrado com sucesso!');
+          this.messageStore.set(messages[6]);
+          this.formMudou = false;
           this.router.navigate([this.router.url.replace('/gastos-energeticos', '/cards')]);
         })
         .catch((error: any) => {
-          this.toasterService.pop('error', 'Error', 'Error ao salvar.');
+          this.messageStore.set(messages[0]);
         });
     }
 
 
-    if (this.formularioPrincipal.valid && this.formularioPrincipal.get('id').value != null) {
+    if (this.formularioPrincipal.valid && this.formularioPrincipal.get('id').value !== null) {
       // update
       this.gastosEnergeticosService.update(this.formularioPrincipal.value, this.formularioPrincipal.get('id').value)
         .then(() => {
-          this.setPatientStore();
-          this.toasterService.pop('success', 'Cadastro', 'Gasto Energético com sucesso!');
+          this.messageStore.set(messages[7]);
+          this.formMudou = false;
           this.router.navigate([this.router.url.replace('/gastos-energeticos', '/cards')]);
         })
         .catch((error: any) => {
-          this.toasterService.pop('error', 'Error', 'Error ao atualizar.');
+          this.messageStore.set(messages[1]);
         });
 
     }
@@ -618,6 +653,35 @@ export class GastosEnergeticosComponent implements OnInit {
         height: this.formularioPrincipal.get('altura').value,
       });
     })
+  }
+
+  
+  onInput() { // verifica se modificou o form
+    this.formMudou = true;
+  }
+  
+  podeDesativar() {
+    return this.podeMudarRota();
+  }
+
+
+  podeMudarRota() {
+    if (this.formMudou) {
+      const title = 'Gastos Energeticos';
+      const msg = 'Deseja sair da página?';
+      const result$ = this.modalService.showModalConfirm(title, msg, 'Sim', 'Não');
+     return result$.asObservable()
+        .pipe(take(1), tap(result => !!result));
+     } else {
+      return true; // return para canDesactived permite que a rota mude se o form nao mudou
+    }
+  }
+
+  
+
+  goToApp() {
+    this.router.navigate([this.router.url.replace('/gastos-energeticos', '/cards').split('cards')[0]]);
+
   }
 
 

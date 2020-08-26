@@ -29,8 +29,8 @@ export class PatientService {
           txt_Sexo: dataPatient.txt_Sexo,
           weight: null,
           height: null,
-          objective: 'Perda de Peso'
-
+          objective: 'Perda de Peso',
+          lastKcal: '0',
         });
         authRef.collection('patient').doc(docRef.id).update({ id: docRef.id });
       });

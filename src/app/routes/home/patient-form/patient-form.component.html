@@ -63,7 +63,7 @@
 
 
 
-        <form class="form-horizontal" [formGroup]="formulario" (ngSubmit)="onSubmit()">
+        <form class="form-horizontal" [formGroup]="formulario">
           <div class="card-body">
 
 
@@ -117,8 +117,7 @@
             <div class="row">
               <div class="col-sm-12  mb-3">
                 <input type="text" class="form-control" placeholder="Data de Nascimento*" formControlName="txt_DN"
-                  #dp="bsDatepicker" bsDatepicker 
-                  [value]=" dateFormat | date: 'dd/MM/yyyy'">
+                  #dp="bsDatepicker" bsDatepicker [value]="dateFormat  | date: 'MM/dd/yyyy'">
                 <app-error-msg [control]="formulario.get('txt_DN')" label="Data de Nascimento"></app-error-msg>
               </div>
             </div>
@@ -203,7 +202,7 @@
                 <app-error-msg [control]="formulario.get('txt_email')" label="e-mail"></app-error-msg>
               </div>
 
-              
+
             </div>
 
 
@@ -225,26 +224,18 @@
               </div>
             </div>
           </div>
-
-
-          <div id="wrapper" class="card-footer">
-            <div id="align-right">
-              <button type="submit" class="btn btn-primary mr-2">Salvar</button>
-              <button class="btn btn-outline-danger" (click)="goToApp()">Cancelar</button>
-            </div>
-          </div>
-
         </form>
+        <div id="wrapper" class="card-footer">
+          <div id="align-right">
+            <button type="submit" class="btn btn-primary mr-2" (click)="onSubmit()">Salvar</button>
+            <button class="btn btn-outline-danger" (click)="goToApp()">Cancelar</button>
+          </div>
+        </div>
 
       </div>
     </div>
 
 
-
-
-
   </div>
-
-  <toaster-container [toasterconfig]="toasterconfig"></toaster-container>
 
 </div>

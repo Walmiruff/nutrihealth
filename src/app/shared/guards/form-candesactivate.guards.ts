@@ -3,7 +3,8 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, RouterStateSnapshot, CanDeactivate } from '@angular/router';
 import { Observable } from 'rxjs';
-import { IFormCanDeactivate } from './iform-candesactivate';
+import { IFormCanDeactivate } from '../models/form-candesactivate.model';
+
 
 
 
@@ -11,7 +12,7 @@ import { IFormCanDeactivate } from './iform-candesactivate';
     providedIn: 'root'
 })
 
-export class EditpatientDeactivateGuard implements CanDeactivate<IFormCanDeactivate> {
+export class FormCanDeactivateGuard implements CanDeactivate<IFormCanDeactivate> {
     // Desativar a rota situaçoes:
     //  sair do formulario de ediçao ou fazer requisção para servidor e ocorre falha
 

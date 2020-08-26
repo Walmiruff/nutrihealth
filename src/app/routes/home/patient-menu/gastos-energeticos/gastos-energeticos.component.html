@@ -15,12 +15,12 @@
                   <div class="col-sm-12 mb-3">
                     <label for="desc">Descrição*</label>
                     <textarea class="form-control note-editor note-editor-margin" formControlName="desc" id="desc"
-                      cols="30" rows="10" maxlength="200"></textarea>
+                      cols="30" rows="10" maxlength="200" (input)="onInput()"></textarea>
                     <small>
                       Caracteres restantes
                       <span>{{ this.formularioPrincipal.get('desc').value === null ? 200 : 200 - this.formularioPrincipal.get('desc').value.length }}</span>
                     </small>
-                    <!-- <app-error-msg [control]="formulario.get('desc')" label="Descrição"></app-error-msg> -->
+                    <app-error-msg [control]="formularioPrincipal.get('desc')" label="Descrição"></app-error-msg>
                   </div>
                 </div>
 
@@ -29,7 +29,8 @@
                     <label for="dataAtend">Data*</label>
                     <input type="text" class="form-control" placeholder="Data de Nascimento*"
                       formControlName="dataAtend" id="dataAtend" #dp="bsDatepicker" bsDatepicker
-                      [value]=" dateFormat | date: 'dd/MM/yyyy'">
+                      [(bsValue)]="bsValue" (input)="onInput()" [value]="(formularioPrincipal.controls.dataAtend.value).toDate()  | date:'dd/MM/yyyy'">
+                      <app-error-msg [control]="formularioPrincipal.get('dataAtend')" label="Data do antendimento"></app-error-msg>
                   </div>
                 </div>
 
@@ -37,12 +38,14 @@
                   <div class="col-sm-6">
                     <label for="altura">Altura*</label>
                     <input type="text" class="form-control" formControlName="altura" id="altura" placeholder="metros"
-                      [textMask]="{mask: mask, placeholderChar:' '}">
+                      [textMask]="{mask: mask, placeholderChar:' '}" (input)="onInput()">
+                      <app-error-msg [control]="formularioPrincipal.get('altura')" label="Altura"></app-error-msg>
                   </div>
                   <div class="col-sm-6">
                     <label for="peso">Peso*</label>
                     <input type="text" class="form-control" formControlName="peso" id="peso" placeholder="quilos"
-                      [textMask]="{mask: maskNumber, placeholderChar:' '}">
+                      [textMask]="{mask: maskNumber, placeholderChar:' '}" (input)="onInput()">
+                      <app-error-msg [control]="formularioPrincipal.get('peso')" label="Peso"></app-error-msg>
                   </div>
                 </div>
 
@@ -50,7 +53,8 @@
                   <div class="col-sm-6 mb-3">
                     <label for="idade">Idade*</label>
                     <input type="text" class="form-control" formControlName="idade" id="idade" placeholder="anos"
-                      [textMask]="{mask: maskNumber2, placeholderChar:' '}">
+                      [textMask]="{mask: maskNumber2, placeholderChar:' '}" (input)="onInput()">
+                      <app-error-msg [control]="formularioPrincipal.get('idade')" label="Idade"></app-error-msg>
                   </div>
                 </div>
 
@@ -61,7 +65,7 @@
                 <div class="row mb-3">
                   <div class="col-sm-12">
                     <label for="protocolo">Protocolo</label>
-                    <select class="form-control" id="protocolo" formControlName="protocolo">
+                    <select class="form-control" id="protocolo" formControlName="protocolo" (input)="onInput()">
                       <option *ngFor="let row of protocolosArray" [title]="row.title" [value]="row.value">
                         {{ row.label }}</option>
                     </select>
@@ -72,9 +76,10 @@
                 <div class="row mb-3" *ngIf="nivelAtivArray.length > 0">
                   <div class="col-sm-12">
                     <label for="nivelAtiv">Nível de Atividade*</label>
-                    <select class="form-control" id="nivelAtiv" formControlName="nivelAtiv">
+                    <select class="form-control" id="nivelAtiv" formControlName="nivelAtiv" (input)="onInput()">
                       <option *ngFor="let row of nivelAtivArray" [value]="row.value">{{ row.label }}</option>
                     </select>
+                    <app-error-msg [control]="formularioPrincipal.get('nivelAtiv')" label="Nível de atividade"></app-error-msg>
                   </div>
                 </div>
 
@@ -82,10 +87,11 @@
                 <div class="row mb-3" *ngIf="this.formularioPrincipal.controls.protocolo.value === '2'">
                   <div class="col-sm-12">
                     <label for="classificacao">Classificação*</label>
-                    <select class="form-control" id="classificacao" formControlName="classificacao">
+                    <select class="form-control" id="classificacao" formControlName="classificacao" (input)="onInput()">
                       <option value="0">Eutrófico</option>
                       <option value="1">Sobrepeso / Obeso</option>
                     </select>
+                    <app-error-msg [control]="formularioPrincipal.get('classificacao')" label="Classificação"></app-error-msg>
                   </div>
                 </div>
 
@@ -93,7 +99,8 @@
                   <div class="col-sm-4">
                     <label for="massaMagra">Massa Magra*</label>
                     <input type="text" class="form-control" formControlName="massaMagra" id="massaMagra"
-                      placeholder="quilos" [textMask]="{mask: maskNumber, placeholderChar:' '}">
+                      placeholder="quilos" [textMask]="{mask: maskNumber, placeholderChar:' '}" (input)="onInput()">
+                      <app-error-msg [control]="formularioPrincipal.get('massaMagra')" label="Massa magra"></app-error-msg>
                   </div>
                 </div>
 
@@ -157,7 +164,8 @@
                   <div class="col-sm-4">
                     <label for="gastoEnergFinal">Gasto Energético Final*</label>
                     <input type="text" class="form-control" formControlName="gastoEnergFinal" id="gastoEnergFinal"
-                      placeholder="Kcal" [textMask]="{mask: maskNumber3, placeholderChar:' '}">
+                      placeholder="Kcal" [textMask]="{mask: maskNumber3, placeholderChar:' '}" (input)="onInput()">
+                      <app-error-msg [control]="formularioPrincipal.get('gastoEnergFinal')" label="Gasto energético final"></app-error-msg>
                   </div>
                 </div>
 
@@ -168,9 +176,8 @@
       </div>
       <div class="card-footer flex flex-end">
         <button (click)="onSubmit()" class="btn btn-primary mr-2">Salvar</button>
-        <button class="btn btn-outline-danger">Cancelar</button>
+        <button class="btn btn-outline-danger" (click)="goToApp()">Cancelar</button>
       </div>
     </div>
   </div>
-  <toaster-container [toasterconfig]="toasterconfig"></toaster-container>
-</div>
+ </div>

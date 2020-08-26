@@ -10,4 +10,5 @@ export interface IPatientmin {
   weight?: string;
   height?: string;
   objective?: string;
+  lastKcal?: string; 
 }
