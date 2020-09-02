@@ -1,0 +1,119 @@
+{
+    "alimentos": [
+        {
+            "descricao": "Abacate cru",
+            "idGrupo": 3,
+            "grupoAlimentar": "Frutas e derivados",
+            "origem": "TACO",
+            "auditado": false,
+            "calorias": 96.15,
+            "proteinas": 1.24,
+            "gordurasTotais": 8.4,
+            "gordurasSaturadas": 2.3,
+            "gordurasMonoinsaturadas": 4.3,
+            "gordurasPoliInsaturadas": 1.4,
+            "gordurasTrans": 0.0,
+            "carboidratos": 6.03,
+            "fibras": 6.31,
+            "calcio": 7.92,
+            "magnesio": 14.68,
+            "manganes": 0.17,
+            "fosforo": 21.95,
+            "ferro": 0.21,
+            "sodio": 0.0,
+            "potassio": 206.26,
+            "cobre": 0.15,
+            "zinco": 0.22,
+            "selenio": -1.0,
+            "vitaminaA_Retinol": -1.0,
+            "vitaminaB1": 0.0,
+            "vitaminaB2": 0.04,
+            "vitaminaB3": 0.0,
+            "vitaminaB5": -1.0,
+            "vitaminaB6": 0.0,
+            "vitaminaB7": -1.0,
+            "vitaminaB9": -1.0,
+            "vitaminaB12": -1.0,
+            "vitaminaD": -1.0,
+            "vitaminaE": -1.0,
+            "vitaminaC": 8.66,
+            "colesterol": -1.0,
+            "acucar": -1.0,
+            "porcoes": [
+                {
+                    "descricao": "100 gramas",
+                    "gramas": 100.0,
+                    "editavel": false,
+                    "id": 0,
+                    "statusOnline": 0
+                },
+                {
+                    "descricao": "3 colheres de sopa",
+                    "gramas": 60.0,
+                    "editavel": false,
+                    "id": 17724,
+                    "statusOnline": 0
+                },
+                {
+                    "descricao": "Colher de sopa cheia (amassado) (20g)",
+                    "gramas": 20.0,
+                    "editavel": false,
+                    "id": 5002,
+                    "statusOnline": 0
+                },
+                {
+                    "descricao": "Colher de sopa cheia (picado) (45g)",
+                    "gramas": 45.0,
+                    "editavel": false,
+                    "id": 5001,
+                    "statusOnline": 0
+                },
+                {
+                    "descricao": "Grama",
+                    "gramas": 1.0,
+                    "editavel": false,
+                    "id": 2028,
+                    "statusOnline": 0
+                },
+                {
+                    "descricao": "Prato fundo (picado) (450g)",
+                    "gramas": 450.0,
+                    "editavel": false,
+                    "id": 5003,
+                    "statusOnline": 0
+                },
+                {
+                    "descricao": "Prato raso (picado) (350g)",
+                    "gramas": 350.0,
+                    "editavel": false,
+                    "id": 5004,
+                    "statusOnline": 0
+                },
+                {
+                    "descricao": "Unidade grande (900g)",
+                    "gramas": 900.0,
+                    "editavel": false,
+                    "id": 5005,
+                    "statusOnline": 0
+                },
+                {
+                    "descricao": "Unidade média (430g)",
+                    "gramas": 430.0,
+                    "editavel": false,
+                    "id": 5006,
+                    "statusOnline": 0
+                },
+                {
+                    "descricao": "Unidade pequena (370g)",
+                    "gramas": 370.0,
+                    "editavel": false,
+                    "id": 5007,
+                    "statusOnline": 0
+                }
+            ],
+            "editavel": false,
+            "id": 2028,
+            "statusOnline": 0
+        }
+    ]
+}

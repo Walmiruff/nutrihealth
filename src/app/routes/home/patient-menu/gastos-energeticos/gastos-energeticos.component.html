@@ -29,7 +29,7 @@
                     <label for="dataAtend">Data*</label>
                     <input type="text" class="form-control" placeholder="Data de Nascimento*"
                       formControlName="dataAtend" id="dataAtend" #dp="bsDatepicker" bsDatepicker
-                      [(bsValue)]="bsValue" (input)="onInput()" [value]="(formularioPrincipal.controls.dataAtend.value).toDate()  | date:'dd/MM/yyyy'">
+                       (input)="onInput()" [value]="(formularioPrincipal.controls.dataAtend.value).toDate()  | date:'dd/MM/yyyy'">
                       <app-error-msg [control]="formularioPrincipal.get('dataAtend')" label="Data do antendimento"></app-error-msg>
                   </div>
                 </div>

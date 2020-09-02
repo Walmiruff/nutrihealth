@@ -1,4 +1,4 @@
-<div id="planos-aliementares">
+<div id="planos-alimentares">
   <div class="card-stnd">
     <div class="card">
       <div class="color card-top flex align-items-center justfy-content-center">
@@ -6,11 +6,203 @@
       </div>
       <div class=""></div>
       <div class="card-body">
-
+        <div class="container">
+          <div class="row">
+            <div class="col-md-4 mr-3">
+              <div class="row">
+                <div class="col-sm-12 mb-3">
+                  <label for="desc">Descrição*</label>
+                  <textarea class="form-control note-editor note-editor-margin" cols="30" rows="10"
+                    maxlength="200"></textarea>
+                  <small>
+                    Caracteres restantes
+                    <span>200</span>
+                  </small>
+                  <!-- <app-error-msg [control]="formularioPrincipal.get('desc')" label="Descrição"></app-error-msg> -->
+                </div>
+              </div>
+            </div>
+            <div class="col-md-7">
+              <div class="flex space-between">
+                <label for="desc">Refeições</label>
+                <div>
+                  <button type="submit" class="btn btn-success  mr-2" (click)="classicModal.show()">Adicionar</button>
+                  <div class="btn-group mb-1 mr-1" dropdown>
+                    <button class="btn dropdown-toggle btn-info" type="button" dropdownToggle>Importar
+                      <span class="caret"></span>
+                    </button>
+                    <div *dropdownMenu class="dropdown-menu" role="menu">
+                      <a class="dropdown-item">Modelo</a>
+                      <a class="dropdown-item">Recordatório</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
       <div class="card-footer flex flex-end">
-        <button type="submit" class="btn btn-primary mr-2">Salvar</button>
-        <button class="btn btn-outline-danger">Cancelar</button>
+        <button class="btn btn-outline-danger mr-2">Cancelar</button>
+        <button type="submit" class="btn btn-primary">Salvar</button>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!--Modal Ref-->
+<div class="modal fade" bsModal #classicModal="bs-modal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
+  aria-hidden="true" [hidden]="hiddenModalRef" [config]="{ignoreBackdropClick: true, keyboard: false}">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Refeição</h4>
+        <button type="button" class="close" aria-label="Close" (click)="classicModal.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" style="overflow-y: auto;">
+        <form>
+          <div class="container">
+
+            <div class="row" style="max-width: 496px;">
+              <div class="col-sm-5 form-group">
+                <label class="col-form-label">Horário*</label>
+                <input class="form-control" id="horario-refeicao" type="time" placeholder="hh:mm" />
+              </div>
+              <div class="col-sm-7 form-group">
+                <label class="col-form-label">Descrição*</label>
+                <select id="descricao-refeicao" class="form-control">
+                  <option>Café da Manhã</option>
+                  <option>Lanche da Manhã</option>
+                  <option>Almoço</option>
+                  <option>Lanche da Tarde</option>
+                  <option>Jantar</option>
+                  <option>Lanche da Noite</option>
+                  <option>Lanche Extra 1</option>
+                  <option>Lanche Extra 2</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="row mt-2">
+              <div class="col-12">
+                <label class="col-form-label">Observação</label>
+                <textarea id="observacao-refeicao" class="form-control" maxlength="500"></textarea>
+                <small>Caracteres restantes <span id="caract-observacao-refeicao">500</span></small>
+              </div>
+            </div>
+
+            <div class="d-flex justify-content-between mt-5">
+              <h5>Alimentos Selecionados</h5>
+              <button type="button" class="mr-1 mb-1 btn btn-outline-primary"
+                (click)="smModal.show(); modalHiddenRef()">+ Adicionar Alimento</button>
+            </div>
+
+          </div>
+        </form>
+      </div>
+      <div class="flex space-between modal-footer">
+        <div>
+          <button type="button" class="btn btn-success">+Add Opção</button>
+        </div>
+        <div>
+          <button type="button" class="btn btn-secondary mr-2" data-dismiss="modal"
+            (click)="classicModal.hide()">Cancelar</button>
+          <button type="button" class="btn btn-primary" (click)="smModal.show()">Salvar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!--Modal Alim-->
+<div bsModal #smModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Adicionar Alimento</h4>
+        <button type="button" class="close" aria-label="Close" (click)="smModal.hide(); modalHiddenRef()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!--Start Tabela Alimentos-->
+        <div class="row mt-4">
+          <div class="col-12">
+            <div class="row">
+              <div class="col-sm-2">
+                Tabela de Alimentos
+              </div>
+              <div class="col-sm-10">
+                <label class="radio-inline mr-3">
+                  <input type="radio" name="tabela-de-alimentos" value="0" class="radio-select-alimento" checked="">
+                  Todas
+                </label>
+                <label class="radio-inline mr-3">
+                  <input type="radio" name="tabela-de-alimentos" value="1" class="radio-select-alimento"> IBGE
+                </label>
+                <label class="radio-inline mr-3">
+                  <input type="radio" name="tabela-de-alimentos" value="2" class="radio-select-alimento"> TACO
+                </label>
+                <label class="radio-inline mr-3">
+                  <input type="radio" name="tabela-de-alimentos" value="3" class="radio-select-alimento"> Tucunduva
+                </label>
+                <label class="radio-inline mr-3">
+                  <input type="radio" name="tabela-de-alimentos" value="4" class="radio-select-alimento"> Marcas
+                </label>
+                <label class="radio-inline mr-3">
+                  <input type="radio" name="tabela-de-alimentos" value="5" class="radio-select-alimento">
+                  Suplementos
+                </label>
+                <label class="radio-inline">
+                  <input type="radio" name="tabela-de-alimentos" value="6" class="radio-select-alimento"> Meus
+                  Alimentos
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div *ngIf="alimentos$ | async as alimentos">
+          <div class="row mt-3">
+            <div class="col-6">
+              <label>Alimento</label>
+              <select *ngFor="let alim of alimentos" class="form-control">
+                <option>{{ alim.descricao }}</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="row mt-3">
+            <div class="col-4">
+              <label>Porção</label>
+              <select *ngFor="let alim of alimentos" class="form-control">
+                <option *ngFor="let porcao of alim.porcoes" [value]="porcao.gramas">{{ porcao.descricao }}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="row mt-3 mb-4">
+          <div class="col-4">
+            <label>Quantidade</label>
+            <input type="text" class="form-control">
+          </div>
+        </div>
+        <!--End Tabela Alimentos-->
+      </div>
+      <div class="modal-footer">
+        <button id="btn-mostrar-nutrientes-alimento" type="button" class="btn btn-info disabled">Mostrar
+          Nutrientes</button>
+        <button id="btn-add-alimento-continuar" type="button" class="btn btn-primary disabled">Incluir e
+          Continuar</button>
+        <button id="btn-add-alimento-fechar" type="button" class="btn btn-success disabled">Incluir e Fechar</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
       </div>
     </div>
   </div>

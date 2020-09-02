@@ -1,4 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+
+import { AlimentosService } from '../../../../shared/services/alimentos.service';
+import { IAlimento } from '../../../../shared/models/alimentos.model';
+import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-planos-alimentares',
@@ -7,10 +12,20 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PlanosAlimentaresComponent implements OnInit {
 
-  constructor() { }
+  public alimentos$: Observable<Array<IAlimento>>;
+  public hiddenModalRef: boolean = false;
+
+  constructor(
+    private alimentosService: AlimentosService
+    ) { }
 
   ngOnInit() {
-   
+  this.alimentos$ = this.alimentosService.getAlimentos();
+  this.alimentosService.getAlimentos().subscribe((resp) => console.log(resp));
+  }
+
+  public modalHiddenRef(): void {
+    this.hiddenModalRef = !this.hiddenModalRef;
   }
 
 }
