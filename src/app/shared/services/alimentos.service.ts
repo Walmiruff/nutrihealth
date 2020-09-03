@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { IAlimento } from '../models/alimentos.model';
-import { map } from 'rxjs/operators';
+import { map, shareReplay } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +16,9 @@ export class AlimentosService {
 
   public getAlimentos(): Observable<Array<IAlimento>> {
     return this.http.get<Array<IAlimento>>(this.url)
-    .pipe(map((resp) => resp['alimentos']));
+    .pipe(
+      map((resp) => resp['alimentos']),
+      shareReplay()
+      );
   }
 }

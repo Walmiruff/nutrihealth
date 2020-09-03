@@ -121,7 +121,7 @@
 
 <!--Modal Alim-->
 <div bsModal #smModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
-  aria-hidden="true">
+  aria-hidden="true" [config]="{ignoreBackdropClick: true, keyboard: false}">
   <div class="modal-dialog modal-xl">
     <div class="modal-content">
       <div class="modal-header">
@@ -168,33 +168,38 @@
           </div>
         </div>
 
-        <div *ngIf="alimentos$ | async as alimentos">
-          <div class="row mt-3">
-            <div class="col-6">
-              <label>Alimento</label>
-              <select *ngFor="let alim of alimentos" class="form-control">
-                <option>{{ alim.descricao }}</option>
-              </select>
+        <form [formGroup]="form">
+
+          <div *ngIf="alimentos$ | async as alimentos">
+            <div class="row mt-3">
+              <div class="col-6">
+                <label>Alimento</label>
+                <select class="form-control" formControlName="alimento" id="alimento">
+                  <option *ngFor="let alim of alimentos" [value]="alim.id">{{ alim.descricao }}</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="row mt-3">
+              <div class="col-6">
+                <label>Porção</label>
+                <select  class="form-control">
+                  <option *ngFor="let porcao of (porcoes$ | async )" [value]="porcao.gramas">{{ porcao.descricao }}</option>
+                </select>
+              </div>
             </div>
           </div>
 
-          <div class="row mt-3">
+          <div class="row mt-3 mb-4">
             <div class="col-4">
-              <label>Porção</label>
-              <select *ngFor="let alim of alimentos" class="form-control">
-                <option *ngFor="let porcao of alim.porcoes" [value]="porcao.gramas">{{ porcao.descricao }}</option>
-              </select>
+              <label>Quantidade</label>
+              <input type="text" class="form-control">
             </div>
           </div>
-        </div>
-
-        <div class="row mt-3 mb-4">
-          <div class="col-4">
-            <label>Quantidade</label>
-            <input type="text" class="form-control">
-          </div>
-        </div>
+        
+        </form>
         <!--End Tabela Alimentos-->
+
       </div>
       <div class="modal-footer">
         <button id="btn-mostrar-nutrientes-alimento" type="button" class="btn btn-info disabled">Mostrar
