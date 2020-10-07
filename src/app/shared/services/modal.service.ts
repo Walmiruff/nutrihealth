@@ -3,8 +3,9 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 
-import { ModalConfirmComponent } from '../components/modal-confirm/modal-confirm.component';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { ModalConfirmComponent } from '../components/modal-confirm/modal-confirm.component';
+import { ModalPorcoesComponent } from '../components/modal-porcoes/modal-porcoes.component';
 
 @Injectable({
   providedIn: 'root'
@@ -27,5 +28,9 @@ export class ModalService {
     return (<ModalConfirmComponent>bsModalRef.content).confirmResult;
   }
 
+  showModalPorcoes(id: number) {
+    const bsModalRef: BsModalRef = this.modalService.show(ModalPorcoesComponent);
+    bsModalRef.content.id = id;
+  }
 
 }

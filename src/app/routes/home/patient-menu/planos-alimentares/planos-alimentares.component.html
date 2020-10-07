@@ -140,9 +140,9 @@
                   Tabela de Alimentos
                 </div>
                 <div class="col-sm-10">
-                  <div *ngFor="let item of tabelas">
-                    <label class="radio-inline mr-3">
-                      <input type="radio" [value]="item.valor" formControlName="tabelas" /> {{ item.nome }}
+                  <div class="form-check-label" *ngFor="let item of tabelas">
+                    <label class="form-check-label mr-3">
+                      <input type="radio" class="form-check-input"  [value]="item.valor" formControlName="tabelas" /> {{ item.nome }}
                     </label>
                   </div>
                 </div>
@@ -168,6 +168,9 @@
                   <option *ngFor="let porcao of (porcoes$ | async )" [value]="porcao.gramas">{{ porcao.descricao }}
                   </option>
                 </select>
+              </div>
+              <div class="col-6">
+                <button id="btn-nova-porcao" class="btn btn-link" (click)="novaPorcao()">Cadastrar Nova Porção</button>
               </div>
             </div>
           </div>

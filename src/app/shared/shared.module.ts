@@ -36,6 +36,7 @@ import { JqcloudDirective } from './directives/jqcloud/jqcloud.directive';
 
 import { ErrorMsgComponent } from './error-msg/error-msg.component';
 import { ModalConfirmComponent } from './components/modal-confirm/modal-confirm.component';
+import { ModalPorcoesComponent } from './components/modal-porcoes/modal-porcoes.component';
 
 // https://angular.io/styleguide#!#04-10
 @NgModule({
@@ -77,7 +78,8 @@ import { ModalConfirmComponent } from './components/modal-confirm/modal-confirm.
         ScrollableDirective,
         JqcloudDirective,
         ErrorMsgComponent,
-        ModalConfirmComponent
+        ModalConfirmComponent,
+        ModalPorcoesComponent
     ],
     exports: [
         CommonModule,
@@ -114,7 +116,10 @@ import { ModalConfirmComponent } from './components/modal-confirm/modal-confirm.
         JqcloudDirective,
         TextMaskModule,
     ],
-    entryComponents: [ModalConfirmComponent]
+    entryComponents: [
+        ModalConfirmComponent,
+        ModalPorcoesComponent
+    ]
 })
 
 // https://github.com/ocombe/ng2-translate/issues/209

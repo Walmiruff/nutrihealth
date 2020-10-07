@@ -97,7 +97,7 @@
 
                 <div id="txt_Sexo" class="row" style="margin-left: 15px">
 
-                  <div class="form-check-inline" *ngFor="let item of txt_Sexo">
+                  <div class="form-check-label" *ngFor="let item of txt_Sexo">
                     <label class="form-check-label">
                       <input type="radio" class="form-check-input" formControlName="txt_Sexo" [value]="item.valor"
                         (input)="onInput()">

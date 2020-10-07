@@ -6,6 +6,7 @@ import { switchMap, map, filter, tap } from 'rxjs/operators';
 import { AlimentosService } from '../../../../shared/services/alimentos.service';
 import { IAlimento, IPorcoes } from '../../../../shared/models/alimentos.model';
 import { DropdownService } from './service/dropdown.service';
+import { ModalService } from '../../../../shared/services/modal.service';
 
 @Component({
   selector: 'app-planos-alimentares',
@@ -26,13 +27,13 @@ export class PlanosAlimentaresComponent implements OnInit {
     private formBuilder: FormBuilder,
     private alimentosService: AlimentosService,
     private dropdownService: DropdownService,
+    private modalService: ModalService,
   ) { }
 
   ngOnInit() {
     this.buildForms();
     this.triggersControls();
     this.alimentos$ = this.alimentosService.getAllAlimentos();
-    this.alimentosService.getAllAlimentos().subscribe(v => console.log('v', v));
     this.tabelas = this.dropdownService.getTabelas();
   }
 
@@ -52,7 +53,7 @@ export class PlanosAlimentaresComponent implements OnInit {
       this.alimentos$ = null;
       this.porcoes$ = null;
       this.form.controls.alimento.reset();
-      value === 0 ? this.alimentos$ = this.alimentosService.getAllAlimentos() : this.alimentos$ = this.alimentosService.getAlimentos(value)
+      value === 0 ? this.alimentos$ = this.alimentosService.getAllAlimentos() : this.alimentos$ = this.alimentosService.getAlimentos(value);
     });
     this.form.controls.alimento.valueChanges
       .pipe(
@@ -60,12 +61,16 @@ export class PlanosAlimentaresComponent implements OnInit {
         switchMap(value => {
           return this.porcoes$ = this.alimentos$
             .pipe(
-              map((alimentos) => alimentos.filter((alimento) => alimento.id == value)),
+              map((alimentos) => alimentos.filter((alimento) => alimento.id === Number(value))),
               map((alimentos) => alimentos[0].porcoes)
             );
         }),
       )
       .subscribe();
+  }
+
+  public novaPorcao(): void {
+    this.modalService.showModalPorcoes(Number(this.form.controls.alimento.value));
   }
 
 }
