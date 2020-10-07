@@ -132,43 +132,24 @@
       </div>
       <div class="modal-body">
         <!--Start Tabela Alimentos-->
-        <div class="row mt-4">
-          <div class="col-12">
-            <div class="row">
-              <div class="col-sm-2">
-                Tabela de Alimentos
-              </div>
-              <div class="col-sm-10">
-                <label class="radio-inline mr-3">
-                  <input type="radio" name="tabela-de-alimentos" value="0" class="radio-select-alimento" checked="">
-                  Todas
-                </label>
-                <label class="radio-inline mr-3">
-                  <input type="radio" name="tabela-de-alimentos" value="1" class="radio-select-alimento"> IBGE
-                </label>
-                <label class="radio-inline mr-3">
-                  <input type="radio" name="tabela-de-alimentos" value="2" class="radio-select-alimento"> TACO
-                </label>
-                <label class="radio-inline mr-3">
-                  <input type="radio" name="tabela-de-alimentos" value="3" class="radio-select-alimento"> Tucunduva
-                </label>
-                <label class="radio-inline mr-3">
-                  <input type="radio" name="tabela-de-alimentos" value="4" class="radio-select-alimento"> Marcas
-                </label>
-                <label class="radio-inline mr-3">
-                  <input type="radio" name="tabela-de-alimentos" value="5" class="radio-select-alimento">
-                  Suplementos
-                </label>
-                <label class="radio-inline">
-                  <input type="radio" name="tabela-de-alimentos" value="6" class="radio-select-alimento"> Meus
-                  Alimentos
-                </label>
+        <form [formGroup]="form">
+          <div class="row mt-4">
+            <div class="col-12">
+              <div class="row">
+                <div class="col-sm-2">
+                  Tabela de Alimentos
+                </div>
+                <div class="col-sm-10">
+                  <div *ngFor="let item of tabelas">
+                    <label class="radio-inline mr-3">
+                      <input type="radio" [value]="item.valor" formControlName="tabelas" /> {{ item.nome }}
+                    </label>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
 
-        <form [formGroup]="form">
 
           <div *ngIf="alimentos$ | async as alimentos">
             <div class="row mt-3">
@@ -183,8 +164,9 @@
             <div class="row mt-3">
               <div class="col-6">
                 <label>Porção</label>
-                <select  class="form-control">
-                  <option *ngFor="let porcao of (porcoes$ | async )" [value]="porcao.gramas">{{ porcao.descricao }}</option>
+                <select class="form-control">
+                  <option *ngFor="let porcao of (porcoes$ | async )" [value]="porcao.gramas">{{ porcao.descricao }}
+                  </option>
                 </select>
               </div>
             </div>
@@ -196,7 +178,7 @@
               <input type="text" class="form-control">
             </div>
           </div>
-        
+
         </form>
         <!--End Tabela Alimentos-->
 

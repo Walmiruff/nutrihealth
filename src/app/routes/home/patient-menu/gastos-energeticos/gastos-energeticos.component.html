@@ -18,7 +18,7 @@
                       cols="30" rows="10" maxlength="200" (input)="onInput()"></textarea>
                     <small>
                       Caracteres restantes
-                      <span>{{ this.formularioPrincipal.get('desc').value === null ? 200 : 200 - this.formularioPrincipal.get('desc').value.length }}</span>
+                      <span>{{ formularioPrincipal.get('desc').value === null ? 200 : 200 - formularioPrincipal.get('desc').value.length }}</span>
                     </small>
                     <app-error-msg [control]="formularioPrincipal.get('desc')" label="Descrição"></app-error-msg>
                   </div>
@@ -29,7 +29,7 @@
                     <label for="dataAtend">Data*</label>
                     <input type="text" class="form-control" placeholder="Data de Nascimento*"
                       formControlName="dataAtend" id="dataAtend" #dp="bsDatepicker" bsDatepicker
-                       (input)="onInput()" [value]="(formularioPrincipal.controls.dataAtend.value).toDate()  | date:'dd/MM/yyyy'">
+                       (input)="onInput()" [value]="formularioPrincipal.get('dataAtend').value?.toDate()  | date:'dd/MM/yyyy'">
                       <app-error-msg [control]="formularioPrincipal.get('dataAtend')" label="Data do antendimento"></app-error-msg>
                   </div>
                 </div>
