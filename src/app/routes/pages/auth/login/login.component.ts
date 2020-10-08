@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 
 import { AuthService } from '../../../../shared/services/auth.service';
 
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -22,12 +23,12 @@ export class LoginComponent implements OnInit {
     showCloseButton: true
   });
   constructor(
-    public settings: SettingsService,
-    public fb: FormBuilder,
     private authService: AuthService,
     private router: Router,
-    public toasterService: ToasterService
-    ) {
+    public settings: SettingsService,
+    public fb: FormBuilder,
+    public toasterService: ToasterService,
+  ) {
 
     this.valForm = fb.group({
       'email': [null, Validators.compose([Validators.required, CustomValidators.email])],
@@ -44,7 +45,7 @@ export class LoginComponent implements OnInit {
     if (this.valForm.valid) {
       this.authService.signIn(value)
         .then((user: any) => {
-            this.router.navigate(['/app']);
+          this.router.navigate(['/app']);
         })
         .catch((error: any) => {
           this.toasterService.pop('error', 'Error ao Logar', 'Email e/ou senha incorretos!');

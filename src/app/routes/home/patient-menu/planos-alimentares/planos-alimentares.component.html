@@ -166,7 +166,7 @@
               <div class="col-6">
                 <label>Porção</label>
                 <select class="form-control">
-                  <option *ngFor="let porcao of (porcoes$ | async )" [value]="porcao.gramas">{{ porcao.descricao }}
+                  <option *ngFor="let porcao of porcoes" [value]="porcao.gramas">{{ porcao.descricao }}
                   </option>
                 </select>
               </div>

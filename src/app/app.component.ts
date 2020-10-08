@@ -5,6 +5,7 @@ import { SettingsService } from './core/settings/settings.service';
 import { MessageStore } from './shared/store/message.store';
 import { IMessage } from './shared/models/message.model';
 
+
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',
@@ -23,16 +24,16 @@ export class AppComponent implements OnInit {
     @HostBinding('class.aside-toggled') get asideToggled() { return this.settings.getLayoutSetting('asideToggled'); };
     @HostBinding('class.aside-collapsed-text') get isCollapsedText() { return this.settings.getLayoutSetting('isCollapsedText'); };
 
-    public message:IMessage;
+    public message: IMessage;
     public toasterconfig: ToasterConfig = new ToasterConfig({
         positionClass: 'toast-bottom-right',
         showCloseButton: true
-      });
+    });
     constructor(
         private messageStore: MessageStore,
         public settings: SettingsService,
         public toasterService: ToasterService,
-        ) { }
+    ) { }
 
     ngOnInit() {
         document.addEventListener('click', e => {
@@ -40,10 +41,11 @@ export class AppComponent implements OnInit {
             if (target.tagName === 'A') e.preventDefault();
         });
 
-         this.messageStore.message$.subscribe((msg: IMessage) => {
+        this.messageStore.message$.subscribe((msg: IMessage) => {
             this.toasterService.pop(msg);
-         });
-        
-        localStorage.setItem('uid', 'UWcxIiq0bodpQjGQJPMF850lSGu2');// apagar
+        });
+
+        // localStorage.setItem('uid', 'UWcxIiq0bodpQjGQJPMF850lSGu2'); // apagar
     }
+
 }

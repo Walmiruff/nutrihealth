@@ -44,10 +44,9 @@ export class AlimentosService {
       });
   }
 
-  public getPorcao() {
+  public getPorcao(): Observable<IPorcoes[]> {
     const authRef = this.firestore.collection('user_porcao').doc(localStorage.getItem('uid'));
-    return authRef.collection<IPorcoes>('porcao').valueChanges()
-    .pipe(tap((portions: IPorcoes[]) => this.portionStore.set(portions)));
+    return authRef.collection<IPorcoes>('porcao').valueChanges();
   }
 
 }
