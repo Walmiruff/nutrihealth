@@ -5,6 +5,9 @@ import { SettingsService } from './core/settings/settings.service';
 import { MessageStore } from './shared/store/message.store';
 import { IMessage } from './shared/models/message.model';
 
+import { AlimentosService } from './shared/services/alimentos.service';
+import IBGE from '../assets/resources/alimentos/IBGE.json';
+import TACO from '../assets/resources/alimentos/TACO.json';
 
 @Component({
     selector: 'app-root',
@@ -29,8 +32,10 @@ export class AppComponent implements OnInit {
         positionClass: 'toast-bottom-right',
         showCloseButton: true
     });
+
     constructor(
         private messageStore: MessageStore,
+        private alimentosService: AlimentosService,
         public settings: SettingsService,
         public toasterService: ToasterService,
     ) { }
@@ -45,7 +50,11 @@ export class AppComponent implements OnInit {
             this.toasterService.pop(msg);
         });
 
-        // localStorage.setItem('uid', 'UWcxIiq0bodpQjGQJPMF850lSGu2'); // apagar
+        this.loadData();
+    }
+
+    public loadData(): void {
+        this.alimentosService.load(IBGE, TACO);
     }
 
 }

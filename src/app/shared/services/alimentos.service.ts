@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { Observable, forkJoin } from 'rxjs';
+import { Observable,forkJoin, of } from 'rxjs';
 import { map, shareReplay, tap } from 'rxjs/operators';
 
 import { IAlimento, IPorcoes } from '../models/alimentos.model';
@@ -12,22 +11,24 @@ import { PortionStore } from '../store/porcoes.store';
 })
 export class AlimentosService {
 
-  private url = [
-    '../../../assets/resources/alimentos/IBGE.json',
-    '../../../assets/resources/alimentos/TACO.json'
-  ];
+  private url: Observable<IAlimento[]>[];
+  private alimIBGE$: Observable<IAlimento[]>;
+  private alimTACO$: Observable<IAlimento[]>;
 
   constructor(
-    private http: HttpClient,
     private firestore: AngularFirestore,
     private portionStore: PortionStore
     ) { }
 
+  public load(IBGE: IAlimento[], TACO: IAlimento[]): Observable<IAlimento[]>[] {
+   return this.url = [ this.alimIBGE$ = of(IBGE),  this.alimTACO$ = of(TACO)];
+  }
+
   public getAlimentos(n: number): Observable<Array<IAlimento>> {
-    return this.http.get<Array<IAlimento>>(this.url[n - 1])
+    return (this.url[n - 1])
       .pipe(
-        shareReplay(1),
         map((resp) => resp['alimentos']),
+        shareReplay(1),
       );
   }
 
@@ -47,6 +48,14 @@ export class AlimentosService {
   public getPorcao(): Observable<IPorcoes[]> {
     const authRef = this.firestore.collection('user_porcao').doc(localStorage.getItem('uid'));
     return authRef.collection<IPorcoes>('porcao').valueChanges();
+  }
+
+  public addAlimDB(form: IAlimento) {
+    const authRef = this.firestore.collection('user_alimento').doc(localStorage.getItem('uid'));
+    return authRef.collection('alimento').add(form) // add
+      .then(() => {
+        this.alimStore.add(form);
+      });
   }
 
 }
