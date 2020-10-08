@@ -37,7 +37,8 @@ export class AlimentosService {
   public postPorcao(form: IPorcoes) {
     const authRef = this.firestore.collection('user_porcao').doc(localStorage.getItem('uid'));
     return authRef.collection('porcao').add(form) // add
-      .then(docRef => {
-      })
+      .then(() => {
+        
+      });
   }
 }

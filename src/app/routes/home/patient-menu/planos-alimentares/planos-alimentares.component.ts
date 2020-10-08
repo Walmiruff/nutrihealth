@@ -79,7 +79,7 @@ export class PlanosAlimentaresComponent implements OnInit {
 
   public onConfirm(): void {
     this.formPorcao.controls.id.patchValue(Number(this.form.controls.alimento.value));
-      console.log('resp', this.formPorcao.value);
+    this.alimentosService.postPorcao(this.formPorcao.value);
   }
 
   // public novaPorcao(): void {
