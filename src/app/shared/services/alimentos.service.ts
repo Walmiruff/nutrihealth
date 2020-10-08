@@ -2,9 +2,10 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Observable, forkJoin } from 'rxjs';
-import { map, shareReplay } from 'rxjs/operators';
+import { map, shareReplay, tap } from 'rxjs/operators';
 
 import { IAlimento, IPorcoes } from '../models/alimentos.model';
+import { PortionStore } from '../store/porcoes.store';
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +20,7 @@ export class AlimentosService {
   constructor(
     private http: HttpClient,
     private firestore: AngularFirestore,
+    private portionStore: PortionStore
     ) { }
 
   public getAlimentos(n: number): Observable<Array<IAlimento>> {
@@ -34,11 +36,18 @@ export class AlimentosService {
     .pipe(map(([a1, a2]) => [...a1, ...a2]));
   }
 
-  public postPorcao(form: IPorcoes) {
+  public addPorcao(form: IPorcoes) {
     const authRef = this.firestore.collection('user_porcao').doc(localStorage.getItem('uid'));
     return authRef.collection('porcao').add(form) // add
       .then(() => {
-        
+        this.portionStore.add(form);
       });
   }
+
+  public getPorcao() {
+    const authRef = this.firestore.collection('user_porcao').doc(localStorage.getItem('uid'));
+    return authRef.collection<IPorcoes>('porcao').valueChanges()
+    .pipe(tap((portions: IPorcoes[]) => this.portionStore.set(portions)));
+  }
+
 }
