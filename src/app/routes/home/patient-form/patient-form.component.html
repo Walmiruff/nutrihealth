@@ -1,0 +1,241 @@
+<div id="patient-form">
+
+  <div class="content-heading">
+    <div>
+      Cadastro de Pacientes
+    </div>
+  </div>
+
+
+  <div class="row justify-content-sm-center">
+
+    <div class="col-lg-3">
+      <div class="card card-default">
+
+
+
+
+        <div class="card-body text-center card-custom">
+
+          <div class="d-flex justify-content-end mt-1 mr-1">
+            <div class="btn-group" dropdown>
+              <button class="btn btn-link" dropdownToggle>
+                <em class="fa fa-ellipsis-v fa-lg text-muted"></em>
+              </button>
+              <ul *dropdownMenu class="dropdown-menu dropdown-menu-right-forced animated fadeInLeft" role="menu">
+                <a class="dropdown-item" [href]="pacienteCelular ? pacienteCelular : 'tel:+551100000000'">
+                  <span class="text-warning"><em class="fa mr-2 icon-phone"></em>Ligar</span>
+                </a>
+                <a class="dropdown-item" [href]="pacienteEmail? pacienteEmail : 'mailto:@gmail.com'">
+                  <span><em class="fa mr-2 icon-envelope-open"></em>Enviar Email</span>
+                </a>
+              </ul>
+            </div>
+          </div>
+
+          <div class="py-1">
+            <img class="img-fluid rounded-circle img-thumbnail thumb96"
+              [src]="pacienteFoto ? pacienteFoto : 'assets/img/usr.jpg'" alt="Contact" />
+          </div>
+          <h3 class="m-0 text-bold">{{ pacienteNome ? pacienteNome : 'Nome do Paciente' }}</h3>
+          <div class="my-3">
+            <p class="mx-2">A foto do paciente ajudará você a indetificá-lo no NutriHealth!</p>
+          </div>
+          <div class="text-center">
+            <a class="btn btn-primary" href="#">Alterar Foto</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
+    <div class="col-lg-9">
+      <div class="card card-default mb-5">
+
+        <div class="card-header d-flex align-items-center">
+          <div class="d-flex justify-content-center col">
+            <div class="h4 m-0 text-center">Dados do Paciente</div>
+          </div>
+
+        </div>
+
+
+
+        <form class="form-horizontal" [formGroup]="formulario">
+          <div class="card-body">
+
+
+
+
+
+            <div class="row">
+
+              <div class="col-sm-12  mb-3">
+                <input type="text" class="form-control" placeholder="Nome*" formControlName="txt_Nome" id="txt_Nome"
+                  (input)="onInput()">
+                <app-error-msg [control]="formulario.get('txt_Nome')" label="Nome"></app-error-msg>
+              </div>
+            </div>
+
+
+            <div class="row">
+
+              <div class="col-sm-12  mb-3">
+                <input type="text" class="form-control" formControlName="txt_NomeResp" placeholder="Nome do Responsável"
+                  id="txt_NomeResp" (input)="onInput()">
+                <app-error-msg [control]="formulario.get('txt_NomeResp')" label="Nome do Responsável"></app-error-msg>
+              </div>
+            </div>
+
+
+            <!--Radio Button-->
+            <div class="row">
+              <div class="col-12  mb-3">
+                <label for="txt_Sexo" class="control-label">Sexo*</label>
+
+                <div id="txt_Sexo" class="row" style="margin-left: 15px">
+
+                  <div class="form-check-label" *ngFor="let item of txt_Sexo">
+                    <label class="form-check-label">
+                      <input type="radio" class="form-check-input" formControlName="txt_Sexo" [value]="item.valor"
+                        (input)="onInput()">
+                      <span class="custom-control-description">{{item.desc }}</span>
+                    </label>
+                  </div>
+
+                </div>
+
+              </div>
+            </div>
+
+
+
+
+
+            <div class="row">
+              <div class="col-sm-12  mb-3">
+                <input type="text" class="form-control" placeholder="Data de Nascimento*" formControlName="txt_DN"
+                  #dp="bsDatepicker" bsDatepicker [value]="dateFormat  | date: 'MM/dd/yyyy'">
+                <app-error-msg [control]="formulario.get('txt_DN')" label="Data de Nascimento"></app-error-msg>
+              </div>
+            </div>
+
+
+
+            <div class="row">
+              <div class="col-sm-12  mb-3">
+                <input type="text" class="form-control" placeholder="País" formControlName="txt_pais" id="txt_pais"
+                  (input)="onInput()">
+                <app-error-msg [control]="formulario.get('txt_pais')" label="País"></app-error-msg>
+              </div>
+            </div>
+
+
+            <div class="row">
+              <div class="col-sm-12  mb-3">
+                <input type="text" class="form-control" placeholder="Estado" formControlName="txt_UF" id="txt_UF"
+                  (input)="onInput()">
+                <app-error-msg [control]="formulario.get('txt_UF')" label="Estado"></app-error-msg>
+              </div>
+            </div>
+
+
+            <div class="row">
+              <div class="col-sm-12  mb-3">
+                <input type="text" class="form-control" placeholder="Cidade" formControlName="txt_Cidade"
+                  id="txt_Cidade" (input)="onInput()">
+                <app-error-msg [control]="formulario.get('txt_Cidade')" label="Cidade"></app-error-msg>
+              </div>
+            </div>
+
+
+            <div class="row">
+
+              <div class="col-sm-6 input-group mb-3">
+                <input type="text" placeholder="Endereço" class="form-control" formControlName="txt_End" id="txt_End"
+                  (input)="onInput()">
+                <app-error-msg [control]="formulario.get('txt_End')" label="Endereço"></app-error-msg>
+              </div>
+
+              <div class="col-sm-6 input-group mb-3">
+                <input type="text" class="form-control" placeholder="CEP" formControlName="txt_CEP" id="txt_CEP"
+                  (input)="onInput()">
+                <app-error-msg [control]="formulario.get('txt_CEP')" label="CEP"></app-error-msg>
+              </div>
+
+            </div>
+
+
+
+
+
+
+            <div class="row">
+
+              <div class="col-sm-6 input-group mb-3">
+                <input type="text" placeholder="Celular" class="form-control" formControlName="txt_Cel" id="txt_Cel"
+                  (input)="onInput()">
+                <app-error-msg [control]="formulario.get('txt_Cel')" label="Celular"></app-error-msg>
+              </div>
+
+              <div class="col-sm-6 input-group mb-3">
+                <input type="text" class="form-control" placeholder="Telefone" formControlName="txt_Tel" id="txt_Tel"
+                  (input)="onInput()">
+                <app-error-msg [control]="formulario.get('txt_Tel')" label="Telefone"></app-error-msg>
+              </div>
+
+            </div>
+
+
+
+
+
+
+
+            <div class="row">
+
+              <div class="col-sm-12 input-group mb-2">
+                <input type="text" class="form-control" placeholder="E-mail" formControlName="txt_email" id="txt_email"
+                  (input)="onInput()">
+                <app-error-msg [control]="formulario.get('txt_email')" label="e-mail"></app-error-msg>
+              </div>
+
+
+            </div>
+
+
+
+
+            <div class="row">
+              <div class="col-sm-12 input-group mb-3">
+                <input class="custom-control-input" id="enviarEmailPaciente" formControlName="enviarEmailPaciente">
+                <p>Um e-mail será enviado para que seu paciente instale o aplicativo</p>
+              </div>
+            </div>
+
+
+            <div class="row">
+              <div class="col-sm-12  mb-3">
+                <input type="text" class="form-control" placeholder="Plano de Saúde" formControlName="txt_Plano"
+                  id="txt_Plano" (input)="onInput()">
+                <app-error-msg [control]="formulario.get('txt_Plano')" label="Plano de Saúde"></app-error-msg>
+              </div>
+            </div>
+          </div>
+        </form>
+        <div id="wrapper" class="card-footer">
+          <div id="align-right">
+            <button class="btn btn-outline-danger  mr-2" (click)="goToApp()">Cancelar</button>
+            <button type="submit" class="btn btn-primary" (click)="onSubmit()">Salvar</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+
+  </div>
+
+</div>

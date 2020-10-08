@@ -1,0 +1,164 @@
+{
+    "alimentos": [
+        {
+            "descricao": "Aba de filé cru(a)",
+            "idGrupo": 4,
+            "grupoAlimentar": "Carnes, frango, peixe e ovos",
+            "origem": "IBGE",
+            "auditado": false,
+            "calorias": 242.0,
+            "proteinas": 24.22,
+            "gordurasTotais": 15.42,
+            "gordurasSaturadas": 5.74,
+            "gordurasMonoinsaturadas": 7.0,
+            "gordurasPoliInsaturadas": 0.61,
+            "gordurasTrans": 0.68,
+            "carboidratos": -1.0,
+            "fibras": -1.0,
+            "calcio": 8.0,
+            "magnesio": 20.0,
+            "manganes": 0.0,
+            "fosforo": 196.0,
+            "ferro": 2.81,
+            "sodio": 67.0,
+            "potassio": 337.0,
+            "cobre": 0.09,
+            "zinco": 5.71,
+            "selenio": 28.3,
+            "vitaminaA_Retinol": -1.0,
+            "vitaminaB1": 0.08,
+            "vitaminaB2": 0.23,
+            "vitaminaB3": 3.21,
+            "vitaminaB5": -1.0,
+            "vitaminaB6": 0.26,
+            "vitaminaB7": -1.0,
+            "vitaminaB9": 9.0,
+            "vitaminaB12": 2.83,
+            "vitaminaD": 0.7,
+            "vitaminaE": 0.14,
+            "vitaminaC": -1.0,
+            "colesterol": 75.0,
+            "acucar": -1.0,
+            "porcoes": [
+                {
+                    "descricao": "100 gramas",
+                    "gramas": 100.0,
+                    "editavel": false,
+                    "id": 0,
+                    "statusOnline": 0
+                },
+                {
+                    "descricao": "Grama",
+                    "gramas": 1.0,
+                    "editavel": false,
+                    "id": 750,
+                    "statusOnline": 0
+                },
+                {
+                    "descricao": "Unidade média (100g)",
+                    "gramas": 100.0,
+                    "editavel": false,
+                    "id": 4981,
+                    "statusOnline": 0
+                },
+                {
+                    "descricao": "Unidade pequena (55g)",
+                    "gramas": 80.0,
+                    "editavel": false,
+                    "id": 4982,
+                    "statusOnline": 0
+                }
+            ],
+            "editavel": false,
+            "id": 750,
+            "statusOnline": 0
+        },
+        {
+            "descricao": "Aba de filé frito(a)",
+            "idGrupo": 4,
+            "grupoAlimentar": "Carnes, frango, peixe e ovos",
+            "origem": "IBGE",
+            "auditado": false,
+            "calorias": 264.66,
+            "proteinas": 24.22,
+            "gordurasTotais": 17.98,
+            "gordurasSaturadas": 6.14,
+            "gordurasMonoinsaturadas": 7.59,
+            "gordurasPoliInsaturadas": 2.09,
+            "gordurasTrans": 0.69,
+            "carboidratos": -1.0,
+            "fibras": -1.0,
+            "calcio": 8.0,
+            "magnesio": 20.0,
+            "manganes": 0.0,
+            "fosforo": 196.0,
+            "ferro": 2.81,
+            "sodio": 67.0,
+            "potassio": 337.0,
+            "cobre": 0.09,
+            "zinco": 5.71,
+            "selenio": 29.48,
+            "vitaminaA_Retinol": -1.0,
+            "vitaminaB1": 0.08,
+            "vitaminaB2": 0.23,
+            "vitaminaB3": 3.21,
+            "vitaminaB5": -1.0,
+            "vitaminaB6": 0.26,
+            "vitaminaB7": -1.0,
+            "vitaminaB9": 9.0,
+            "vitaminaB12": 2.83,
+            "vitaminaD": 0.7,
+            "vitaminaE": 0.35,
+            "vitaminaC": -1.0,
+            "colesterol": 75.0,
+            "acucar": -1.0,
+            "porcoes": [
+                {
+                    "descricao": "100 gramas",
+                    "gramas": 100.0,
+                    "editavel": false,
+                    "id": 0,
+                    "statusOnline": 0
+                },
+                {
+                    "descricao": "Grama",
+                    "gramas": 1.0,
+                    "editavel": false,
+                    "id": 752,
+                    "statusOnline": 0
+                },
+                {
+                    "descricao": "Unidade grande (110g)",
+                    "gramas": 110.0,
+                    "editavel": false,
+                    "id": 4983,
+                    "statusOnline": 0
+                },
+                {
+                    "descricao": "Unidade média (80g)",
+                    "gramas": 80.0,
+                    "editavel": false,
+                    "id": 4984,
+                    "statusOnline": 0
+                },
+                {
+                    "descricao": "Unidade pequena (20g)",
+                    "gramas": 20.0,
+                    "editavel": false,
+                    "id": 16637,
+                    "statusOnline": 0
+                },
+                {
+                    "descricao": "Unidade pequena (55g)",
+                    "gramas": 55.0,
+                    "editavel": false,
+                    "id": 4985,
+                    "statusOnline": 0
+                }
+            ],
+            "editavel": false,
+            "id": 752,
+            "statusOnline": 0
+        }
+    ]
+}

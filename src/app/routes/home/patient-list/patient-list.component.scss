@@ -1,0 +1,57 @@
+@import "../../../shared/styles/app.scss";
+
+#patient-list {
+  h4 {
+    margin-bottom: 8px;
+  }
+
+  p {
+    margin: 0;
+  }
+
+  a {
+    color: $black;
+    cursor: pointer;
+  }
+
+  img {
+    width: 80px;
+    height: 80px;
+    border: none;
+    margin-top: 15px;
+  }
+
+  #text-lim {
+    font-size: 0.9rem;
+    max-width: 23ch;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  #card-patient {
+    margin-top: 10px;
+    margin-bottom: 0px;
+  }
+
+  #wrapper-card-footer {
+    display: flex;
+    background: transparent;
+    border: transparent;
+    padding: 0;
+  }
+
+  .card-body {
+    height: 187px;
+  }
+
+  .btn-invisible {
+    padding: 0 0 0 10px;
+    border: 0;
+    background-color: transparent;
+  }
+
+  .position-drop-left{
+    left: -100px !important;
+  }
+}

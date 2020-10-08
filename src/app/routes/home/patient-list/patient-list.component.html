@@ -1,0 +1,105 @@
+<div id="patient-list">
+
+  <div class="content-heading">
+    <div>
+      Meus Pacientes
+      <small>Bem vindo!</small>
+    </div>
+  </div>
+
+  <div id="wrapper">
+    <div id="align-right-top">
+      <button [routerLink]="[ '/app/home/form' ]" class="mr-1 btn btn-primary">+Add Pacientes</button>
+    </div>
+  </div>
+
+
+  <div class="row" *ngIf="patients$  | async as patients ; else elseTemplate">
+    <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12" *ngFor="let patient of patients">
+      <div class="card card-default my-3">
+        <div class="card-body">
+
+
+          <div class="float-right btn-group" dropdown>
+            <button class="btn-invisible" dropdownToggle><em class="fa mr-2 fas fa-angle-down"></em><b
+                class="caret"></b>
+            </button>
+            <div *dropdownMenu class="position-drop-left dropdown-menu animated flipInX" role="menu">
+              <a class="dropdown-item" [routerLink]="['/app/home/form',patient.id]"><em
+                  class="fa mr-2 fas fa-edit"></em>Editar</a>
+              <a class="dropdown-item" (click)="onDelete(patient.id)"><em class="fa mr-2 fas fa-trash"></em>Deletar</a>
+              <a class="dropdown-item"><em class="fa mr-2 fas fa-image"></em>Trocar
+                Foto</a>
+              <a class="dropdown-item"><em class="fa mr-2 fas fa-print"></em>Imprimir</a>
+            </div>
+          </div>
+
+
+
+          <div class="d-flex align-items-left margin-0">
+
+            <div class="mr-3">
+              <img class="img-thumbnail rounded-circle" [src]="patient.txt_Foto" alt="Avatar" />
+            </div>
+
+            <div id="text-lim" class="flex-first">
+              <div id="card-patient">
+                <h4>
+                  <strong>{{ patient.txt_Nome }}</strong>
+                </h4>
+
+                <p>
+                  {{ patient.txt_DN.toDate() | convertTimestampDate}}
+                  <br>
+                  {{ patient.txt_email }}
+                  <br>
+                  <ng-container *ngIf="patient.txt_Cel; else elseTemplateTel">
+                    {{ patient.txt_Cel }}
+                  </ng-container>
+                  <br>
+                  <ng-template #elseTemplateTel>
+                    {{ patient.txt_Tel }}
+                  </ng-template>
+                  <br>
+                </p>
+              </div>
+            </div>
+
+          </div>
+
+
+
+          <div id="wrapper-card-footer" class="card-footer">
+            <div id="align-right">
+              <button class="btn btn-xs btn-secondary mr-3"  [routerLink]="['/app/home/dashboard',patient.id]">Acompanhamento</button>
+              <button class="btn btn-xs btn-primary" [routerLink]="['/app/home/menu',patient.id]" (click)="setPatientStore(patient)">Iniciar</button>
+            </div>
+          </div>
+
+
+        </div>
+
+
+      </div>
+    </div>
+  </div>
+
+  <ng-template #elseTemplate>
+    <div class="loader-demo loader-demo-sk d-flex align-items-center justify-content-center">
+      <div class="sk-cube-grid">
+        <div class="sk-cube sk-cube1"></div>
+        <div class="sk-cube sk-cube2"></div>
+        <div class="sk-cube sk-cube3"></div>
+        <div class="sk-cube sk-cube4"></div>
+        <div class="sk-cube sk-cube5"></div>
+        <div class="sk-cube sk-cube6"></div>
+        <div class="sk-cube sk-cube7"></div>
+        <div class="sk-cube sk-cube8"></div>
+        <div class="sk-cube sk-cube9"></div>
+      </div>
+    </div>
+  </ng-template>
+
+
+  <toaster-container [toasterconfig]="toasterconfig"></toaster-container>
+</div>

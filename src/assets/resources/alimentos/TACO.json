@@ -1,0 +1,279 @@
+{
+    "alimentos": [
+        {
+            "descricao": "Abacate cru",
+            "idGrupo": 3,
+            "grupoAlimentar": "Frutas e derivados",
+            "origem": "TACO",
+            "auditado": false,
+            "calorias": 96.15,
+            "proteinas": 1.24,
+            "gordurasTotais": 8.4,
+            "gordurasSaturadas": 2.3,
+            "gordurasMonoinsaturadas": 4.3,
+            "gordurasPoliInsaturadas": 1.4,
+            "gordurasTrans": 0.0,
+            "carboidratos": 6.03,
+            "fibras": 6.31,
+            "calcio": 7.92,
+            "magnesio": 14.68,
+            "manganes": 0.17,
+            "fosforo": 21.95,
+            "ferro": 0.21,
+            "sodio": 0.0,
+            "potassio": 206.26,
+            "cobre": 0.15,
+            "zinco": 0.22,
+            "selenio": -1.0,
+            "vitaminaA_Retinol": -1.0,
+            "vitaminaB1": 0.0,
+            "vitaminaB2": 0.04,
+            "vitaminaB3": 0.0,
+            "vitaminaB5": -1.0,
+            "vitaminaB6": 0.0,
+            "vitaminaB7": -1.0,
+            "vitaminaB9": -1.0,
+            "vitaminaB12": -1.0,
+            "vitaminaD": -1.0,
+            "vitaminaE": -1.0,
+            "vitaminaC": 8.66,
+            "colesterol": -1.0,
+            "acucar": -1.0,
+            "porcoes": [
+                {
+                    "descricao": "100 gramas",
+                    "gramas": 100.0,
+                    "editavel": false,
+                    "id": 0,
+                    "statusOnline": 0
+                },
+                {
+                    "descricao": "3 colheres de sopa",
+                    "gramas": 60.0,
+                    "editavel": false,
+                    "id": 17724,
+                    "statusOnline": 0
+                },
+                {
+                    "descricao": "Colher de sopa cheia (amassado) (20g)",
+                    "gramas": 20.0,
+                    "editavel": false,
+                    "id": 5002,
+                    "statusOnline": 0
+                },
+                {
+                    "descricao": "Colher de sopa cheia (picado) (45g)",
+                    "gramas": 45.0,
+                    "editavel": false,
+                    "id": 5001,
+                    "statusOnline": 0
+                },
+                {
+                    "descricao": "Grama",
+                    "gramas": 1.0,
+                    "editavel": false,
+                    "id": 2028,
+                    "statusOnline": 0
+                },
+                {
+                    "descricao": "Prato fundo (picado) (450g)",
+                    "gramas": 450.0,
+                    "editavel": false,
+                    "id": 5003,
+                    "statusOnline": 0
+                },
+                {
+                    "descricao": "Prato raso (picado) (350g)",
+                    "gramas": 350.0,
+                    "editavel": false,
+                    "id": 5004,
+                    "statusOnline": 0
+                },
+                {
+                    "descricao": "Unidade grande (900g)",
+                    "gramas": 900.0,
+                    "editavel": false,
+                    "id": 5005,
+                    "statusOnline": 0
+                },
+                {
+                    "descricao": "Unidade média (430g)",
+                    "gramas": 430.0,
+                    "editavel": false,
+                    "id": 5006,
+                    "statusOnline": 0
+                },
+                {
+                    "descricao": "Unidade pequena (370g)",
+                    "gramas": 370.0,
+                    "editavel": false,
+                    "id": 5007,
+                    "statusOnline": 0
+                }
+            ],
+            "editavel": false,
+            "id": 2028,
+            "statusOnline": 0
+        },
+        {
+            "descricao": "Abacaxi cru",
+            "idGrupo": 3,
+            "grupoAlimentar": "Frutas e derivados",
+            "origem": "TACO",
+            "auditado": false,
+            "calorias": 48.32,
+            "proteinas": 0.86,
+            "gordurasTotais": 0.12,
+            "gordurasSaturadas": -1.0,
+            "gordurasMonoinsaturadas": -1.0,
+            "gordurasPoliInsaturadas": -1.0,
+            "gordurasTrans": -1.0,
+            "carboidratos": 12.33,
+            "fibras": 0.99,
+            "calcio": 22.43,
+            "magnesio": 18.44,
+            "manganes": 1.62,
+            "fosforo": 12.78,
+            "ferro": 0.26,
+            "sodio": 0.0,
+            "potassio": 131.34,
+            "cobre": 0.11,
+            "zinco": 0.14,
+            "selenio": -1.0,
+            "vitaminaA_Retinol": -1.0,
+            "vitaminaB1": 0.17,
+            "vitaminaB2": 0.02,
+            "vitaminaB3": 0.0,
+            "vitaminaB5": -1.0,
+            "vitaminaB6": 0.0,
+            "vitaminaB7": -1.0,
+            "vitaminaB9": -1.0,
+            "vitaminaB12": -1.0,
+            "vitaminaD": -1.0,
+            "vitaminaE": -1.0,
+            "vitaminaC": 34.62,
+            "colesterol": -1.0,
+            "acucar": -1.0,
+            "porcoes": [
+                {
+                    "descricao": "100 gramas",
+                    "gramas": 100.0,
+                    "editavel": false,
+                    "id": 0,
+                    "statusOnline": 0
+                },
+                {
+                    "descricao": "Fatia grande (190g)",
+                    "gramas": 190.0,
+                    "editavel": false,
+                    "id": 5018,
+                    "statusOnline": 0
+                },
+                {
+                    "descricao": "Fatia média (75g)",
+                    "gramas": 75.0,
+                    "editavel": false,
+                    "id": 5019,
+                    "statusOnline": 0
+                },
+                {
+                    "descricao": "Fatia pequena (50g)",
+                    "gramas": 50.0,
+                    "editavel": false,
+                    "id": 5020,
+                    "statusOnline": 0
+                },
+                {
+                    "descricao": "Grama",
+                    "gramas": 1.0,
+                    "editavel": false,
+                    "id": 2029,
+                    "statusOnline": 0
+                },
+                {
+                    "descricao": "Unidade média (750g)",
+                    "gramas": 750.0,
+                    "editavel": false,
+                    "id": 5021,
+                    "statusOnline": 0
+                },
+                {
+                    "descricao": "Unidade pequena (480g)",
+                    "gramas": 480.0,
+                    "editavel": false,
+                    "id": 5022,
+                    "statusOnline": 0
+                }
+            ],
+            "editavel": false,
+            "id": 2029,
+            "statusOnline": 0
+        },
+        {
+            "descricao": "Abacaxi polpa congelada",
+            "idGrupo": 3,
+            "grupoAlimentar": "Frutas e derivados",
+            "origem": "TACO",
+            "auditado": false,
+            "calorias": 30.59,
+            "proteinas": 0.47,
+            "gordurasTotais": 0.11,
+            "gordurasSaturadas": -1.0,
+            "gordurasMonoinsaturadas": -1.0,
+            "gordurasPoliInsaturadas": -1.0,
+            "gordurasTrans": -1.0,
+            "carboidratos": 7.8,
+            "fibras": 0.33,
+            "calcio": 13.54,
+            "magnesio": 10.07,
+            "manganes": 1.02,
+            "fosforo": 7.63,
+            "ferro": 0.36,
+            "sodio": 1.24,
+            "potassio": 106.68,
+            "cobre": 0.04,
+            "zinco": 0.06,
+            "selenio": -1.0,
+            "vitaminaA_Retinol": -1.0,
+            "vitaminaB1": 0.05,
+            "vitaminaB2": 0.0,
+            "vitaminaB3": 0.0,
+            "vitaminaB5": -1.0,
+            "vitaminaB6": 0.0,
+            "vitaminaB7": -1.0,
+            "vitaminaB9": -1.0,
+            "vitaminaB12": -1.0,
+            "vitaminaD": -1.0,
+            "vitaminaE": -1.0,
+            "vitaminaC": 1.25,
+            "colesterol": -1.0,
+            "acucar": -1.0,
+            "porcoes": [
+                {
+                    "descricao": "100 gramas",
+                    "gramas": 100.0,
+                    "editavel": false,
+                    "id": 0,
+                    "statusOnline": 0
+                },
+                {
+                    "descricao": "Grama",
+                    "gramas": 1.0,
+                    "editavel": false,
+                    "id": 2030,
+                    "statusOnline": 0
+                },
+                {
+                    "descricao": "Unidade (100g)",
+                    "gramas": 100.0,
+                    "editavel": false,
+                    "id": 5023,
+                    "statusOnline": 0
+                }
+            ],
+            "editavel": false,
+            "id": 2030,
+            "statusOnline": 0
+        }
+    ]
+}

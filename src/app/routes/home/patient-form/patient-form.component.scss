@@ -1,0 +1,18 @@
+@import "../../../shared/styles/app.scss";
+@import "~ngx-bootstrap/datepicker/bs-datepicker.css";
+
+#patient-form {
+    
+
+    ul {
+        cursor: pointer;
+    }
+
+    img {
+        border: 0px;
+    }
+
+    .card-custom {
+        padding: 0 0 15px 0
+    }
+}

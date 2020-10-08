@@ -1,0 +1,88 @@
+@import "../../../../../shared/styles/app.scss";
+
+#cards {
+    h4 {
+        color: white;
+        text-align: center;
+    }
+
+    a {
+        border: none;
+    }
+
+    .color8 {
+        background-color: $color8;
+    }
+
+    .color7 {
+        background-color: $color7;
+    }
+
+    .color6 {
+        background-color: $color6;
+    }
+
+    .color5 {
+        background-color: $color5;
+    }
+
+    .color4 {
+        background-color: $color4;
+    }
+
+    .color3 {
+        background-color: $color3;
+    }
+
+    .color2 {
+        background-color: $color2;
+    }
+
+    .color1 {
+        background-color: $color1;
+    }
+
+    .card {
+        max-width: 248px;
+        .card-top {
+            width: 248px;
+            height: 100px;
+            border-top-left-radius: calc(0.25rem - 1px);
+            border-top-right-radius: calc(0.25rem - 1px);
+        }
+        .card-body {
+            height: 300px;
+            padding: 0px;
+            .panel {
+                width: 242px;
+                height: 236px;
+                margin-top: 16px;
+            }
+            a {
+                position: absolute;
+                right: 10px;
+                bottom: 10px;
+            }
+            ol {
+                padding: 0px 0px 0px 32px;
+            }
+            .panel::-webkit-scrollbar {
+                width: 7px;
+                height: 10px;
+            }
+            .panel::-webkit-scrollbar-track {
+                background: transparent;
+            }
+            .panel::-webkit-scrollbar-thumb {
+                background: #cfcfcf;
+            }
+            .panel{
+                overflow-y: hidden;
+            }
+            
+            .panel:hover{
+                overflow-y: auto;
+            }
+        }
+    }
+}

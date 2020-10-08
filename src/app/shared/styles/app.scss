@@ -1,0 +1,170 @@
+/*!
+ *
+ * NutriHealth - Bootstrap Admin Template
+ *
+ * Version: 4.3
+ * Author: @themicon_co
+ * Website: http://themicon.co
+ * License: https://wrapbootstrap.com/help/licenses
+ *
+ */
+
+// Bootstrap
+@import "bootstrap/functions";
+@import "bootstrap/variables";
+@import "bootstrap/mixins";
+// Variables
+@import "app/variables";
+// Layout
+@import "app/layout";
+@import "app/layout-extra";
+@import "app/layout-animation";
+@import "app/top-navbar";
+@import "app/sidebar";
+@import "app/offsidebar";
+@import "app/user-block";
+@import "app/settings";
+// Common
+@import "app/typo";
+@import "app/bootstrap-reset";
+@import "app/bootstrap-custom";
+@import "app/button-extra";
+@import "app/placeholder";
+@import "app/cards";
+@import "app/circles";
+@import "app/dropdown-extra";
+@import "app/half-float";
+@import "app/animate";
+@import "app/slim-scroll";
+@import "app/inputs";
+@import "app/utils";
+@import "app/print";
+// Elements
+@import "app/spinner";
+// Charts
+// @import "app/radial-bar";
+// @import "app/chart-flot";
+// @import "app/chart-easypie";
+// Form elements
+// @import "app/form-select2";
+// @import "app/form-tags-input";
+// @import "app/file-upload";
+// @import "app/summernote";
+// @import "app/typeahead";
+// Tables
+// @import "app/table-extras";
+// @import "app/table-angulargrid";
+// Maps
+// @import "app/gmap";
+// @import "app/vector-map";
+// Extras
+// @import "app/timeline";
+// @import "app/todo";
+// @import "app/calendar";
+// @import "app/mailbox";
+// @import "app/plans";
+
+$black: #000000;
+$color1: #aa7dce;
+$color2: #3b429f;
+$color3: #758bfd;
+$color4: #255f85;
+$color5: #363537;
+$color6: #c5283d;
+$color7: #e9724c;
+$color8: #ffc857;
+
+#wrapper {
+  display: flex;
+}
+
+#align-right {
+  margin: 0 0 0 auto;
+}
+
+#align-right-top {
+  margin: 0 0 auto auto;
+}
+
+#align-right-bottom {
+  margin: auto 0 0 auto;
+}
+
+#align-center {
+  margin: auto auto auto auto;
+}
+
+.margin-0 {
+  margin: 0px;
+}
+.flex {
+  display: flex;
+}
+
+.flex-end {
+  justify-content: flex-end;
+}
+
+.align-items-center {
+  align-items: center;
+}
+
+.justfy-content-center {
+  justify-content: center;
+}
+
+.space-between {
+	justify-content: space-between;
+}
+
+
+/* Card */
+.card-stnd {
+  h4 {
+    color: white;
+    text-align: center;
+  }
+  .card {
+    width: auto;
+    .card-top {
+      width: auto;
+      height: 120px;
+      border-top-left-radius: calc(0.25rem - 1px);
+      border-top-right-radius: calc(0.25rem - 1px);
+    }
+    .card-body {
+      min-height: 460px;
+    }
+    .card-footer {
+      border: none;
+      background-color: white;
+    }
+  }
+}
+
+/*Date Picker*/
+.bs-datepicker-head > bs-datepicker-navigation-view {
+  display: flex;
+  justify-content: space-around;
+}
+
+.theme-blue {
+  .bs-datepicker-head {
+      background-color: $info;
+  }
+  .bs-datepicker-body table td {
+      span.selected,
+      &.selected span,
+      span[class*="select-"]:after,
+      &[class*="select-"] span:after {
+          background-color: $info;
+      }
+      &.week span {
+          color: $info;
+      }
+  }
+}
+
+label{ 
+  margin: 0px;
+}

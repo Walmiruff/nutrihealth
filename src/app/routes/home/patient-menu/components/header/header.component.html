@@ -1,0 +1,51 @@
+<div id="header">
+
+  <div class="content-heading">
+      <div>
+          Atendimento Nutricional
+      </div>
+  </div>
+
+  <div *ngIf="patiente$ | async as patient">
+      <div class="card b text-white">
+          <div class="card-body bg-cover clearfix" style="background-image: url(assets/img/cover.jpg);">
+              <div class="media mt-0 align-items-center">
+                  <img class="mr-3 img-thumbnail rounded-circle thumb96" [src]="patient.txt_Foto" alt="Image" />
+                  <div class="media-body">
+                      <div class="d-flex">
+                          <div>
+                              <h4 class="m-0">{{ patient.txt_Nome }}</h4>
+                              <p> {{ patient.txt_DN.toDate() | convertTimestampDate}}</p>
+                              <div dropdown>
+                                  <button class="btn btn-info btn-xs" dropdownToggle
+                                      type="button">{{  patient.objective }}</button>
+                                  <div *dropdownMenu class="position-drop-left dropdown-menu animated flipInX"
+                                      role="menu">
+                                      <a class="dropdown-item">{{ patient.height === null ? 0 : patient.height }} m</a>
+                                      <a class="dropdown-item">{{ patient.weight === null ? 0 : patient.weight }} Kg</a>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="ml-auto d-none d-sm-block">
+                              <div class="inline text-center mr-3">
+                                  <div class="h3 m-0">
+                                      <strong>{{ patient.height === null ? 0 : patient.height }}m</strong>
+                                  </div>
+                                  <small>Altura</small>
+                              </div>
+                              <div class="inline text-center mr-2">
+                                  <div class="h3 m-0">
+                                      <strong>{{ patient.weight === null ? 0 : patient.weight }}Kg</strong>
+                                  </div>
+                                  <small>Peso</small>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+  
+  
+</div>
