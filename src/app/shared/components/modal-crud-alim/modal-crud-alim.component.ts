@@ -2,6 +2,9 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { BsModalRef } from 'ngx-bootstrap/modal';
+import { v4 as uuid } from 'uuid';
+
+import { AlimentosService } from '../../services/alimentos.service';
 
 @Component({
   selector: 'app-modal-crud-alim',
@@ -12,12 +15,14 @@ export class ModalCrudAlimComponent implements OnInit {
 
   @Input() public id: string;
   public form: FormGroup;
+
   constructor(
     private formBuilder: FormBuilder,
-    public porcaoModalRef: BsModalRef,
+    private alimentosService: AlimentosService,
+    public alimModalRef: BsModalRef,
   ) {
     this.form = this.formBuilder.group({
-      descricao: [null],
+      descricao: ['Teste Alimento'],
       idGrupo: [1],
       grupoAlimentar: [null], // enum
       origem: ['NUTRI'],
@@ -59,31 +64,38 @@ export class ModalCrudAlimComponent implements OnInit {
       id: [null],
       statusOnline: [0], //  usar esse campo para fazer a conversão da porção
     });
-   }
+  }
 
   ngOnInit() {
-    this.submit();
   }
 
   public submit(): void {
     this.form.value['porcoes'] = [
-        {
-          descricao: '100 gramas',
-          gramas: 100.0,
-          editavel: false,
-          id: 0,
-          statusOnline: 0
-        },
-        {
-          descricao: 'Grama',
-          gramas: 1.0,
-          editavel: false,
-          id: 61352,
-          statusOnline: 0
-        }
-      ];
+      {
+        descricao: '100 gramas',
+        gramas: 100.0,
+        editavel: false,
+        id: 0,
+        statusOnline: 0
+      },
+      {
+        descricao: 'Grama',
+        gramas: 1.0,
+        editavel: false,
+        id: 61352,
+        statusOnline: 0
+      }
+    ];
 
-  console.log('form', this.form.value);
- }
+    if (this.id === undefined) {
+      this.form.controls.id.patchValue(uuid());
+      this.alimentosService.addAlimDB(this.form.value).then(() => {
+        this.alimModalRef.hide();
+      });
+    } else {
+      // update
+    }
+
+  }
 
 }

@@ -7,6 +7,7 @@ import { AlimentosService } from '../../../../shared/services/alimentos.service'
 import { IAlimento, IPorcoes } from '../../../../shared/models/alimentos.model';
 import { DropdownService } from './service/dropdown.service';
 import { PortionStore } from '../../../../shared/store/porcoes.store';
+import { AlimStore } from '../../../../shared/store/alim.store';
 import { ModalService } from '../../../../shared/services/modal.service';
 
 @Component({
@@ -30,6 +31,7 @@ export class PlanosAlimentaresComponent implements OnInit {
     private alimentosService: AlimentosService,
     private dropdownService: DropdownService,
     private portionStore: PortionStore,
+    private alimStore: AlimStore,
     private modalService: ModalService,
   ) { }
 
@@ -38,6 +40,8 @@ export class PlanosAlimentaresComponent implements OnInit {
     this.triggersControls();
     this.alimentos$ = this.alimentosService.getAllAlimentos();
     this.tabelas = this.dropdownService.getTabelas();
+
+    this.alimStore.alims$.subscribe(resp => console.log('resp', resp));
   }
 
   public modalHiddenRef(): void {

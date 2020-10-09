@@ -27,11 +27,11 @@
         <option value="16">Bebidas (alcoólicas e não alcoólicas)</option>
       </select> -->
     </form>
-    <h2>*Ao cadastrar o alimento, o Sistema irá converter os valores para a porção de 100g. Pois esta é a base para o
-      cálculo.</h2>
+    <h5>*Ao cadastrar o alimento, o Sistema irá converter os valores para a porção de 100g. Pois esta é a base para o
+      cálculo.</h5>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-primary mr-2" (click)="onClose()">Cancelar</button>
-    <button type="button" class="btn btn-secondary" (click)="onConfirm()" data-dismiss="modal">Salvar</button>
+    <button type="button" class="btn btn-primary mr-2">Cancelar</button>
+    <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="submit()">Salvar</button>
   </div>
 </div>

@@ -120,7 +120,8 @@ import { ModalCrudAlimComponent } from './components/modal-crud-alim/modal-crud-
     ],
     entryComponents: [
         ModalConfirmComponent,
-        ModalPorcoesComponent
+        ModalPorcoesComponent,
+        ModalCrudAlimComponent
     ]
 })
 
