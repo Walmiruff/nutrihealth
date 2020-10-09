@@ -14,8 +14,8 @@ export class ModalPorcoesComponent implements OnInit {
   public form: FormGroup;
 
   constructor(
-    public porcaoModalRef: BsModalRef,
     private formBuilder: FormBuilder,
+    public porcaoModalRef: BsModalRef,
   ) { }
 
   ngOnInit() {
@@ -30,7 +30,6 @@ export class ModalPorcoesComponent implements OnInit {
 
   onConfirm() {
     this.form.controls.id.patchValue(this.id);
-    console.log('myFormPorcao', this.form.value);
     this.porcaoModalRef.hide();
   }
 

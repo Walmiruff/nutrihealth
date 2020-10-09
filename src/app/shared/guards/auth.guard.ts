@@ -4,10 +4,9 @@ import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router, CanLo
 import { Observable } from 'rxjs';
 
 import { AlimentosService } from '../services/alimentos.service';
-import { IPorcoes } from '../models/alimentos.model';
+import { IPorcoes, IAlimento } from '../models/alimentos.model';
 import { PortionStore } from '../store/porcoes.store';
-import { MessageStore } from '../store/message.store';
-import { messages } from '../const/messages';
+import { AlimStore } from '../store/alim.store';
 
 @Injectable({
   providedIn: 'root'
@@ -19,8 +18,8 @@ export class AuthGuard implements CanActivate {
     private router: Router,
     private afAuth: AngularFireAuth,
     private portionStore: PortionStore,
-    private alimentosService: AlimentosService,
-    private messageStore: MessageStore,
+    private alimStore: AlimStore,
+    private alimentosService: AlimentosService
     ) { }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
@@ -38,7 +37,7 @@ export class AuthGuard implements CanActivate {
     
     if (this.codigoUsuario) {
       localStorage.setItem('uid', this.codigoUsuario);
-      this.loadPortions();
+      this.loadPortionsAndAlims();
       return true;
     }
     this.router.navigate(['/pages/auth/login']);
@@ -47,10 +46,8 @@ export class AuthGuard implements CanActivate {
     return false;
   }
 
-  public loadPortions() {
-    this.alimentosService.getPorcao().subscribe(
-      (portions: IPorcoes[]) => this.portionStore.set(portions),
-      (err) => this.messageStore.set(messages[8]),
-    );
+  public loadPortionsAndAlims() {
+    this.alimentosService.getPorcoes().subscribe((portions: IPorcoes[]) => this.portionStore.set(portions));
+    this.alimentosService.getAlimsDB().subscribe((alimentos: IAlimento[]) => this.alimStore.set(alimentos));
   }
 }

@@ -1,0 +1,37 @@
+<div class="modal-content">
+  <div class="modal-header">
+    <h5 class="modal-title">Adicionar/Editar Alimento*</h5>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="form">
+      <input type="text" class="form-control" formControlName="descricao" placeholder="Nome*" id="descricao">
+      <!-- <select id="select-grupo-alimento" class="form-control" formControlName="idGrupo">
+        <option value="1">Verduras e legumes</option>
+        <option value="2">Cereal, pães, massas, carboidratos</option>
+        <option value="3">Frutas e derivados</option>
+        <option value="4">Carnes, frango, peixe e ovos</option>
+        <option value="5">Leguminosas e derivados</option>
+        <option value="6">Leites e substitutos</option>
+        <option value="7">Óleos e gorduras</option>
+        <option value="8">Açúcares e doces</option>
+        <option value="9">Oleaginosas e derivados</option>
+        <option value="10">Temperos</option>
+        <option value="11">Industrializados</option>
+        <option value="12">Preparações</option>
+        <option value="13">Suplementos</option>
+        <option value="14">Embutidos</option>
+        <option value="15">Ervas</option>
+        <option value="16">Bebidas (alcoólicas e não alcoólicas)</option>
+      </select> -->
+    </form>
+    <h2>*Ao cadastrar o alimento, o Sistema irá converter os valores para a porção de 100g. Pois esta é a base para o
+      cálculo.</h2>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-primary mr-2" (click)="onClose()">Cancelar</button>
+    <button type="button" class="btn btn-secondary" (click)="onConfirm()" data-dismiss="modal">Salvar</button>
+  </div>
+</div>

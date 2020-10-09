@@ -52,11 +52,4 @@ export const messages: Array<IMessage> = [
         body: 'Error ao Atualizar o Paciente.'
 
     },
-    // 8 . Error ao buscar porções.
-    {
-        type: 'error',
-        title: 'Porções',
-        body: 'Error ao buscar porções.'
-
-    }
 ]

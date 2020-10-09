@@ -7,6 +7,7 @@ import { AlimentosService } from '../../../../shared/services/alimentos.service'
 import { IAlimento, IPorcoes } from '../../../../shared/models/alimentos.model';
 import { DropdownService } from './service/dropdown.service';
 import { PortionStore } from '../../../../shared/store/porcoes.store';
+import { ModalService } from '../../../../shared/services/modal.service';
 
 @Component({
   selector: 'app-planos-alimentares',
@@ -29,6 +30,7 @@ export class PlanosAlimentaresComponent implements OnInit {
     private alimentosService: AlimentosService,
     private dropdownService: DropdownService,
     private portionStore: PortionStore,
+    private modalService: ModalService,
   ) { }
 
   ngOnInit() {
@@ -92,8 +94,8 @@ export class PlanosAlimentaresComponent implements OnInit {
     ).subscribe();
   }
 
-  // public novaPorcao(): void {
-  //   this.modalService.showModalPorcoes(Number(this.form.controls.alimento.value));
-  // }
+  public novaPorcao(): void {
+    this.modalService.showModalAlim();
+  }
 
 }

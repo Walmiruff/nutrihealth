@@ -5,6 +5,7 @@ import { map, shareReplay, tap } from 'rxjs/operators';
 
 import { IAlimento, IPorcoes } from '../models/alimentos.model';
 import { PortionStore } from '../store/porcoes.store';
+import { AlimStore } from '../store/alim.store';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +18,8 @@ export class AlimentosService {
 
   constructor(
     private firestore: AngularFirestore,
-    private portionStore: PortionStore
+    private portionStore: PortionStore,
+    private alimStore: AlimStore,
     ) { }
 
   public load(IBGE: IAlimento[], TACO: IAlimento[]): Observable<IAlimento[]>[] {
@@ -45,7 +47,7 @@ export class AlimentosService {
       });
   }
 
-  public getPorcao(): Observable<IPorcoes[]> {
+  public getPorcoes(): Observable<IPorcoes[]> {
     const authRef = this.firestore.collection('user_porcao').doc(localStorage.getItem('uid'));
     return authRef.collection<IPorcoes>('porcao').valueChanges();
   }
@@ -56,6 +58,11 @@ export class AlimentosService {
       .then(() => {
         this.alimStore.add(form);
       });
+  }
+
+  public getAlimsDB(): Observable<IAlimento[]> {
+    const authRef = this.firestore.collection('user_alimento').doc(localStorage.getItem('uid'));
+    return authRef.collection<IAlimento>('alimento').valueChanges();
   }
 
 }

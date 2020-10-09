@@ -37,6 +37,7 @@ import { JqcloudDirective } from './directives/jqcloud/jqcloud.directive';
 import { ErrorMsgComponent } from './error-msg/error-msg.component';
 import { ModalConfirmComponent } from './components/modal-confirm/modal-confirm.component';
 import { ModalPorcoesComponent } from './components/modal-porcoes/modal-porcoes.component';
+import { ModalCrudAlimComponent } from './components/modal-crud-alim/modal-crud-alim.component';
 
 // https://angular.io/styleguide#!#04-10
 @NgModule({
@@ -79,7 +80,8 @@ import { ModalPorcoesComponent } from './components/modal-porcoes/modal-porcoes.
         JqcloudDirective,
         ErrorMsgComponent,
         ModalConfirmComponent,
-        ModalPorcoesComponent
+        ModalPorcoesComponent,
+        ModalCrudAlimComponent
     ],
     exports: [
         CommonModule,

@@ -6,6 +6,7 @@ import { Subject } from 'rxjs';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ModalConfirmComponent } from '../components/modal-confirm/modal-confirm.component';
 import { ModalPorcoesComponent } from '../components/modal-porcoes/modal-porcoes.component';
+import { ModalCrudAlimComponent } from '../components/modal-crud-alim/modal-crud-alim.component';
 
 @Injectable({
   providedIn: 'root'
@@ -30,6 +31,11 @@ export class ModalService {
 
   showModalPorcoes(id: number) {
     const porcaoModalRef: BsModalRef = this.modalService.show(ModalPorcoesComponent);
+    porcaoModalRef.content.id = id;
+  }
+
+  showModalAlim(id?: number) {
+    const porcaoModalRef: BsModalRef = this.modalService.show(ModalCrudAlimComponent);
     porcaoModalRef.content.id = id;
   }
 
