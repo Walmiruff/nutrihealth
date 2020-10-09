@@ -19,11 +19,11 @@ import { ModalService } from '../../../../shared/services/modal.service';
 export class PlanosAlimentaresComponent implements OnInit {
 
   public alimentos$: Observable<Array<IAlimento>>;
-  public porcoes: IPorcoes[];
+  public porcoes: any[] = [];
   public hiddenModalRef: Boolean = false;
   public form: FormGroup;
   public formPorcao: FormGroup;
-  public tabelas: any[];
+  public tabelas: any[] = [];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -62,23 +62,23 @@ export class PlanosAlimentaresComponent implements OnInit {
   public triggersControls(): void {
     this.form.controls.tabelas.valueChanges.subscribe(value => {
       this.alimentos$ = null;
-      this.porcoes = [];
+      this.porcoes.splice(0);
       this.form.controls.alimento.reset();
       value === 0 ? this.alimentos$ = this.alimentosService.getAllAlimentos() : this.alimentos$ = this.alimentosService.getAlimentos(value);
-      
-      this.alimentos$.subscribe((r) => console.log('rep', r));
-      
     });
     this.form.controls.alimento.valueChanges
       .pipe(
         filter(value => value !== null),
         switchMap(value => {
-          this.alimentos$ = null;
-          this.porcoes = [];
+          this.porcoes.splice(0);
           return this.alimentos$
             .pipe(
               map((alimentos) => alimentos.filter((alimento) => alimento.id == (value))),
-              map((alimentos) => this.porcoes = alimentos[0].porcoes)
+              map((alimentos) => {
+                alimentos[0].porcoes.forEach(element => {
+                  this.porcoes.push(element);
+                });
+              })
             );
         }),
       )
@@ -93,10 +93,13 @@ export class PlanosAlimentaresComponent implements OnInit {
   public getPortionCustom(idAlim: number | string): void {
     this.portionStore.portions$.pipe(
       take(1),
-      map((porcoes) => porcoes.filter((porcao) => porcao.id === idAlim)),
       filter(porcoes => porcoes.length > 0),
-      tap((porcoes) => this.porcoes.push(porcoes[0])),
-    ).subscribe();
+      map((porcoes) => porcoes.filter((porcao) => porcao.id === idAlim)),
+    ).subscribe((porcoes) => {
+      porcoes.forEach(element => {
+        this.porcoes.push(element);
+      });
+    });
   }
 
   public novaPorcao(): void {
