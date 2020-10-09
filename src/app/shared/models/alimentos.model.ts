@@ -44,7 +44,7 @@ export interface IAlimento {
     acucar: number;
     porcoes?: Array<IPorcoes>;
     editavel: boolean;
-    id: number;
+    id: number | string;
     statusOnline: number;
 }
 

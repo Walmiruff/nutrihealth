@@ -27,11 +27,15 @@ export class AlimentosService {
   }
 
   public getAlimentos(n: number): Observable<Array<IAlimento>> {
-    return (this.url[n - 1])
-      .pipe(
-        map((resp) => resp['alimentos']),
-        shareReplay(1),
-      );
+    if (n === 6) {
+     return this.alimStore.alims$;
+    } else {
+      return (this.url[n - 1])
+        .pipe(
+          map((resp) => resp['alimentos']),
+          shareReplay(1),
+        );
+    }
   }
 
   public getAllAlimentos(): Observable<Array<IAlimento>> {

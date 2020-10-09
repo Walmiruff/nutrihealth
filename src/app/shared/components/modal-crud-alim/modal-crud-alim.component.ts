@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { v4 as uuid } from 'uuid';
 
+import { IAlimento } from '../../models/alimentos.model';
 import { AlimentosService } from '../../services/alimentos.service';
 
 @Component({
@@ -15,6 +16,7 @@ export class ModalCrudAlimComponent implements OnInit {
 
   @Input() public id: string;
   public form: FormGroup;
+  public newForm: IAlimento;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -87,9 +89,11 @@ export class ModalCrudAlimComponent implements OnInit {
       }
     ];
 
+    this.newForm = this.form.value;
+
     if (this.id === undefined) {
-      this.form.controls.id.patchValue(uuid());
-      this.alimentosService.addAlimDB(this.form.value).then(() => {
+      this.newForm.id = uuid();
+      this.alimentosService.addAlimDB(this.newForm).then(() => {
         this.alimModalRef.hide();
       });
     } else {

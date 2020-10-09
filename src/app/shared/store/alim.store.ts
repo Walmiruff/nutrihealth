@@ -33,7 +33,7 @@ export class AlimStore {
         this.alimsSource.next(this.alims);
     }
 
-    public getId(alimId: number): IAlimento {
+    public getId(alimId: number | string): IAlimento {
         return this.alims.find((element) => element.id === alimId );
     }
  

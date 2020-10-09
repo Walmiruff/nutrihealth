@@ -7,7 +7,6 @@ import { AlimentosService } from '../../../../shared/services/alimentos.service'
 import { IAlimento, IPorcoes } from '../../../../shared/models/alimentos.model';
 import { DropdownService } from './service/dropdown.service';
 import { PortionStore } from '../../../../shared/store/porcoes.store';
-import { AlimStore } from '../../../../shared/store/alim.store';
 import { ModalService } from '../../../../shared/services/modal.service';
 
 @Component({
@@ -31,7 +30,6 @@ export class PlanosAlimentaresComponent implements OnInit {
     private alimentosService: AlimentosService,
     private dropdownService: DropdownService,
     private portionStore: PortionStore,
-    private alimStore: AlimStore,
     private modalService: ModalService,
   ) { }
 
@@ -40,8 +38,6 @@ export class PlanosAlimentaresComponent implements OnInit {
     this.triggersControls();
     this.alimentos$ = this.alimentosService.getAllAlimentos();
     this.tabelas = this.dropdownService.getTabelas();
-
-    this.alimStore.alims$.subscribe(resp => console.log('resp', resp));
   }
 
   public modalHiddenRef(): void {
@@ -69,27 +65,32 @@ export class PlanosAlimentaresComponent implements OnInit {
       this.porcoes = [];
       this.form.controls.alimento.reset();
       value === 0 ? this.alimentos$ = this.alimentosService.getAllAlimentos() : this.alimentos$ = this.alimentosService.getAlimentos(value);
+      
+      this.alimentos$.subscribe((r) => console.log('rep', r));
+      
     });
     this.form.controls.alimento.valueChanges
       .pipe(
         filter(value => value !== null),
         switchMap(value => {
+          this.alimentos$ = null;
+          this.porcoes = [];
           return this.alimentos$
             .pipe(
-              map((alimentos) => alimentos.filter((alimento) => alimento.id === Number(value))),
+              map((alimentos) => alimentos.filter((alimento) => alimento.id == (value))),
               map((alimentos) => this.porcoes = alimentos[0].porcoes)
             );
         }),
       )
-      .subscribe(() => this.getPortionCustom(Number(this.form.controls.alimento.value)));
+      .subscribe(() => this.getPortionCustom(this.form.controls.alimento.value));
   }
 
   public onConfirm(): void {
-    this.formPorcao.controls.id.patchValue(Number(this.form.controls.alimento.value));
+    this.formPorcao.controls.id.patchValue(this.form.controls.alimento.value);
     this.alimentosService.addPorcao(this.formPorcao.value);
   }
 
-  public getPortionCustom(idAlim: number): void {
+  public getPortionCustom(idAlim: number | string): void {
     this.portionStore.portions$.pipe(
       take(1),
       map((porcoes) => porcoes.filter((porcao) => porcao.id === idAlim)),

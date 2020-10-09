@@ -34,7 +34,7 @@ export class DropdownService {
         valor: 5
       },
       {
-        nome: 'Meus Aliementos',
+        nome: 'Meus Alimentos',
         valor: 6
       }
     ];
