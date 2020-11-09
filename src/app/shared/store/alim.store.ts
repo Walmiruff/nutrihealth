@@ -27,6 +27,11 @@ export class AlimStore {
         this.alimsSource.next(this.alims);
     }
 
+    public removeAll(): void {
+        this.alims.splice(0);
+        this.alimsSource.next(this.alims);
+    }
+
     public update(alim: IAlimento): void {
         const target = this.getId(alim.idAlimento);
         Object.assign(target, alim);

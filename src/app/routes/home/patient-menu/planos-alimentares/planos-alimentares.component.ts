@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { v4 as uuid } from 'uuid';
 import { Observable } from 'rxjs';
-import { switchMap, map, filter, tap, take } from 'rxjs/operators';
+import { switchMap, map, filter, tap, take, delay } from 'rxjs/operators';
 
 import { AlimentosService } from '../../../../shared/services/alimentos.service';
 import { DropdownService } from './service/dropdown.service';
@@ -45,6 +45,8 @@ export class PlanosAlimentaresComponent implements OnInit {
     this.triggersControls();
     this.alimentos$ = this.alimentosService.getAllAlimentos();
     this.tabelas = this.dropdownService.getTabelas();
+
+    this.refeicaoStore.refs$.subscribe((r) => console.log('refeicao', r));
   }
 
   public modalHiddenRef(): void {
@@ -70,8 +72,9 @@ export class PlanosAlimentaresComponent implements OnInit {
     this.formModalRef = this.formBuilder.group({
       horarioRefeicao: [null],
       tipoRefeicao: [null],
-      observacaoRefeicao: [null]
-    })
+      observacaoRefeicao: [null],
+      id: [null]
+    });
   }
 
   public triggersControls(): void {
@@ -122,7 +125,7 @@ export class PlanosAlimentaresComponent implements OnInit {
     this.modalService.showModalAlim();
   }
 
-  public addAlim(): void {
+  public saveOrUpdateAlim(): void {
     const alim: IAlimento = {
       idAlimento: uuid(),
       ordemListagem: this.alimSelected.ordemListagem,
@@ -175,12 +178,23 @@ export class PlanosAlimentaresComponent implements OnInit {
     this.alimStore.add(alim);
   }
 
-  public saveRef(): void  {
-    this.formModalRef.controls.tipoRefeicao.value;
-    const ref: IRefeicao = {
-      id: this.formModalRef
-    }
-    this.refeicaoStore.update(ref);
+  public saveOrUpdateRef(): void {
+    this.alimStore.alims$
+    .pipe(
+      take(1),
+      tap(alims => {
+      const ref: IRefeicao = {
+        id: uuid(),
+        itens: '1',
+        descricao: this.formModalRef.controls.tipoRefeicao.value,
+        observacao: this.formModalRef.controls.observacaoRefeicao.value,
+        alimentos: [...alims],
+      };
+      this.refeicaoStore.add(ref);
+    }),
+    delay(500),
+    )
+    .subscribe(() =>  this.alimStore.removeAll());
   }
 
 }

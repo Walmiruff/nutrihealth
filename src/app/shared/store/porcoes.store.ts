@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, BehaviorSubject } from 'rxjs';
 
-import { IPorcoes } from '../models/alimentos.model';
+import { IPorcoes } from '../models/porcoes.model';
 
 
 @Injectable({

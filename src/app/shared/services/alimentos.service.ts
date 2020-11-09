@@ -3,7 +3,8 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { Observable,forkJoin, of } from 'rxjs';
 import { map, shareReplay, tap } from 'rxjs/operators';
 
-import { IAlimento, IPorcoes } from '../models/alimentos.model';
+import { IAlimento } from '../models/alimentos.model';
+import { IPorcoes } from '../models/porcoes.model';
 import { PortionStore } from '../store/porcoes.store';
 import { AlimStore } from '../store/alim.store';
 

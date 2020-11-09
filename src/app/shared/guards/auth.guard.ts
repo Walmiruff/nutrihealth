@@ -4,7 +4,8 @@ import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router, CanLo
 import { Observable } from 'rxjs';
 
 import { AlimentosService } from '../services/alimentos.service';
-import { IPorcoes, IAlimento } from '../models/alimentos.model';
+import { IAlimento } from '../models/alimentos.model';
+import { IPorcoes } from '../models/porcoes.model';
 import { PortionStore } from '../store/porcoes.store';
 import { AlimStore } from '../store/alim.store';
 
