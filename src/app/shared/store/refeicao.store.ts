@@ -27,8 +27,8 @@ export class RefeicaoStore {
     }
 
     public removeAll(): void {
-       // this.refs.splice(0);
-       // this.refsSource.next(this.refs);
+       this.refs.splice(0);
+       this.refsSource.next(this.refs);
     }
 
     public update(ref: IRefeicao): void {

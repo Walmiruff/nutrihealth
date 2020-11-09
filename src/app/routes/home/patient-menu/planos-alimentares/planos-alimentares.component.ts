@@ -125,7 +125,7 @@ export class PlanosAlimentaresComponent implements OnInit {
     this.modalService.showModalAlim();
   }
 
-  public saveOrUpdateAlim(): void {
+  public saveAlim(): void {
     const alim: IAlimento = {
       idAlimento: uuid(),
       ordemListagem: this.alimSelected.ordemListagem,
@@ -178,7 +178,7 @@ export class PlanosAlimentaresComponent implements OnInit {
     this.alimStore.add(alim);
   }
 
-  public saveOrUpdateRef(): void {
+  public saveRef(): void {
     this.alimStore.alims$
     .pipe(
       take(1),
