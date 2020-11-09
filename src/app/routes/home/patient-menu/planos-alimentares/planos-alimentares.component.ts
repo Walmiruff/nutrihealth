@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { v4 as uuid } from 'uuid';
 import { Observable } from 'rxjs';
-import { switchMap, map, filter, tap, take, delay, shareReplay } from 'rxjs/operators';
+import { switchMap, map, filter, tap, take, delay } from 'rxjs/operators';
 
 import { AlimentosService } from '../../../../shared/services/alimentos.service';
 import { DropdownService } from './service/dropdown.service';
@@ -30,16 +30,16 @@ export class PlanosAlimentaresComponent implements OnInit {
   public tabelas: any[] = [];
   public alimSelected: IAlimento;
   public alimStore$: Observable<Array<IAlimento>>;
+  private refeicoes$: Observable<Array<IRefeicao>>,
 
   constructor(
     private formBuilder: FormBuilder,
     private alimentosService: AlimentosService,
     private dropdownService: DropdownService,
-    private portionStore: PortionStore,
     private modalService: ModalService,
+    private portionStore: PortionStore,
     private alimStore: AlimStore,
     private refeicaoStore: RefeicaoStore,
-    private refeicoes$: Observable<Array<IRefeicao>>,
   ) { }
 
   ngOnInit() {
@@ -50,8 +50,6 @@ export class PlanosAlimentaresComponent implements OnInit {
 
     this.refeicoes$ = this.refeicaoStore.refs$;
     this.alimStore$ = this.alimStore.alims$;
-
-    this.refeicaoStore.refs$.subscribe(r => console.log('refeicao', r));
   }
 
   public modalHiddenRef(): void {

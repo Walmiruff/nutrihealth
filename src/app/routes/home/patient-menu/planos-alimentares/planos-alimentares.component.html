@@ -42,13 +42,13 @@
               <div *ngIf="refeicoes$ | async as refs">
                 <div class="row" *ngFor="let ref of refs">
                   <div class="col-sm-4">
-                    {{ ref.descricao }}
+                   {{ ref.horario }} - {{ ref.descricao }}
                   </div>
                   <div class="col-sm-8">
                     <ul *ngFor="let alim of ref.alimentos">
                       <li>
-                        <a>{{ alim.descricao }}</a>
-                        <span>{{ alim.porcaoGramas }}</span>
+                        <a>{{ alim.descricao }} - </a>
+                        <span>{{ alim.porcao }}</span>
                       </li>
                     </ul>
                   </div>
