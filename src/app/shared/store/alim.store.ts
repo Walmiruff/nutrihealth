@@ -22,8 +22,8 @@ export class AlimStore {
         this.alimsSource.next(this.alims);
     }
 
-    public remove(alim: IAlimento): void{
-        this.alims = this.alims.filter((a) => a.idAlimento !== alim.idAlimento);
+    public remove(idAlimento: string): void{
+        this.alims = this.alims.filter((a) => a.idAlimento !== idAlimento);
         this.alimsSource.next(this.alims);
     }
 

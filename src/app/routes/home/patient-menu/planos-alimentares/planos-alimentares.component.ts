@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { v4 as uuid } from 'uuid';
 import { Observable } from 'rxjs';
-import { switchMap, map, filter, tap, take, delay } from 'rxjs/operators';
+import { switchMap, map, filter, tap, take, delay, shareReplay } from 'rxjs/operators';
 
 import { AlimentosService } from '../../../../shared/services/alimentos.service';
 import { DropdownService } from './service/dropdown.service';
@@ -29,6 +29,7 @@ export class PlanosAlimentaresComponent implements OnInit {
   public formModalRef: FormGroup;
   public tabelas: any[] = [];
   public alimSelected: IAlimento;
+  public alimStore$: Observable<Array<IAlimento>>;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -38,6 +39,7 @@ export class PlanosAlimentaresComponent implements OnInit {
     private modalService: ModalService,
     private alimStore: AlimStore,
     private refeicaoStore: RefeicaoStore,
+    private refeicoes$: Observable<Array<IRefeicao>>,
   ) { }
 
   ngOnInit() {
@@ -46,7 +48,10 @@ export class PlanosAlimentaresComponent implements OnInit {
     this.alimentos$ = this.alimentosService.getAllAlimentos();
     this.tabelas = this.dropdownService.getTabelas();
 
-    this.refeicaoStore.refs$.subscribe((r) => console.log('refeicao', r));
+    this.refeicoes$ = this.refeicaoStore.refs$;
+    this.alimStore$ = this.alimStore.alims$;
+
+    this.refeicaoStore.refs$.subscribe(r => console.log('refeicao', r));
   }
 
   public modalHiddenRef(): void {
@@ -195,6 +200,14 @@ export class PlanosAlimentaresComponent implements OnInit {
     delay(500),
     )
     .subscribe(() =>  this.alimStore.removeAll());
+  }
+
+  public removeAlim(idAlimento: string): void {
+    this.alimStore.remove(idAlimento);
+  }
+
+  public updateAlim(): void {
+
   }
 
 }

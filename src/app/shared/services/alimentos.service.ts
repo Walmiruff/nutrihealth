@@ -6,7 +6,7 @@ import { map, shareReplay, tap } from 'rxjs/operators';
 import { IAlimento } from '../models/alimentos.model';
 import { IPorcoes } from '../models/porcoes.model';
 import { PortionStore } from '../store/porcoes.store';
-import { AlimStore } from '../store/alim.store';
+import { AlimListStore } from '../store/alim-list.store';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +20,7 @@ export class AlimentosService {
   constructor(
     private firestore: AngularFirestore,
     private portionStore: PortionStore,
-    private alimStore: AlimStore,
+    private alimListStore: AlimListStore,
     ) { }
 
   public load(IBGE: IAlimento[], TACO: IAlimento[]): Observable<IAlimento[]>[] {
@@ -29,7 +29,7 @@ export class AlimentosService {
 
   public getAlimentos(n: number): Observable<Array<IAlimento>> {
     if (n === 6) {
-     return this.alimStore.alims$;
+     return this.alimListStore.alims$;
     } else {
       return (this.url[n - 1])
         .pipe(
@@ -61,7 +61,7 @@ export class AlimentosService {
     const authRef = this.firestore.collection('user_alimento').doc(localStorage.getItem('uid'));
     return authRef.collection('alimento').add(form) // add
       .then(() => {
-        this.alimStore.add(form);
+        this.alimListStore.add(form);
       });
   }
 

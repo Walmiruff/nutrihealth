@@ -7,7 +7,7 @@ import { AlimentosService } from '../services/alimentos.service';
 import { IAlimento } from '../models/alimentos.model';
 import { IPorcoes } from '../models/porcoes.model';
 import { PortionStore } from '../store/porcoes.store';
-import { AlimStore } from '../store/alim.store';
+import { AlimListStore } from '../store/alim-list.store';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +19,7 @@ export class AuthGuard implements CanActivate {
     private router: Router,
     private afAuth: AngularFireAuth,
     private portionStore: PortionStore,
-    private alimStore: AlimStore,
+    private alimListStore: AlimListStore,
     private alimentosService: AlimentosService
     ) { }
 
@@ -49,6 +49,6 @@ export class AuthGuard implements CanActivate {
 
   public loadPortionsAndAlims() {
     this.alimentosService.getPorcoes().subscribe((portions: IPorcoes[]) => this.portionStore.set(portions));
-    this.alimentosService.getAlimsDB().subscribe((alimentos: IAlimento[]) => this.alimStore.set(alimentos));
+    this.alimentosService.getAlimsDB().subscribe((alimentos: IAlimento[]) => this.alimListStore.set(alimentos));
   }
 }
