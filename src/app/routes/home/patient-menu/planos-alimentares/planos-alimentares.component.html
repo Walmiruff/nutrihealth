@@ -64,25 +64,25 @@
         </button>
       </div>
       <div class="modal-body" style="overflow-y: auto;">
-        <form>
+        <form [formGroup]="formModalRef">
           <div class="container">
 
             <div class="row" style="max-width: 496px;">
               <div class="col-sm-5 form-group">
                 <label class="col-form-label">Horário*</label>
-                <input class="form-control" id="horario-refeicao" type="time" placeholder="hh:mm" />
+                <input class="form-control" id="horarioRefeicao" formControlName="horarioRefeicao" type="time" placeholder="hh:mm" />
               </div>
               <div class="col-sm-7 form-group">
                 <label class="col-form-label">Descrição*</label>
-                <select id="descricao-refeicao" class="form-control">
-                  <option>Café da Manhã</option>
-                  <option>Lanche da Manhã</option>
-                  <option>Almoço</option>
-                  <option>Lanche da Tarde</option>
-                  <option>Jantar</option>
-                  <option>Lanche da Noite</option>
-                  <option>Lanche Extra 1</option>
-                  <option>Lanche Extra 2</option>
+                <select id="tipoRefeicao" class="form-control" formControlName="tipoRefeicao" id="tipoRefeicao">
+                  <option value="0-Café da Manhã">Café da Manhã</option>
+                  <option value="1-Lanche da Manhã">Lanche da Manhã</option>
+                  <option value="2-Almoço">Almoço</option>
+                  <option value="3-Lanche da Tarde">Lanche da Tarde</option>
+                  <option value="4-Jantar">Jantar</option>
+                  <option value="5-Lanche da Noite">Lanche da Noite</option>
+                  <option value="6-Lanche Extra 1">Lanche Extra 1</option>
+                  <option value="7-Lanche Extra 2">Lanche Extra 2</option>
                 </select>
               </div>
             </div>
@@ -90,7 +90,7 @@
             <div class="row mt-2">
               <div class="col-12">
                 <label class="col-form-label">Observação</label>
-                <textarea id="observacao-refeicao" class="form-control" maxlength="500"></textarea>
+                <textarea id="observacaoRefeicao" formControlName="observacaoRefeicao" class="form-control" maxlength="500"></textarea>
                 <small>Caracteres restantes <span id="caract-observacao-refeicao">500</span></small>
               </div>
             </div>
@@ -111,7 +111,7 @@
         <div>
           <button type="button" class="btn btn-secondary mr-2" data-dismiss="modal"
             (click)="classicModal.hide()">Cancelar</button>
-          <button type="button" class="btn btn-primary" (click)="smModal.show()">Salvar</button>
+          <button type="button" class="btn btn-primary" (click)="smModal.show(); saveRef()">Salvar</button>
         </div>
       </div>
     </div>

@@ -5,11 +5,13 @@ import { Observable } from 'rxjs';
 import { switchMap, map, filter, tap, take } from 'rxjs/operators';
 
 import { AlimentosService } from '../../../../shared/services/alimentos.service';
-import { IAlimento } from '../../../../shared/models/alimentos.model';
 import { DropdownService } from './service/dropdown.service';
-import { PortionStore } from '../../../../shared/store/porcoes.store';
+import { IAlimento } from '../../../../shared/models/alimentos.model';
+import { IRefeicao } from '../../../../shared/models/refeicao.model';
 import { ModalService } from '../../../../shared/services/modal.service';
+import { PortionStore } from '../../../../shared/store/porcoes.store';
 import { AlimStore } from '../../../../shared/store/alim.store';
+import { RefeicaoStore } from '../../../../shared/store/refeicao.store';
 
 @Component({
   selector: 'app-planos-alimentares',
@@ -24,6 +26,7 @@ export class PlanosAlimentaresComponent implements OnInit {
   public hiddenModalRef: Boolean = false;
   public form: FormGroup;
   public formPorcao: FormGroup;
+  public formModalRef: FormGroup;
   public tabelas: any[] = [];
   public alimSelected: IAlimento;
 
@@ -34,6 +37,7 @@ export class PlanosAlimentaresComponent implements OnInit {
     private portionStore: PortionStore,
     private modalService: ModalService,
     private alimStore: AlimStore,
+    private refeicaoStore: RefeicaoStore,
   ) { }
 
   ngOnInit() {
@@ -62,6 +66,12 @@ export class PlanosAlimentaresComponent implements OnInit {
       id: [null],
       statusOnline: 1,
     });
+
+    this.formModalRef = this.formBuilder.group({
+      horarioRefeicao: [null],
+      tipoRefeicao: [null],
+      observacaoRefeicao: [null]
+    })
   }
 
   public triggersControls(): void {
@@ -159,11 +169,18 @@ export class PlanosAlimentaresComponent implements OnInit {
       acucar: this.alimSelected.acucar,
       editavel: this.alimSelected.editavel,
       id: this.alimSelected.id,
-      statusOnline: this.alimSelected.statusOnline,
-      porcoes: this.alimSelected.porcoes
+      statusOnline: this.alimSelected.statusOnline
     };
 
     this.alimStore.add(alim);
+  }
+
+  public saveRef(): void  {
+    this.formModalRef.controls.tipoRefeicao.value;
+    const ref: IRefeicao = {
+      id: this.formModalRef
+    }
+    this.refeicaoStore.update(ref);
   }
 
 }

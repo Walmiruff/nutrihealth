@@ -1,3 +1,5 @@
+import { IPorcoes } from './porcoes.model';
+
 export interface IAlimento {
     idAlimento?: string;
     ordemListagem?: number;
@@ -45,13 +47,5 @@ export interface IAlimento {
     porcoes?: Array<IPorcoes>;
     editavel: boolean;
     id: number | string;
-    statusOnline: number;
-}
-
-export interface IPorcoes {
-    descricao: string;
-    gramas: number;
-    editavel: boolean;
-    id: number;
     statusOnline: number;
 }
