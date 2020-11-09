@@ -1,13 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
+import { v4 as uuid } from 'uuid';
 import { Observable } from 'rxjs';
 import { switchMap, map, filter, tap, take } from 'rxjs/operators';
 
 import { AlimentosService } from '../../../../shared/services/alimentos.service';
-import { IAlimento, IPorcoes } from '../../../../shared/models/alimentos.model';
+import { IAlimento } from '../../../../shared/models/alimentos.model';
 import { DropdownService } from './service/dropdown.service';
 import { PortionStore } from '../../../../shared/store/porcoes.store';
 import { ModalService } from '../../../../shared/services/modal.service';
+import { AlimStore } from '../../../../shared/store/alim.store';
 
 @Component({
   selector: 'app-planos-alimentares',
@@ -17,13 +19,13 @@ import { ModalService } from '../../../../shared/services/modal.service';
 
 
 export class PlanosAlimentaresComponent implements OnInit {
-
   public alimentos$: Observable<Array<IAlimento>>;
   public porcoes: any[] = [];
   public hiddenModalRef: Boolean = false;
   public form: FormGroup;
   public formPorcao: FormGroup;
   public tabelas: any[] = [];
+  public alimSelected: IAlimento;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -31,6 +33,7 @@ export class PlanosAlimentaresComponent implements OnInit {
     private dropdownService: DropdownService,
     private portionStore: PortionStore,
     private modalService: ModalService,
+    private alimStore: AlimStore,
   ) { }
 
   ngOnInit() {
@@ -47,7 +50,9 @@ export class PlanosAlimentaresComponent implements OnInit {
   public buildForms(): void {
     this.form = this.formBuilder.group({
       alimento: [null],
-      tabelas: [0]
+      tabelas: [0],
+      porcoes: [null],
+      quantidade: [null]
     });
 
     this.formPorcao = this.formBuilder.group({
@@ -75,6 +80,7 @@ export class PlanosAlimentaresComponent implements OnInit {
             .pipe(
               map((alimentos) => alimentos.filter((alimento) => alimento.id == (value))),
               map((alimentos) => {
+                this.alimSelected = alimentos[0];
                 alimentos[0].porcoes.forEach(element => {
                   this.porcoes.push(element);
                 });
@@ -104,6 +110,60 @@ export class PlanosAlimentaresComponent implements OnInit {
 
   public novaPorcao(): void {
     this.modalService.showModalAlim();
+  }
+
+  public addAlim(): void {
+    const alim: IAlimento = {
+      idAlimento: uuid(),
+      ordemListagem: this.alimSelected.ordemListagem,
+      porcao: this.form.controls.porcoes.value.split('-')[1],
+      porcaoGramas: Number(this.form.controls.porcoes.value.split('-')[0]),
+      quantidade: Number(this.form.controls.quantidade.value),
+      descricao: this.alimSelected.descricao,
+      idGrupo: this.alimSelected.idGrupo,
+      grupoAlimentar: this.alimSelected.grupoAlimentar,
+      origem: this.alimSelected.origem,
+      auditado: this.alimSelected.auditado,
+      calorias: this.alimSelected.calorias,
+      proteinas: this.alimSelected.proteinas,
+      gordurasTotais: this.alimSelected.gordurasTotais,
+      gordurasSaturadas: this.alimSelected.gordurasSaturadas,
+      gordurasMonoinsaturadas: this.alimSelected.gordurasMonoinsaturadas,
+      gordurasPoliInsaturadas: this.alimSelected.gordurasPoliInsaturadas,
+      gordurasTrans: this.alimSelected.gordurasTrans,
+      carboidratos: this.alimSelected.carboidratos,
+      fibras: this.alimSelected.fibras,
+      calcio: this.alimSelected.calcio,
+      magnesio: this.alimSelected.magnesio,
+      manganes: this.alimSelected.manganes,
+      fosforo: this.alimSelected.fosforo,
+      ferro: this.alimSelected.ferro,
+      sodio: this.alimSelected.sodio,
+      potassio: this.alimSelected.potassio,
+      cobre: this.alimSelected.cobre,
+      zinco: this.alimSelected.zinco,
+      selenio: this.alimSelected.selenio,
+      vitaminaA_Retinol: this.alimSelected.vitaminaA_Retinol,
+      vitaminaB1: this.alimSelected.vitaminaB1,
+      vitaminaB2: this.alimSelected.vitaminaB2,
+      vitaminaB3: this.alimSelected.vitaminaB3,
+      vitaminaB5: this.alimSelected.vitaminaB5,
+      vitaminaB6: this.alimSelected.vitaminaB6,
+      vitaminaB7: this.alimSelected.vitaminaB7,
+      vitaminaB9: this.alimSelected.vitaminaB9,
+      vitaminaB12: this.alimSelected.vitaminaB12,
+      vitaminaD: this.alimSelected.vitaminaD,
+      vitaminaE: this.alimSelected.vitaminaE,
+      vitaminaC: this.alimSelected.vitaminaC,
+      colesterol: this.alimSelected.colesterol,
+      acucar: this.alimSelected.acucar,
+      editavel: this.alimSelected.editavel,
+      id: this.alimSelected.id,
+      statusOnline: this.alimSelected.statusOnline,
+      porcoes: this.alimSelected.porcoes
+    };
+
+    this.alimStore.add(alim);
   }
 
 }

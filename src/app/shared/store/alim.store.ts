@@ -23,18 +23,18 @@ export class AlimStore {
     }
 
     public remove(alim: IAlimento): void{
-        this.alims = this.alims.filter((a) => a.id !== alim.id);
+        this.alims = this.alims.filter((a) => a.idAlimento !== alim.idAlimento);
         this.alimsSource.next(this.alims);
     }
 
     public update(alim: IAlimento): void {
-        const target = this.getId(alim.id);
+        const target = this.getId(alim.idAlimento);
         Object.assign(target, alim);
         this.alimsSource.next(this.alims);
     }
 
     public getId(alimId: number | string): IAlimento {
-        return this.alims.find((element) => element.id === alimId );
+        return this.alims.find((element) => element.idAlimento === alimId );
     }
  
 }

@@ -168,8 +168,8 @@
             <div class="row mt-3">
               <div class="col-6">
                 <label>Porção</label>
-                <select class="form-control">
-                  <option *ngFor="let porcao of porcoes" [value]="porcao.gramas">{{ porcao.descricao }}
+                <select class="form-control" formControlName="porcoes" id="porcoes">
+                  <option *ngFor="let porcao of porcoes" [value]="porcao.gramas + '-' + porcao.descricao">{{ porcao.descricao }}
                   </option>
                 </select>
               </div>
@@ -182,7 +182,7 @@
           <div class="row mt-3 mb-4">
             <div class="col-4">
               <label>Quantidade</label>
-              <input type="text" class="form-control">
+              <input type="text" class="form-control"  formControlName="quantidade" id="quantidade">
             </div>
           </div>
 
@@ -193,7 +193,7 @@
       <div class="modal-footer">
         <button id="btn-mostrar-nutrientes-alimento" type="button" class="btn btn-info disabled">Mostrar
           Nutrientes</button>
-        <button id="btn-add-alimento-continuar" type="button" class="btn btn-primary disabled">Incluir e
+        <button id="btn-add-alimento-continuar" type="button" class="btn btn-primary disabled" (click)="addAlim()">Incluir e
           Continuar</button>
         <button id="btn-add-alimento-fechar" type="button" class="btn btn-success disabled">Incluir e Fechar</button>
         <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
