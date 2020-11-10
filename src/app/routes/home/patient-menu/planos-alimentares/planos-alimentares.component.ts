@@ -134,7 +134,6 @@ export class PlanosAlimentaresComponent implements OnInit {
   public saveAlim(): void {
     const alim: IAlimento = {
       idAlimento: uuid(),
-      ordemListagem: this.alimSelected.ordemListagem,
       porcao: this.form.controls.porcoes.value.split('-')[1],
       porcaoGramas: Number(this.form.controls.porcoes.value.split('-')[0]),
       quantidade: Number(this.form.controls.quantidade.value),
