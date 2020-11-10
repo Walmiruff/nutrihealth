@@ -4,7 +4,7 @@ import { take, switchMap } from 'rxjs/operators';
 
 import { ToasterService, ToasterConfig } from 'angular2-toaster/angular2-toaster';
 
-import { IPatientmin } from '../../../shared/models/patientmin.model';
+import { IPatientmin } from '../../../shared/models/patient.model';
 import { PatientService } from '../../../shared/services/patient.service';
 import { ModalService } from '../../../shared/services/modal.service';
 import { PatientStore } from '../../../shared/store/patiente-store';

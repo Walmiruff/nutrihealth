@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 
 import { IPatient } from '../models/patient.model';
-import { IPatientmin } from '../models/patientmin.model';
+import { IPatientmin } from '../models/patient.model';
 
 @Injectable({
   providedIn: 'root'

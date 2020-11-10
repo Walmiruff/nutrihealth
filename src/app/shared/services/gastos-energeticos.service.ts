@@ -2,8 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 
 import { PatientStore } from '../store/patiente-store';
-import { IGastosEnerg } from '../models/gastos-energ.model';
-import { IGastosEnergMin } from '../models/gastos-energ-min.model';
+import { IGastosEnerg, IGastosEnergMin } from '../models/gastos-energ.model';
 
 
 @Injectable({
@@ -57,8 +56,6 @@ export class GastosEnergeticosService {
           desc: data.desc,
           dataAtend: data.dataAtend,
         });
-      })
+      });
   }
-
-  
 }

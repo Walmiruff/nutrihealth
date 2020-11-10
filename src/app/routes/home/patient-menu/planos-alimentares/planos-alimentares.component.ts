@@ -8,10 +8,12 @@ import { AlimentosService } from '../../../../shared/services/alimentos.service'
 import { DropdownService } from './service/dropdown.service';
 import { IAlimento } from '../../../../shared/models/alimentos.model';
 import { IRefeicao } from '../../../../shared/models/refeicao.model';
+import { IPlanoAlim } from '../../../../shared/models/plano-alim.model';
 import { ModalService } from '../../../../shared/services/modal.service';
 import { PortionStore } from '../../../../shared/store/porcoes.store';
 import { AlimStore } from '../../../../shared/store/alim.store';
 import { RefeicaoStore } from '../../../../shared/store/refeicao.store';
+import { PlanosAlimentaresService } from '../../../../shared/services/planos-alimentares.service';
 
 @Component({
   selector: 'app-planos-alimentares',
@@ -30,11 +32,12 @@ export class PlanosAlimentaresComponent implements OnInit {
   public tabelas: any[] = [];
   public alimSelected: IAlimento;
   public alimStore$: Observable<Array<IAlimento>>;
-  private refeicoes$: Observable<Array<IRefeicao>>,
+  public refeicoes$: Observable<Array<IRefeicao>>;
 
   constructor(
     private formBuilder: FormBuilder,
     private alimentosService: AlimentosService,
+    private planosAlimentaresService: PlanosAlimentaresService,
     private dropdownService: DropdownService,
     private modalService: ModalService,
     private portionStore: PortionStore,
@@ -183,21 +186,21 @@ export class PlanosAlimentaresComponent implements OnInit {
 
   public saveRef(): void {
     this.alimStore.alims$
-    .pipe(
-      take(1),
-      tap(alims => {
-      const ref: IRefeicao = {
-        id: uuid(),
-        itens: '1',
-        descricao: this.formModalRef.controls.tipoRefeicao.value,
-        observacao: this.formModalRef.controls.observacaoRefeicao.value,
-        alimentos: [...alims],
-      };
-      this.refeicaoStore.add(ref);
-    }),
-    delay(500),
-    )
-    .subscribe(() =>  this.alimStore.removeAll());
+      .pipe(
+        take(1),
+        tap(alims => {
+          const ref: IRefeicao = {
+            id: uuid(),
+            itens: '1',
+            descricao: this.formModalRef.controls.tipoRefeicao.value,
+            observacao: this.formModalRef.controls.observacaoRefeicao.value,
+            alimentos: [...alims],
+          };
+          this.refeicaoStore.add(ref);
+        }),
+        delay(500),
+      )
+      .subscribe(() => this.alimStore.removeAll());
   }
 
   public removeAlim(idAlimento: string): void {
@@ -206,6 +209,22 @@ export class PlanosAlimentaresComponent implements OnInit {
 
   public updateAlim(): void {
 
+  }
+
+  public savePA(): void {
+    this.refeicaoStore.refs$
+      .subscribe((refs) => {
+        const planoAlim: IPlanoAlim = {
+          codTipoDieta: 0,
+          calculado: true,
+          diasSemana: [0, 1, 2, 3, 4, 5, 6],
+          data: '09/11/2020',
+          nome: '',
+          descricao: 'texto text area',
+          refeicoes: refs
+        };
+        this.planosAlimentaresService.addPlano(planoAlim);
+      });
   }
 
 }

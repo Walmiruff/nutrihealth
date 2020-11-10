@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Observable, BehaviorSubject } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
+import { shareReplay } from 'rxjs/operators';
 
 import { IRefeicao } from '../models/refeicao.model';
 
@@ -10,7 +11,7 @@ import { IRefeicao } from '../models/refeicao.model';
 export class RefeicaoStore {
     private refsSource = new BehaviorSubject<IRefeicao[]>(null);
     private refs: IRefeicao[] = [];
-    refs$ = this.refsSource.asObservable();
+    refs$ = this.refsSource.asObservable().pipe(shareReplay(1));
 
     public set(refs: IRefeicao[]): void {
         this.refsSource.next(refs);

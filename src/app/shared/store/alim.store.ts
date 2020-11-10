@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Observable, BehaviorSubject } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
+import { shareReplay } from 'rxjs/operators';
 
 import { IAlimento } from '../models/alimentos.model';
 
@@ -11,7 +12,7 @@ export class AlimStore {
 
     private alimsSource = new BehaviorSubject<IAlimento[]>(null);
     private alims: IAlimento[] = [];
-    alims$ = this.alimsSource.asObservable();
+    alims$ = this.alimsSource.asObservable().pipe(shareReplay(1));
 
     public set(alims: IAlimento[]): void {
         this.alimsSource.next(alims);

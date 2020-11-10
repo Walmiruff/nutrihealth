@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 
 import { GastosEnergeticosService } from '../../../../../shared/services/gastos-energeticos.service';
-import { IGastosEnergMin } from '../../../../../shared/models/gastos-energ-min.model';
+import { IGastosEnergMin } from '../../../../../shared/models/gastos-energ.model';
 
 @Component({
   selector: 'app-cards',

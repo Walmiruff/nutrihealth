@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { shareReplay } from 'rxjs/operators';
 
-import { IPatientmin } from '../models/patientmin.model';
+import { IPatientmin } from '../models/patient.model';
 
 
 @Injectable({

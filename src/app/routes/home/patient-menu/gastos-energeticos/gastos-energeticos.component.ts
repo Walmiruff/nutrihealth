@@ -4,7 +4,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { map, switchMap, tap, filter, take } from 'rxjs/operators';
 
 import { IFormCanDeactivate } from '../../../../shared/models/form-candesactivate.model';
-import { IPatientmin } from '../../../../shared/models/patientmin.model';
+import { IPatientmin } from '../../../../shared/models/patient.model';
 import { PatientStore } from '../../../../shared/store/patiente-store';
 import { messages } from '../../../../shared/const/messages';
 import { GastosEnergeticosService } from '../../../../shared/services/gastos-energeticos.service';

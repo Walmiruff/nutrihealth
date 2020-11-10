@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { map } from 'rxjs/operators';
 
 import { PatientStore } from '../../../../../shared/store/patiente-store';
-import { IPatientmin } from '../../../../../shared/models/patientmin.model';
+import { IPatientmin } from '../../../../../shared/models/patient.model';
 import { Observable } from 'rxjs';
 
 @Component({
