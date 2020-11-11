@@ -23,4 +23,14 @@ export class PlanosAlimentaresService {
          authRef.collection('planos_alimentares').doc(docRef.id).update({ id: docRef.id });
       });
   }
+
+  getMin() {
+    const authRef = this.firestore.collection('user_planos_alimentares').doc(localStorage.getItem('uid'));
+    return authRef.collection<IPlanoAlim>('planos_alimentares_min').valueChanges();
+  }
+
+  getId(id: string) {
+    const authRef = this.firestore.collection('user_planos_alimentares').doc(localStorage.getItem('uid'));
+    return authRef.collection<IPlanoAlim>('planos_alimentares').doc(id).valueChanges();
+  }
 }

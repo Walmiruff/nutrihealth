@@ -62,6 +62,12 @@
             </div>
 
             <div class="card-body">
+                <div class="panel">
+                    <ol *ngIf="planosAlim$ | async as planosAlims">
+                        <li *ngFor="let planosAlim of planosAlims"
+                            (click)="navigateToById('/planos-alimentares', planosAlim.id)">{{ planosAlim.id }}</li>
+                    </ol>
+                </div>
                 <a href="#" class="color6 btn btn-primary" (click)="navigateTo('/planos-alimentares')">+ Adicionar</a>
             </div>
         </div>

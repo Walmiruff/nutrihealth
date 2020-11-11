@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
+import { Router, ActivatedRoute } from '@angular/router';
 import { v4 as uuid } from 'uuid';
 import { Observable } from 'rxjs';
 import { switchMap, map, filter, tap, take, delay } from 'rxjs/operators';
@@ -29,10 +30,12 @@ export class PlanosAlimentaresComponent implements OnInit {
   public form: FormGroup;
   public formPorcao: FormGroup;
   public formModalRef: FormGroup;
+  public formPlanoAlim: FormGroup;
   public tabelas: any[] = [];
   public alimSelected: IAlimento;
   public alimStore$: Observable<Array<IAlimento>>;
   public refeicoes$: Observable<Array<IRefeicao>>;
+  public id: string;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -43,6 +46,7 @@ export class PlanosAlimentaresComponent implements OnInit {
     private portionStore: PortionStore,
     private alimStore: AlimStore,
     private refeicaoStore: RefeicaoStore,
+    private route: ActivatedRoute,
   ) { }
 
   ngOnInit() {
@@ -53,6 +57,14 @@ export class PlanosAlimentaresComponent implements OnInit {
 
     this.refeicoes$ = this.refeicaoStore.refs$;
     this.alimStore$ = this.alimStore.alims$;
+
+    this.route.params
+      .pipe(
+        map((params: any) => this.id = params['id']),
+        filter(id => id !== undefined),
+        switchMap(id => this.planosAlimentaresService.getId(id)),
+        tap((planoAlim) => console.log('planoAlim', planoAlim)),
+      ).subscribe((planoAlim: IPlanoAlim) => this.refeicaoStore.set(planoAlim.refeicoes));
   }
 
   public modalHiddenRef(): void {
@@ -80,6 +92,19 @@ export class PlanosAlimentaresComponent implements OnInit {
       tipoRefeicao: [null],
       observacaoRefeicao: [null],
       id: [null]
+    });
+
+    this.formPlanoAlim = this.formBuilder.group({
+      calculado: [null],
+      dom: [false],
+      seg: [false],
+      ter: [false],
+      qua: [false],
+      qui: [false],
+      sex: [false],
+      sab: [false],
+      data: [null],
+      descricao: [null],
     });
   }
 
@@ -215,12 +240,12 @@ export class PlanosAlimentaresComponent implements OnInit {
       .subscribe((refs) => {
         const planoAlim: IPlanoAlim = {
           codTipoDieta: 0,
-          calculado: true,
-          diasSemana: [0, 1, 2, 3, 4, 5, 6],
-          data: '09/11/2020',
           nome: '',
+          diasSemana: [0, 1, 2, 3, 4, 5, 6],
+          refeicoes: refs,
+          calculado: true,
+          data: '09/11/2020',
           descricao: 'texto text area',
-          refeicoes: refs
         };
         this.planosAlimentaresService.addPlano(planoAlim);
       });
