@@ -60,11 +60,14 @@ export class PlanosAlimentaresComponent implements OnInit {
 
     this.route.params
       .pipe(
+        take(1),
         map((params: any) => this.id = params['id']),
         filter(id => id !== undefined),
         switchMap(id => this.planosAlimentaresService.getId(id)),
-        tap((planoAlim) => console.log('planoAlim', planoAlim)),
       ).subscribe((planoAlim: IPlanoAlim) => this.refeicaoStore.set(planoAlim.refeicoes));
+
+      this.alimStore.alims$.subscribe((alim) => console.log('alim', alim));
+      this.refeicaoStore.refs$.subscribe((ref) => console.log('ref', ref));
   }
 
   public modalHiddenRef(): void {
@@ -204,23 +207,23 @@ export class PlanosAlimentaresComponent implements OnInit {
       id: this.alimSelected.id,
       statusOnline: this.alimSelected.statusOnline
     };
-
-    this.alimStore.add(alim);
+      this.alimStore.add(alim);
   }
 
-  public saveRef(): void {
+  public saveOrUpdateRef(): void {
     this.alimStore.alims$
       .pipe(
         take(1),
         tap(alims => {
           const ref: IRefeicao = {
-            id: uuid(),
-            itens: '1',
+            id: this.formModalRef.controls.id.value === null ? uuid() : this.formModalRef.controls.id.value,
+            itens: '1', // primeira de opçao como refeiçao
             descricao: this.formModalRef.controls.tipoRefeicao.value,
             observacao: this.formModalRef.controls.observacaoRefeicao.value,
+            horario: this.formModalRef.controls.horarioRefeicao.value,
             alimentos: [...alims],
           };
-          this.refeicaoStore.add(ref);
+          this.formModalRef.controls.id.value === null ? this.refeicaoStore.add(ref) : this.refeicaoStore.update(ref);
         }),
         delay(500),
       )
@@ -236,7 +239,7 @@ export class PlanosAlimentaresComponent implements OnInit {
   }
 
   public savePA(): void {
-    this.refeicaoStore.refs$
+    this.refeicaoStore.refs$.pipe(take(1))
       .subscribe((refs) => {
         const planoAlim: IPlanoAlim = {
           codTipoDieta: 0,
@@ -249,6 +252,23 @@ export class PlanosAlimentaresComponent implements OnInit {
         };
         this.planosAlimentaresService.addPlano(planoAlim);
       });
+  }
+
+  public updateRef(refId: string): void {
+    // carregar o  modal de refeiçoes
+    this.refeicaoStore.refs$.pipe(
+      take(1),
+      map((refs) => refs.filter((ref) => ref.id === refId)),
+      )
+    .subscribe(refeicaoSelect => {
+      this.formModalRef.patchValue({
+        horarioRefeicao: refeicaoSelect[0].horario,
+        tipoRefeicao: refeicaoSelect[0].descricao,
+        observacaoRefeicao: refeicaoSelect[0].observacao,
+        id: refeicaoSelect[0].id
+      });
+      this.alimStore.set(refeicaoSelect[0].alimentos);
+    });
   }
 
 }

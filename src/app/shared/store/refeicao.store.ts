@@ -14,7 +14,8 @@ export class RefeicaoStore {
     refs$ = this.refsSource.asObservable().pipe(shareReplay(1));
 
     public set(refs: IRefeicao[]): void {
-        this.refsSource.next(refs);
+        this.refs = refs;
+        this.refsSource.next(this.refs);
     };
 
     public add(ref: IRefeicao): void {

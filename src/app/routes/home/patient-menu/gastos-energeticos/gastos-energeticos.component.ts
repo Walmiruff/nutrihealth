@@ -78,6 +78,7 @@ export class GastosEnergeticosComponent implements OnInit, IFormCanDeactivate {
     this.consultDataRegister();
     this.route.params
       .pipe(
+        take(1),
         map((params: any) => this.id = params['id']),
         filter(id => id !== undefined),
         switchMap(id => this.gastosEnergeticosService.getId(id)),
@@ -108,7 +109,7 @@ export class GastosEnergeticosComponent implements OnInit, IFormCanDeactivate {
   }
 
   public consultDataRegister(): void {
-    this.patienteStore.patiente$.subscribe((resp: IPatientmin) => {
+    this.patienteStore.patiente$.pipe(take(1)).subscribe((resp: IPatientmin) => {
 
       this.formularioPrincipal.patchValue({
         idade: this.convertTimestampDatePipe.transform((new Date(resp.txt_DN['seconds'] * 1000)), true),

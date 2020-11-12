@@ -41,7 +41,7 @@
               <!--Refeiçoes-->
               <div *ngIf="refeicoes$ | async as refs">
                 <div class="row" *ngFor="let ref of refs">
-                  <div class="col-sm-4">
+                  <div class="col-sm-4" (click)="updateRef(ref.id); classicModal.show()">
                    {{ ref.horario }} - {{ ref.descricao }}
                   </div>
                   <div class="col-sm-8">
@@ -146,7 +146,7 @@
           <button type="button" class="btn btn-secondary mr-2" data-dismiss="modal"
             (click)="classicModal.hide()">Cancelar</button>
           <button type="button" class="btn btn-primary"
-            (click)="classicModal.hide();smModal.hide(); saveRef()">Salvar</button>
+            (click)="classicModal.hide();smModal.hide(); saveOrUpdateRef()">Salvar</button>
         </div>
       </div>
     </div>

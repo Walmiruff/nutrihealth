@@ -15,7 +15,8 @@ export class AlimStore {
     alims$ = this.alimsSource.asObservable().pipe(shareReplay(1));
 
     public set(alims: IAlimento[]): void {
-        this.alimsSource.next(alims);
+        this.alims = alims;
+        this.alimsSource.next(this.alims);
     };
 
     public add(alim: IAlimento): void {

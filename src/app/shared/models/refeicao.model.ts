@@ -5,7 +5,7 @@ export interface IRefeicao {
     itens?: string;
     descricao?: string;
     observacao?: string;
-    id: number;
+    id: string;
     statusOnline?: number;
     alimentos?: Array<IAlimento>;
 }
