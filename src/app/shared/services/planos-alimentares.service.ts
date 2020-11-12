@@ -33,4 +33,17 @@ export class PlanosAlimentaresService {
     const authRef = this.firestore.collection('user_planos_alimentares').doc(localStorage.getItem('uid'));
     return authRef.collection<IPlanoAlim>('planos_alimentares').doc(id).valueChanges();
   }
+
+  updatePlano(dataPlan: IPlanoAlim, id: string) {
+    const authRef = this.firestore.collection('user_planos_alimentares').doc(localStorage.getItem('uid'));
+    return authRef.collection('planos_alimentares').doc(id).update(dataPlan)
+      .then(() => {
+        authRef.collection('planos_alimentares_min').doc(id).update({
+          id: id,
+          data: dataPlan.data,
+          diasSemana: dataPlan.diasSemana,
+          descricao: dataPlan.descricao,
+        });
+      });
+  }
 }

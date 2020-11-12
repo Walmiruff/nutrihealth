@@ -64,7 +64,12 @@ export class PlanosAlimentaresComponent implements OnInit {
         map((params: any) => this.id = params['id']),
         filter(id => id !== undefined),
         switchMap(id => this.planosAlimentaresService.getId(id)),
-      ).subscribe((planoAlim: IPlanoAlim) => this.refeicaoStore.set(planoAlim.refeicoes));
+      ).subscribe((planoAlim: IPlanoAlim) => {
+        this.formPlanoAlim.patchValue({
+          idPlanoAlim: planoAlim.id,
+        });
+        this.refeicaoStore.set(planoAlim.refeicoes);
+      });
   }
 
   public modalHiddenRef(): void {
@@ -106,6 +111,7 @@ export class PlanosAlimentaresComponent implements OnInit {
       sab: [false],
       data: [null],
       descricao: [null],
+      idPlanoAlim: [null]
     });
   }
 
@@ -115,7 +121,7 @@ export class PlanosAlimentaresComponent implements OnInit {
       this.porcoes.splice(0);
       this.formModalAlim.controls.alimento.reset();
       value === 0 ? this.alimentos$ = this.alimentosService.getAllAlimentos() :
-      this.alimentos$ = this.alimentosService.getAlimentos(value.toString());
+        this.alimentos$ = this.alimentosService.getAlimentos(value.toString());
     });
     this.formModalAlim.controls.alimento.valueChanges
       .pipe(
@@ -251,7 +257,7 @@ export class PlanosAlimentaresComponent implements OnInit {
       });
   }
 
-  public savePA(): void {
+  public saveOrUpdatePA(): void {
     this.refeicaoStore.refs$.pipe(take(1))
       .subscribe((refs) => {
         const planoAlim: IPlanoAlim = {
@@ -263,7 +269,9 @@ export class PlanosAlimentaresComponent implements OnInit {
           data: '09/11/2020',
           descricao: 'texto text area',
         };
-        this.planosAlimentaresService.addPlano(planoAlim);
+        const id = this.formPlanoAlim.controls.idPlanoAlim.value;
+        id === null ? this.planosAlimentaresService.addPlano(planoAlim) :
+        this.planosAlimentaresService.updatePlano(planoAlim, id);
       });
   }
 
