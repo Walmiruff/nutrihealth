@@ -70,6 +70,9 @@ export class PlanosAlimentaresComponent implements OnInit {
         });
         this.refeicaoStore.set(planoAlim.refeicoes);
       });
+
+    this.refeicaoStore.refs$.subscribe((refs) => console.log('refs', refs));
+    this.alimStore.alims$.subscribe((alims) => console.log('alims', alims));
   }
 
   public modalHiddenRef(): void {
@@ -293,13 +296,11 @@ export class PlanosAlimentaresComponent implements OnInit {
   }
 
   public clearModalAlim(): void {
-    // this.formModalAlim.reset();
+    this.formModalAlim.controls.idAlimento.patchValue(null);
   }
 
-  public clearModalAlimAndRef(): void {
+  public clearModalRef(): void {
     this.formModalRef.controls.id.patchValue(null);
-    // this.formModalRef.reset();
-    // this.formModalAlim.reset();
   }
 
 }
