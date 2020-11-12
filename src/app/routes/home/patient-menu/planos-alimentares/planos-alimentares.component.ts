@@ -292,4 +292,14 @@ export class PlanosAlimentaresComponent implements OnInit {
       });
   }
 
+  public clearModalAlim(): void {
+    // this.formModalAlim.reset();
+  }
+
+  public clearModalAlimAndRef(): void {
+    this.formModalRef.controls.id.patchValue(null);
+    // this.formModalRef.reset();
+    // this.formModalAlim.reset();
+  }
+
 }
