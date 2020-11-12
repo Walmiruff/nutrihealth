@@ -65,9 +65,6 @@ export class PlanosAlimentaresComponent implements OnInit {
         filter(id => id !== undefined),
         switchMap(id => this.planosAlimentaresService.getId(id)),
       ).subscribe((planoAlim: IPlanoAlim) => this.refeicaoStore.set(planoAlim.refeicoes));
-
-    this.alimStore.alims$.subscribe((alim) => console.log('alim', alim));
-    this.refeicaoStore.refs$.subscribe((ref) => console.log('ref', ref));
   }
 
   public modalHiddenRef(): void {
@@ -117,7 +114,8 @@ export class PlanosAlimentaresComponent implements OnInit {
       this.alimentos$ = null;
       this.porcoes.splice(0);
       this.formModalAlim.controls.alimento.reset();
-      value === 0 ? this.alimentos$ = this.alimentosService.getAllAlimentos() : this.alimentos$ = this.alimentosService.getAlimentos(value);
+      value === 0 ? this.alimentos$ = this.alimentosService.getAllAlimentos() :
+      this.alimentos$ = this.alimentosService.getAlimentos(value.toString());
     });
     this.formModalAlim.controls.alimento.valueChanges
       .pipe(
@@ -132,11 +130,12 @@ export class PlanosAlimentaresComponent implements OnInit {
                 alimentos[0].porcoes.forEach(element => {
                   this.porcoes.push(element);
                 });
-              })
+              }),
+              tap(() => this.getPortionCustom(this.formModalAlim.controls.alimento.value))
             );
         }),
       )
-      .subscribe(() => this.getPortionCustom(this.formModalAlim.controls.alimento.value));
+      .subscribe();
   }
 
   public onConfirm(): void {
@@ -243,9 +242,9 @@ export class PlanosAlimentaresComponent implements OnInit {
     )
       .subscribe(alimSelected => {
         this.formModalAlim.patchValue({
-          tabelas: 1,
+          tabelas: alimSelected[0].origem,
           alimento: alimSelected[0].id,
-          porcoes: `${alimSelected[0].porcaoGramas} - ${alimSelected[0].porcao}`,
+          porcoes: `${alimSelected[0].porcaoGramas}-${alimSelected[0].porcao}`,
           quantidade: alimSelected[0].quantidade,
           idAlimento: alimSelected[0].idAlimento,
         });

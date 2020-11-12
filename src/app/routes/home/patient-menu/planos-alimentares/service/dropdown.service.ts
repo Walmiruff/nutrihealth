@@ -15,27 +15,27 @@ export class DropdownService {
       },
       {
         nome: 'IBGE',
-        valor: 1
+        valor: 'IBGE'
       },
       {
         nome: 'TACO',
-        valor: 2
+        valor: 'TACO'
       },
       {
         nome: 'Tucunduva',
-        valor: 3
+        valor: 'Tucunduva'
       },
       {
         nome: 'Marcas',
-        valor: 4
+        valor: 'Marcas'
       },
       {
         nome: 'Suplementos',
-        valor: 5
+        valor: 'Suplementos'
       },
       {
         nome: 'Meus Alimentos',
-        valor: 6
+        valor: 'NUTRI'
       }
     ];
   }

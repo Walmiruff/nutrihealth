@@ -119,7 +119,7 @@
                 <div *ngFor="let alim of alims">
                   <div class="row">
                     <div class="col-5">
-                      <p>{{ alim.descricao }} ( {{ alim.porcao }} : {{alim.porcaoGramas}} )</p>
+                      <p>{{ alim.descricao }} ( {{ alim.porcao }} : {{alim.quantidade}} )</p>
                     </div>
                     <div class="col-7">
                       <div class="row">
@@ -196,7 +196,7 @@
                 </select>
               </div>
               <div class="col-6">
-                <button id="btn-novo-alim" class="btn btn-link" (click)="novaPorcao()" disabled>Cadastrar Nova
+                <button id="btn-novo-alim" class="btn btn-link" (click)="novaPorcao()" disabled>Cadastrar Novo
                   Alimento</button>
               </div>
             </div>

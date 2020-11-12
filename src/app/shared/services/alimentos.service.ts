@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { Observable,forkJoin, of } from 'rxjs';
+import { Observable, forkJoin, of } from 'rxjs';
 import { map, shareReplay, tap } from 'rxjs/operators';
 
 import { IAlimento } from '../models/alimentos.model';
@@ -21,27 +21,38 @@ export class AlimentosService {
     private firestore: AngularFirestore,
     private portionStore: PortionStore,
     private alimListStore: AlimListStore,
-    ) { }
+  ) { }
 
   public load(IBGE: IAlimento[], TACO: IAlimento[]): Observable<IAlimento[]>[] {
-   return this.url = [ this.alimIBGE$ = of(IBGE),  this.alimTACO$ = of(TACO)];
+    return this.url = [this.alimIBGE$ = of(IBGE), this.alimTACO$ = of(TACO)];
   }
 
-  public getAlimentos(n: number): Observable<Array<IAlimento>> {
-    if (n === 6) {
-     return this.alimListStore.alims$;
+  public getAlimentos(tabela: string | number): Observable<Array<IAlimento>> {
+    if (tabela === 'NUTRI') {
+      return this.alimListStore.alims$;
     } else {
-      return (this.url[n - 1])
-        .pipe(
-          map((resp) => resp['alimentos']),
-          shareReplay(1),
-        );
+      let n: number;
+      switch (tabela) {
+        case 'IBGE':
+          n = 0;
+          break;
+        case 'TACO':
+          n = 1;
+          break;
+        default:
+          n = 1;
+          break;
+      }
+      return (this.url[n]).pipe(
+        map((resp) => resp['alimentos']),
+        shareReplay(1),
+      );
     }
   }
 
   public getAllAlimentos(): Observable<Array<IAlimento>> {
-    return forkJoin(this.getAlimentos(1), this.getAlimentos(2))
-    .pipe(map(([a1, a2]) => [...a1, ...a2]));
+    return forkJoin(this.getAlimentos('IBGE'), this.getAlimentos('TACO'))
+      .pipe(map(([a1, a2]) => [...a1, ...a2]));
   }
 
   public addPorcao(form: IPorcoes) {
@@ -71,3 +82,10 @@ export class AlimentosService {
   }
 
 }
+
+
+// IBGE 4
+// TACO 1
+// Tucunduva 3
+// Marcas 6
+// Suplementos 13
