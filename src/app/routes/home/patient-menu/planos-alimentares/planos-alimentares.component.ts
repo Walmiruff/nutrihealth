@@ -27,7 +27,7 @@ export class PlanosAlimentaresComponent implements OnInit {
   public alimentos$: Observable<Array<IAlimento>>;
   public porcoes: any[] = [];
   public hiddenModalRef: Boolean = false;
-  public form: FormGroup;
+  public formModalAlim: FormGroup;
   public formPorcao: FormGroup;
   public formModalRef: FormGroup;
   public formPlanoAlim: FormGroup;
@@ -66,8 +66,8 @@ export class PlanosAlimentaresComponent implements OnInit {
         switchMap(id => this.planosAlimentaresService.getId(id)),
       ).subscribe((planoAlim: IPlanoAlim) => this.refeicaoStore.set(planoAlim.refeicoes));
 
-      this.alimStore.alims$.subscribe((alim) => console.log('alim', alim));
-      this.refeicaoStore.refs$.subscribe((ref) => console.log('ref', ref));
+    this.alimStore.alims$.subscribe((alim) => console.log('alim', alim));
+    this.refeicaoStore.refs$.subscribe((ref) => console.log('ref', ref));
   }
 
   public modalHiddenRef(): void {
@@ -75,11 +75,12 @@ export class PlanosAlimentaresComponent implements OnInit {
   }
 
   public buildForms(): void {
-    this.form = this.formBuilder.group({
+    this.formModalAlim = this.formBuilder.group({
       alimento: [null],
       tabelas: [0],
       porcoes: [null],
-      quantidade: [null]
+      quantidade: [null],
+      idAlimento: [null]
     });
 
     this.formPorcao = this.formBuilder.group({
@@ -112,13 +113,13 @@ export class PlanosAlimentaresComponent implements OnInit {
   }
 
   public triggersControls(): void {
-    this.form.controls.tabelas.valueChanges.subscribe(value => {
+    this.formModalAlim.controls.tabelas.valueChanges.subscribe(value => {
       this.alimentos$ = null;
       this.porcoes.splice(0);
-      this.form.controls.alimento.reset();
+      this.formModalAlim.controls.alimento.reset();
       value === 0 ? this.alimentos$ = this.alimentosService.getAllAlimentos() : this.alimentos$ = this.alimentosService.getAlimentos(value);
     });
-    this.form.controls.alimento.valueChanges
+    this.formModalAlim.controls.alimento.valueChanges
       .pipe(
         filter(value => value !== null),
         switchMap(value => {
@@ -135,11 +136,11 @@ export class PlanosAlimentaresComponent implements OnInit {
             );
         }),
       )
-      .subscribe(() => this.getPortionCustom(this.form.controls.alimento.value));
+      .subscribe(() => this.getPortionCustom(this.formModalAlim.controls.alimento.value));
   }
 
   public onConfirm(): void {
-    this.formPorcao.controls.id.patchValue(this.form.controls.alimento.value);
+    this.formPorcao.controls.id.patchValue(this.formModalAlim.controls.alimento.value);
     this.alimentosService.addPorcao(this.formPorcao.value);
   }
 
@@ -161,10 +162,10 @@ export class PlanosAlimentaresComponent implements OnInit {
 
   public saveAlim(): void {
     const alim: IAlimento = {
-      idAlimento: uuid(),
-      porcao: this.form.controls.porcoes.value.split('-')[1],
-      porcaoGramas: Number(this.form.controls.porcoes.value.split('-')[0]),
-      quantidade: Number(this.form.controls.quantidade.value),
+      idAlimento: this.formModalAlim.controls.idAlimento.value === null ? uuid() : this.formModalAlim.controls.idAlimento.value,
+      porcao: this.formModalAlim.controls.porcoes.value.split('-')[1],
+      porcaoGramas: Number(this.formModalAlim.controls.porcoes.value.split('-')[0]),
+      quantidade: Number(this.formModalAlim.controls.quantidade.value),
       descricao: this.alimSelected.descricao,
       idGrupo: this.alimSelected.idGrupo,
       grupoAlimentar: this.alimSelected.grupoAlimentar,
@@ -207,7 +208,7 @@ export class PlanosAlimentaresComponent implements OnInit {
       id: this.alimSelected.id,
       statusOnline: this.alimSelected.statusOnline
     };
-      this.alimStore.add(alim);
+    this.formModalAlim.controls.idAlimento.value === null ? this.alimStore.add(alim) : this.alimStore.update(alim);
   }
 
   public saveOrUpdateRef(): void {
@@ -234,8 +235,21 @@ export class PlanosAlimentaresComponent implements OnInit {
     this.alimStore.remove(idAlimento);
   }
 
-  public updateAlim(): void {
-
+  public updateAlim(alimId: string): void {
+    // carreagar modal de alimentos
+    this.alimStore.alims$.pipe(
+      take(1),
+      map((alims) => alims.filter((alim) => alim.id === alimId)),
+    )
+      .subscribe(alimSelected => {
+        this.formModalAlim.patchValue({
+          tabelas: 1,
+          alimento: alimSelected[0].id,
+          porcoes: `${alimSelected[0].porcaoGramas} - ${alimSelected[0].porcao}`,
+          quantidade: alimSelected[0].quantidade,
+          idAlimento: alimSelected[0].idAlimento,
+        });
+      });
   }
 
   public savePA(): void {
@@ -259,16 +273,16 @@ export class PlanosAlimentaresComponent implements OnInit {
     this.refeicaoStore.refs$.pipe(
       take(1),
       map((refs) => refs.filter((ref) => ref.id === refId)),
-      )
-    .subscribe(refeicaoSelect => {
-      this.formModalRef.patchValue({
-        horarioRefeicao: refeicaoSelect[0].horario,
-        tipoRefeicao: refeicaoSelect[0].descricao,
-        observacaoRefeicao: refeicaoSelect[0].observacao,
-        id: refeicaoSelect[0].id
+    )
+      .subscribe(refeicaoSelect => {
+        this.formModalRef.patchValue({
+          horarioRefeicao: refeicaoSelect[0].horario,
+          tipoRefeicao: refeicaoSelect[0].descricao,
+          observacaoRefeicao: refeicaoSelect[0].observacao,
+          id: refeicaoSelect[0].id
+        });
+        this.alimStore.set(refeicaoSelect[0].alimentos);
       });
-      this.alimStore.set(refeicaoSelect[0].alimentos);
-    });
   }
 
 }

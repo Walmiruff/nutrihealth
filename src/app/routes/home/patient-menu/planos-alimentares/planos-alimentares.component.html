@@ -40,7 +40,7 @@
               </div>
               <!--Refeiçoes-->
               <div *ngIf="refeicoes$ | async as refs">
-                <div class="row" *ngFor="let ref of refs">
+                <div class="row mb-4" *ngFor="let ref of refs">
                   <div class="col-sm-4" (click)="updateRef(ref.id); classicModal.show()">
                    {{ ref.horario }} - {{ ref.descricao }}
                   </div>
@@ -123,7 +123,7 @@
                     </div>
                     <div class="col-7">
                       <div class="row">
-                        <button type="button" class="btn btn-success" (click)="updateAlim()">Editar</button>
+                        <button type="button" class="btn btn-success" (click)="updateAlim(alim.id); smModal.show(); modalHiddenRef()">Editar</button>
                         <button type="button" class="btn btn-secondary ml-2"
                           (click)="removeAlim(alim.idAlimento)">Remover</button>
                       </div>
@@ -167,7 +167,7 @@
       </div>
       <div class="modal-body">
         <!--Start Tabela Alimentos-->
-        <form [formGroup]="form">
+        <form [formGroup]="formModalAlim">
           <div class="row mt-4">
             <div class="col-12">
               <div class="row">
