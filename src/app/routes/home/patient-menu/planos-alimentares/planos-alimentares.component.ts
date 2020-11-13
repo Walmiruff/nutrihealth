@@ -81,10 +81,10 @@ export class PlanosAlimentaresComponent implements OnInit {
 
   public buildForms(): void {
     this.formModalAlim = this.formBuilder.group({
+      tabelas: ['TACO'],
       alimento: [null],
-      tabelas: [0],
       porcoes: [null],
-      quantidade: [null],
+      quantidade: [1],
       idAlimento: [null]
     });
 
@@ -123,6 +123,7 @@ export class PlanosAlimentaresComponent implements OnInit {
       this.alimentos$ = null;
       this.porcoes.splice(0);
       this.formModalAlim.controls.alimento.reset();
+      this.formModalAlim.controls.quantidade.patchValue(1);
       value === 0 ? this.alimentos$ = this.alimentosService.getAllAlimentos() :
         this.alimentos$ = this.alimentosService.getAlimentos(value.toString());
     });
@@ -136,11 +137,11 @@ export class PlanosAlimentaresComponent implements OnInit {
               map((alimentos) => alimentos.filter((alimento) => alimento.id == (value))),
               map((alimentos) => {
                 this.alimSelected = alimentos[0];
-                alimentos[0].porcoes.forEach(element => {
+                alimentos[0].porcoes.map(element => {
                   this.porcoes.push(element);
                 });
               }),
-              tap(() => this.getPortionCustom(this.formModalAlim.controls.alimento.value))
+              tap(() => this.getPortionCustom(this.formModalAlim.controls.alimento.value)),
             );
         }),
       )
@@ -158,7 +159,7 @@ export class PlanosAlimentaresComponent implements OnInit {
       filter(porcoes => porcoes.length > 0),
       map((porcoes) => porcoes.filter((porcao) => porcao.id === idAlim)),
     ).subscribe((porcoes) => {
-      porcoes.forEach(element => {
+      porcoes.map(element => {
         this.porcoes.push(element);
       });
     });
@@ -274,7 +275,7 @@ export class PlanosAlimentaresComponent implements OnInit {
         };
         const id = this.formPlanoAlim.controls.idPlanoAlim.value;
         id === null ? this.planosAlimentaresService.addPlano(planoAlim) :
-        this.planosAlimentaresService.updatePlano(planoAlim, id);
+          this.planosAlimentaresService.updatePlano(planoAlim, id);
       });
   }
 
@@ -296,11 +297,18 @@ export class PlanosAlimentaresComponent implements OnInit {
   }
 
   public clearModalAlim(): void {
-    this.formModalAlim.controls.idAlimento.patchValue(null);
+    this.formModalAlim.patchValue({
+      tabelas: 'TACO',
+      alimento: null,
+      porcoes: null,
+      quantidade: 1,
+      idAlimento: null
+    });
   }
 
   public clearModalRef(): void {
-    this.formModalRef.controls.id.patchValue(null);
+    this.formModalRef.reset();
+    this.alimStore.set([]);
   }
 
 }
