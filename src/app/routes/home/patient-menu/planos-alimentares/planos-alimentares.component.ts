@@ -9,7 +9,7 @@ import { AlimentosService } from '../../../../shared/services/alimentos.service'
 import { DropdownService } from './service/dropdown.service';
 import { IAlimento } from '../../../../shared/models/alimentos.model';
 import { IRefeicao } from '../../../../shared/models/refeicao.model';
-import { IPlanoAlim } from '../../../../shared/models/plano-alim.model';
+import { IPlanoAlim, IPlanoAlimMin } from '../../../../shared/models/plano-alim.model';
 import { ModalService } from '../../../../shared/services/modal.service';
 import { PortionStore } from '../../../../shared/store/porcoes.store';
 import { AlimStore } from '../../../../shared/store/alim.store';
@@ -37,6 +37,7 @@ export class PlanosAlimentaresComponent implements OnInit {
   public alimStore$: Observable<Array<IAlimento>>;
   public refeicoes$: Observable<Array<IRefeicao>>;
   public id: string;
+  public modeloPlanoAlim$: Observable<IPlanoAlimMin[]>;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -268,15 +269,15 @@ export class PlanosAlimentaresComponent implements OnInit {
       .subscribe((refs) => {
         const planoAlim: IPlanoAlim = {
           codTipoDieta: 0,
-          nome: '',
           diasSemana: [0, 1, 2, 3, 4, 5, 6],
           refeicoes: refs,
           calculado: true,
           data: '09/11/2020',
           descricao: 'texto text area',
+          nome: ''
         };
         const id = this.formPlanoAlim.controls.idPlanoAlim.value;
-        id === null ? this.modelosPlanosAlimentaresService.addPlano(planoAlim) :
+        id === null ? this.planosAlimentaresService.addPlano(planoAlim) :
           this.planosAlimentaresService.updatePlano(planoAlim, id);
       });
   }
@@ -312,5 +313,22 @@ export class PlanosAlimentaresComponent implements OnInit {
     this.formModalRef.reset();
     this.alimStore.set([]);
   }
+
+  /** Carregar um modelo ou recordatorio **/
+  public loadModelosPlanosAlim(): void {
+   this.modeloPlanoAlim$ = this.modelosPlanosAlimentaresService.getMin();
+  }
+
+  public findModeloPlanoAlim(idPA: string): void {
+    this.modelosPlanosAlimentaresService.getId(idPA)
+    .subscribe((planoAlim: IPlanoAlim) => {
+      this.formPlanoAlim.patchValue({
+        idPlanoAlim: uuid(),
+      });
+      this.refeicaoStore.set(planoAlim.refeicoes);
+    });
+  }
+
+
 
 }

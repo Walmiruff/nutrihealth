@@ -13,8 +13,9 @@ export interface IPlanoAlim {
     refeicoes?: Array<IRefeicao>;
 }
 
-export interface IPlanoAlim {
+export interface IPlanoAlimMin {
     data?: string;
     descricao?: string;
     diasSemana?: Array<number>;
+    nome?: string;
 }

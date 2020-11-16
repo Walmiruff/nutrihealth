@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 
-import { IPlanoAlim } from '../models/plano-alim.model';
+import { IPlanoAlim, IPlanoAlimMin } from '../models/plano-alim.model';
 
 @Injectable({
   providedIn: 'root'
@@ -24,7 +24,7 @@ export class ModelosPlanosAlimentaresService {
 
   getMin() {
     const authRef = this.firestore.collection('user_modelos_planos_alimentares').doc(localStorage.getItem('uid'));
-    return authRef.collection<IPlanoAlim>('modelos_planos_alimentares_min').valueChanges();
+    return authRef.collection<IPlanoAlimMin>('modelos_planos_alimentares_min').valueChanges();
   }
 
   getId(id: string) {
