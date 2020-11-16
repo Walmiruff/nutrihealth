@@ -15,6 +15,7 @@ import { PortionStore } from '../../../../shared/store/porcoes.store';
 import { AlimStore } from '../../../../shared/store/alim.store';
 import { RefeicaoStore } from '../../../../shared/store/refeicao.store';
 import { PlanosAlimentaresService } from '../../../../shared/services/planos-alimentares.service';
+import { ModelosPlanosAlimentaresService } from '../../../../shared/services/modelos-planos-alimentares.service';
 
 @Component({
   selector: 'app-planos-alimentares',
@@ -41,6 +42,7 @@ export class PlanosAlimentaresComponent implements OnInit {
     private formBuilder: FormBuilder,
     private alimentosService: AlimentosService,
     private planosAlimentaresService: PlanosAlimentaresService,
+    private modelosPlanosAlimentaresService: ModelosPlanosAlimentaresService,
     private dropdownService: DropdownService,
     private modalService: ModalService,
     private portionStore: PortionStore,
@@ -274,7 +276,7 @@ export class PlanosAlimentaresComponent implements OnInit {
           descricao: 'texto text area',
         };
         const id = this.formPlanoAlim.controls.idPlanoAlim.value;
-        id === null ? this.planosAlimentaresService.addPlano(planoAlim) :
+        id === null ? this.modelosPlanosAlimentaresService.addPlano(planoAlim) :
           this.planosAlimentaresService.updatePlano(planoAlim, id);
       });
   }
