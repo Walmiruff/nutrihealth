@@ -282,8 +282,9 @@ export class PlanosAlimentaresComponent implements OnInit {
       });
   }
 
-  public updateRef(refId: string): void {
+  public updateRef(refId: string, isCopy: boolean): void {
     // carregar o  modal de refeiçoes
+    let copyRefeicaoSelectyAlim: any[] = [];
     this.refeicaoStore.refs$.pipe(
       take(1),
       map((refs) => refs.filter((ref) => ref.id === refId)),
@@ -293,10 +294,18 @@ export class PlanosAlimentaresComponent implements OnInit {
           horarioRefeicao: refeicaoSelect[0].horario,
           tipoRefeicao: refeicaoSelect[0].descricao,
           observacaoRefeicao: refeicaoSelect[0].observacao,
-          id: refeicaoSelect[0].id
+          id: isCopy === true ? null : refeicaoSelect[0].id,
         });
-        this.alimStore.set(refeicaoSelect[0].alimentos);
+        if (isCopy === true) { // mudar idAlimentos
+          copyRefeicaoSelectyAlim = JSON.parse(JSON.stringify(refeicaoSelect[0].alimentos));
+          copyRefeicaoSelectyAlim.map(alim => alim.idAlimento = uuid());
+        }
+        this.alimStore.set(isCopy === true ? copyRefeicaoSelectyAlim : refeicaoSelect[0].alimentos);
       });
+  }
+
+  public deleteRef(refId: string): void {
+    this.refeicaoStore.remove(refId);
   }
 
   public clearModalAlim(): void {

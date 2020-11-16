@@ -23,8 +23,8 @@ export class RefeicaoStore {
         this.refsSource.next(this.refs);
     }
 
-    public remove(ref: IRefeicao): void {
-        this.refs = this.refs.filter((a) => a.id !== ref.id);
+    public remove(refId: string): void {
+        this.refs = this.refs.filter((a) => a.id !== refId);
         this.refsSource.next(this.refs);
     }
 

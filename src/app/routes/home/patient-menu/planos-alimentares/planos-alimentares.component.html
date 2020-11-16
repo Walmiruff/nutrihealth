@@ -41,8 +41,15 @@
               <!--Refeiçoes-->
               <div *ngIf="refeicoes$ | async as refs">
                 <div class="row mb-4" *ngFor="let ref of refs">
-                  <div class="col-sm-4" (click)="updateRef(ref.id); classicModal.show()">
+                  <div class="col-sm-4">
                    {{ ref.horario }} - {{ ref.descricao }}
+                   <div class="row mt-2">
+                     <div class="col-sm-12">
+                       <em class="fa mr-2 fas fa-edit" (click)="updateRef(ref.id, false); classicModal.show()"></em>
+                       <em class="fa mr-2 fas fa-trash" (click)="deleteRef(ref.id)"></em>
+                       <em class="fa mr-2 fas fa-copy" (click)="updateRef(ref.id, true); classicModal.show()"></em>
+                     </div>
+                   </div>
                   </div>
                   <div class="col-sm-8">
                     <ul *ngFor="let alim of ref.alimentos">
