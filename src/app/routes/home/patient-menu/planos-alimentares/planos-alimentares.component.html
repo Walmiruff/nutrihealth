@@ -129,54 +129,62 @@
             </div>
 
             <div class="d-flex justify-content-between mt-5">
-              <h5>Alimentos Selecionados</h5>
-              <div *ngIf="alimStore$ | async as alims">
-                
-                <div *ngIf="alims | primOrSecOp: 1">
-                  <div *ngFor="let alim of alims">
-                    <div class="row">
-                      <div class="col-5">
-                        <p>{{ alim.descricao }} ( {{ alim.porcao }} : {{alim.quantidade}} )</p>
-                      </div>
-                      <div class="col-7">
-                        <div class="row">
-                          <button type="button" class="btn btn-success"
-                            (click)="updateAlim(alim.id); smModal.show(); modalHiddenRef(); addOptionFalse()">Editar</button>
-                          <button type="button" class="btn btn-secondary ml-2"
-                            (click)="removeAlim(alim.idAlimento)">Remover</button>
+              <div class="row">
+                <div class="col-12">
+                  <h5>Alimentos Selecionados</h5>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-12">
+                  <div *ngIf="alimStorePrimary$ | async as alims">
+                    <div *ngFor="let alim of alims">
+                      <div class="row">
+                        <div class="col-5">
+                          <p>{{ alim.descricao }} ( {{ alim.porcao }} : {{alim.quantidade}} )</p>
+                        </div>
+                        <div class="col-7">
+                          <div class="row">
+                            <button type="button" class="btn btn-success"
+                              (click)="updateAlim(alim.id); smModal.show(); modalHiddenRef(); addOptionFalse()">Editar</button>
+                            <button type="button" class="btn btn-secondary ml-2"
+                              (click)="removeAlim(alim.idAlimento)">Remover</button>
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
-             
-                <p *ngIf="hasSecondOption(alims)"><strong>Segunda Opção</strong></p>
-             
-                <div *ngIf="alims | primOrSecOp: 2">
-                <div *ngFor="let alim of alims | primOrSecOp: 2">
-                  <div class="row">
-                    <div class="col-5">
-                      <p>{{ alim.descricao }} ( {{ alim.porcao }} : {{alim.quantidade}} )</p>
-                    </div>
-                    <div class="col-7">
-                      <div class="row">
-                        <button type="button" class="btn btn-success"
-                          (click)="updateAlim(alim.id); smModal.show(); modalHiddenRef(); addOption()">Editar</button>
-                        <button type="button" class="btn btn-secondary ml-2"
-                          (click)="removeAlim(alim.idAlimento)">Remover</button>
+              </div>
+
+                <div class="row">
+                  <div class="col-12">
+                    <div *ngIf="alimStoreSecond$ | async as alims">
+                      <p *ngIf="alims.length > 0"><strong>Segunda Opção</strong></p>
+                      <div *ngFor="let alim of alims">
+                        <div class="row">
+                          <div class="col-5">
+                            <p>{{ alim.descricao }} ( {{ alim.porcao }} : {{alim.quantidade}} )</p>
+                          </div>
+                          <div class="col-7">
+                            <div class="row">
+                              <button type="button" class="btn btn-success"
+                                (click)="updateAlim(alim.id); smModal.show(); modalHiddenRef(); addOption()">Editar</button>
+                              <button type="button" class="btn btn-secondary ml-2"
+                                (click)="removeAlim(alim.idAlimento)">Remover</button>
+                            </div>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
-                </div>
-              
               </div>
-            </div>
-            <button type="button" class="mr-1 mb-1 btn btn-outline-primary"
-              (click)="smModal.show(); modalHiddenRef(); clearModalAlim(); addOptionFalse()">+
-              Adicionar Alimento</button>
+              <button type="button" class="mr-1 mb-1 btn btn-outline-primary"
+                (click)="smModal.show(); modalHiddenRef(); clearModalAlim(); addOptionFalse()">+
+                Adicionar Alimento</button>
 
-          </div>
+            </div>
         </form>
       </div>
       <div class="flex space-between modal-footer">

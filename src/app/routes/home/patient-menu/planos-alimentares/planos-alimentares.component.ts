@@ -35,6 +35,8 @@ export class PlanosAlimentaresComponent implements OnInit {
   public tabelas: any[] = [];
   public alimSelected: IAlimento;
   public alimStore$: Observable<Array<IAlimento>>;
+  public alimStorePrimary$: Observable<Array<IAlimento>>;
+  public alimStoreSecond$: Observable<Array<IAlimento>>;
   public refeicoes$: Observable<Array<IRefeicao>>;
   public id: string;
   public modeloPlanoAlim$: Observable<IPlanoAlimMin[]>;
@@ -74,6 +76,8 @@ export class PlanosAlimentaresComponent implements OnInit {
         });
         this.refeicaoStore.set(planoAlim.refeicoes);
       });
+
+    this.separetePrimOrSecOption();
 
     this.refeicaoStore.refs$.subscribe((refs) => console.log('refs', refs));
     this.alimStore.alims$.subscribe((alims) => console.log('alims', alims));
@@ -333,19 +337,31 @@ export class PlanosAlimentaresComponent implements OnInit {
     this.isSegundaOpcao = true;
   }
 
+  public separetePrimOrSecOption(): void {
+    this.alimStorePrimary$ = this.alimStore$.pipe(
+      filter(alim => alim !== null && alim.length > 0),
+      map(alims => alims.filter(alim => alim.ordemListagem === 1)),
+    );
+
+    this.alimStoreSecond$ = this.alimStore$.pipe(
+      filter(alim => alim !== null && alim.length > 0),
+      map(alims => alims.filter(alim => alim.ordemListagem === 2)),
+    );
+  }
+
   /** Carregar um modelo ou recordatorio **/
   public loadModelosPlanosAlim(): void {
-   this.modeloPlanoAlim$ = this.modelosPlanosAlimentaresService.getMin();
+    this.modeloPlanoAlim$ = this.modelosPlanosAlimentaresService.getMin();
   }
 
   public findModeloPlanoAlim(idPA: string): void {
     this.modelosPlanosAlimentaresService.getId(idPA)
-    .subscribe((planoAlim: IPlanoAlim) => {
-      this.formPlanoAlim.patchValue({
-        idPlanoAlim: uuid(),
+      .subscribe((planoAlim: IPlanoAlim) => {
+        this.formPlanoAlim.patchValue({
+          idPlanoAlim: uuid(),
+        });
+        this.refeicaoStore.set(planoAlim.refeicoes);
       });
-      this.refeicaoStore.set(planoAlim.refeicoes);
-    });
   }
 
   public hasSecondOption(alims: IAlimento[]): boolean {
