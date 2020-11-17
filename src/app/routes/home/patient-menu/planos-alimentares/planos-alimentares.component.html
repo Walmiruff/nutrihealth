@@ -26,7 +26,8 @@
               <div class="flex space-between">
                 <label for="desc">Refeições</label>
                 <div>
-                  <button type="submit" class="btn btn-success  mr-2" (click)="classicModal.show(); clearModalRef()">Adicionar</button>
+                  <button type="submit" class="btn btn-success  mr-2"
+                    (click)="classicModal.show(); clearModalRef()">Adicionar</button>
                   <div class="btn-group mb-1 mr-1" dropdown>
                     <button class="btn dropdown-toggle btn-info" type="button" dropdownToggle>Importar
                       <span class="caret"></span>
@@ -42,17 +43,24 @@
               <div *ngIf="refeicoes$ | async as refs">
                 <div class="row mb-4" *ngFor="let ref of refs">
                   <div class="col-sm-4">
-                   {{ ref.horario }} - {{ ref.descricao }}
-                   <div class="row mt-2">
-                     <div class="col-sm-12">
-                       <em class="fa mr-2 fas fa-edit" (click)="updateRef(ref.id, false); classicModal.show()"></em>
-                       <em class="fa mr-2 fas fa-trash" (click)="deleteRef(ref.id)"></em>
-                       <em class="fa mr-2 fas fa-copy" (click)="updateRef(ref.id, true); classicModal.show()"></em>
-                     </div>
-                   </div>
+                    {{ ref.horario }} - {{ ref.descricao }}
+                    <div class="row mt-2">
+                      <div class="col-sm-12">
+                        <em class="fa mr-2 fas fa-edit" (click)="updateRef(ref.id, false); classicModal.show()"></em>
+                        <em class="fa mr-2 fas fa-trash" (click)="deleteRef(ref.id)"></em>
+                        <em class="fa mr-2 fas fa-copy" (click)="updateRef(ref.id, true); classicModal.show()"></em>
+                      </div>
+                    </div>
                   </div>
                   <div class="col-sm-8">
-                    <ul *ngFor="let alim of ref.alimentos">
+                    <ul *ngFor="let alim of ref.alimentos | primOrSecOp: 1">
+                      <li>
+                        <a>{{ alim.descricao }} - </a>
+                        <span>{{ alim.porcao }}</span>
+                      </li>
+                    </ul>
+                    <p *ngIf="hasSecondOption(ref.alimentos)"><strong>Segunda Opção</strong></p>
+                    <ul *ngFor="let alim of ref.alimentos | primOrSecOp: 2">
                       <li>
                         <a>{{ alim.descricao }} - </a>
                         <span>{{ alim.porcao }}</span>
@@ -123,23 +131,49 @@
             <div class="d-flex justify-content-between mt-5">
               <h5>Alimentos Selecionados</h5>
               <div *ngIf="alimStore$ | async as alims">
-                <div *ngFor="let alim of alims">
+                
+                <div *ngIf="alims | primOrSecOp: 1">
+                  <div *ngFor="let alim of alims">
+                    <div class="row">
+                      <div class="col-5">
+                        <p>{{ alim.descricao }} ( {{ alim.porcao }} : {{alim.quantidade}} )</p>
+                      </div>
+                      <div class="col-7">
+                        <div class="row">
+                          <button type="button" class="btn btn-success"
+                            (click)="updateAlim(alim.id); smModal.show(); modalHiddenRef(); addOptionFalse()">Editar</button>
+                          <button type="button" class="btn btn-secondary ml-2"
+                            (click)="removeAlim(alim.idAlimento)">Remover</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+             
+                <p *ngIf="hasSecondOption(alims)"><strong>Segunda Opção</strong></p>
+             
+                <div *ngIf="alims | primOrSecOp: 2">
+                <div *ngFor="let alim of alims | primOrSecOp: 2">
                   <div class="row">
                     <div class="col-5">
                       <p>{{ alim.descricao }} ( {{ alim.porcao }} : {{alim.quantidade}} )</p>
                     </div>
                     <div class="col-7">
                       <div class="row">
-                        <button type="button" class="btn btn-success" (click)="updateAlim(alim.id); smModal.show(); modalHiddenRef()">Editar</button>
+                        <button type="button" class="btn btn-success"
+                          (click)="updateAlim(alim.id); smModal.show(); modalHiddenRef(); addOption()">Editar</button>
                         <button type="button" class="btn btn-secondary ml-2"
                           (click)="removeAlim(alim.idAlimento)">Remover</button>
                       </div>
                     </div>
                   </div>
                 </div>
+                </div>
+              
               </div>
             </div>
-            <button type="button" class="mr-1 mb-1 btn btn-outline-primary" (click)="smModal.show(); modalHiddenRef(); clearModalAlim()">+
+            <button type="button" class="mr-1 mb-1 btn btn-outline-primary"
+              (click)="smModal.show(); modalHiddenRef(); clearModalAlim(); addOptionFalse()">+
               Adicionar Alimento</button>
 
           </div>
@@ -147,7 +181,8 @@
       </div>
       <div class="flex space-between modal-footer">
         <div>
-          <button type="button" class="btn btn-success">+Add Opção</button>
+          <button type="button" class="btn btn-success"
+            (click)="smModal.show(); modalHiddenRef(); clearModalAlim(); addOption()">+Add Opção</button>
         </div>
         <div>
           <button type="button" class="btn btn-secondary mr-2" data-dismiss="modal"
@@ -298,7 +333,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-primary mr-2" (click)="modelosModal.hide()">Cancelar</button>
-     </div>
+      </div>
     </div>
   </div>
 </div>

@@ -3,7 +3,7 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { v4 as uuid } from 'uuid';
 import { Observable } from 'rxjs';
-import { switchMap, map, filter, tap, take, delay } from 'rxjs/operators';
+import { switchMap, map, filter, tap, take, delay, shareReplay } from 'rxjs/operators';
 
 import { AlimentosService } from '../../../../shared/services/alimentos.service';
 import { DropdownService } from './service/dropdown.service';
@@ -38,6 +38,7 @@ export class PlanosAlimentaresComponent implements OnInit {
   public refeicoes$: Observable<Array<IRefeicao>>;
   public id: string;
   public modeloPlanoAlim$: Observable<IPlanoAlimMin[]>;
+  public isSegundaOpcao = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -59,7 +60,7 @@ export class PlanosAlimentaresComponent implements OnInit {
     this.tabelas = this.dropdownService.getTabelas();
 
     this.refeicoes$ = this.refeicaoStore.refs$;
-    this.alimStore$ = this.alimStore.alims$;
+    this.alimStore$ = this.alimStore.alims$.pipe(shareReplay(1));
 
     this.route.params
       .pipe(
@@ -176,6 +177,7 @@ export class PlanosAlimentaresComponent implements OnInit {
     const alim: IAlimento = {
       idAlimento: this.formModalAlim.controls.idAlimento.value === null ? uuid() : this.formModalAlim.controls.idAlimento.value,
       porcao: this.formModalAlim.controls.porcoes.value.split('-')[1],
+      ordemListagem: this.isSegundaOpcao === false ? 1 : 2,
       porcaoGramas: Number(this.formModalAlim.controls.porcoes.value.split('-')[0]),
       quantidade: Number(this.formModalAlim.controls.quantidade.value),
       descricao: this.alimSelected.descricao,
@@ -323,6 +325,14 @@ export class PlanosAlimentaresComponent implements OnInit {
     this.alimStore.set([]);
   }
 
+  public addOptionFalse(): void {
+    this.isSegundaOpcao = false;
+  }
+
+  public addOption(): void {
+    this.isSegundaOpcao = true;
+  }
+
   /** Carregar um modelo ou recordatorio **/
   public loadModelosPlanosAlim(): void {
    this.modeloPlanoAlim$ = this.modelosPlanosAlimentaresService.getMin();
@@ -338,6 +348,11 @@ export class PlanosAlimentaresComponent implements OnInit {
     });
   }
 
+  public hasSecondOption(alims: IAlimento[]): boolean {
+    return alims.some((e) => {
+      return e.ordemListagem === 2;
+    });
+  }
 
 
 }
